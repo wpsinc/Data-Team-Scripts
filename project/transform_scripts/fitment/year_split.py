@@ -14,7 +14,7 @@ def split_year_range(df, col_name):
     df[[start_col, end_col]] = df[col_name].str.split("-", expand=True)
 
     df[start_col] = df[start_col].str.replace("`", "")
-
+    df[end_col].replace({None: 0}, inplace=True)  # replace None with 0
     df[start_col] = df[start_col].astype(int)
     df[end_col] = df[end_col].astype(int)
 
@@ -62,7 +62,7 @@ def main():
     df = split_year_range(df, col_name)
     df = reorder_columns(df, original_columns)
     print(df.head())
-    # df.to_excel(file_path, index=False)
+    df.to_excel(file_path, index=False)
 
 if __name__ == "__main__":
     main()
