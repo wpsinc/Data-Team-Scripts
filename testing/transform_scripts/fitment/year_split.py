@@ -35,29 +35,28 @@ def split_year_range(df, col_name):
 
     return df
 
-# def reorder_columns(df):
-#     df = df[
-#
-#     ]
-#     return df
+def reorder_columns(df, original_columns):
+    df = df[original_columns]
+    return df
 
 def main():
     df = pd.read_excel(file_path, header=None)
-    df = df.iloc[1:]
+    if df.iloc[0].isnull().all():
+        df = df.iloc[1:]
     df.reset_index(drop=True, inplace=True)
     df.columns = df.iloc[0]
     df = df.iloc[1:] 
     df.reset_index(drop=True, inplace=True)
-    columns = df.columns.tolist()
+    original_columns = df.columns.tolist()
     questions = [
         inquirer.List('col_name',
                       message="Enter the name of the column to split",
-                      choices=columns),
+                      choices=original_columns),
     ]
     answers = inquirer.prompt(questions)
     col_name = answers['col_name']
     df = split_year_range(df, col_name)
-    # df = reorder_columns(df)
+    df = reorder_columns(df, original_columns)
     print(df.head())
     # df.to_excel(file_path, index=False)
 
