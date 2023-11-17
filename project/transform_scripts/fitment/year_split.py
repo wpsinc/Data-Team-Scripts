@@ -11,21 +11,46 @@ file_path = filedialog.askopenfilename(title="Select File to Split the Year Colu
 def split_year_range(df, col_name):
     start_col = "start_year"
     end_col = "end_year"
-    df[[start_col, end_col]] = df[col_name].str.split("-", expand=True)
+
+    df[start_col], df[end_col] = zip(
+        *df[col_name].apply(
+            lambda x: (
+                str(x).split("-") if isinstance(x, str) and "-" in x else (str(x), None)
+            )
+        )
+    )
 
     df[start_col] = df[start_col].str.replace("`", "")
     df[end_col].replace({None: 0}, inplace=True)  # replace None with 0
-    df[start_col] = df[start_col].astype(int)
-    df[end_col] = df[end_col].astype(int)
 
-    df[start_col] = df[start_col].apply(lambda x: 1900 + x if x >= 50 else 2000 + x)
-    df[end_col] = df[end_col].apply(lambda x: 1900 + x if x >= 50 else 2000 + x)
+    df[start_col] = df[start_col].apply(
+        lambda x: float(x)
+        if isinstance(x, str) and x != "" and pd.notnull(x) and x != "inf"
+        else float("nan")
+    )
+    df[end_col] = df[end_col].apply(
+        lambda x: float(x)
+        if isinstance(x, str) and x != "" and pd.notnull(x) and x != "inf"
+        else float("nan")
+    )
+
+    df[start_col] = df[start_col].astype(pd.Int64Dtype())  # convert to nullable integer
+    df[end_col] = df[end_col].astype(pd.Int64Dtype())  # convert to nullable integer
+
+    df[start_col] = df[start_col].apply(
+        lambda x: 1900 + x if pd.notnull(x) and x >= 50 else 2000 + x
+    )
+    df[end_col] = df[end_col].apply(
+        lambda x: 1900 + x if pd.notnull(x) and x >= 50 else 2000 + x
+    )
 
     df["year_range"] = df.apply(
         lambda row: ",".join(
             [str(i) for i in range(row[start_col], row[end_col] + 1)]
-            if "None" not in str(row[start_col]) and "None" not in str(row[end_col])
-            else ""
+            if pd.notnull(row[start_col])
+            and pd.notnull(row[end_col])
+            and "-" in str(row[col_name])
+            else [str(row[col_name])]
         ),
         axis=1,
     )
@@ -59,10 +84,15 @@ def main():
     ]
     answers = inquirer.prompt(questions)
     col_name = answers["col_name"]
-    df = split_year_range(df, col_name)
-    df = reorder_columns(df, original_columns)
-    print(df.head())
-    df.to_excel(file_path, index=False)
+
+    if df[col_name].isnull().all():
+        print("Selected column is empty. Skipping the splitting process.")
+    else:
+        df = split_year_range(df, col_name)
+        df = reorder_columns(df, original_columns)
+        print(df.head())
+        # df.to_excel(file_path, index=False)
+
 
 if __name__ == "__main__":
     main()
