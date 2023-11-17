@@ -30,6 +30,28 @@ On Unix or MacOS, use:
 pip install -r requirements.txt
 ```
 
+4. Create your own branch: It's recommended to create your own branch to work on for changes you are applying to the repository. It is also recommended to create a branch dedicated to a major feature implementation to isolate large scale changes. You can create a new branch using the following command:
+    
+```bash
+git checkout -b <branch-name>
+```
+
+5. Make your changes: Make any changes you want to make to the project. Once you're done, you can commit your changes using the following commands:
+    
+```bash
+git add .
+git commit -m "Your commit message"
+```
+
+6. Push your changes: Push your changes to the remote repository using the following command:
+    
+```bash
+git push origin <branch-name>
+```
+
+7. Create a pull request: Create a pull request to merge your changes into the master branch. Once your pull request is approved, you can merge your changes into the master branch.
+
+
 ### Project List:
 
 - london_eom_reporting: Monthly reporting done for specified brands completed by London
