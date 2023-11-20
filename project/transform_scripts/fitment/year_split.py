@@ -20,7 +20,7 @@ def split_year_range(df, col_name):
         )
     )
 
-    df[start_col] = df[start_col].str.replace("`", "")
+    df[start_col] = df[start_col].str.replace("`", "").str.replace("'", "")
     df[end_col].replace({None: 0}, inplace=True)  # replace None with 0
 
     df[start_col] = df[start_col].apply(
@@ -90,8 +90,19 @@ def main():
     else:
         df = split_year_range(df, col_name)
         df = reorder_columns(df, original_columns)
+
+    update_choices = [
+        inquirer.List(
+            "update_excel",
+            message="Do you want to update the Excel file selected?",
+            choices=["Yes", "No, just testing"],
+        ),
+    ]
+    update_answer = inquirer.prompt(update_choices)
+    if update_answer["update_excel"] == "Yes":
+        df.to_excel(file_path, index=False)
+    else:
         print(df.head())
-        # df.to_excel(file_path, index=False)
 
 
 if __name__ == "__main__":
