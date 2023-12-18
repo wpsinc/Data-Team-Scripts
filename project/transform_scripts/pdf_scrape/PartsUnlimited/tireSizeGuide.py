@@ -28,9 +28,14 @@ def process_file(file):
     text = re.sub(r"(?<= )\b\d{2}\b(?= )", add_amp, text)
     text = text.split("FITS MODEL FRONT TIRE REAR TIRE", 1)[1]
 
-    df = pd.read_csv(
-        io.StringIO(text), names=["Model", "Year", "Front Tire", "Rear Tire"]
-    )
+
+    data = []
+    for line in text.split("\n"):
+        text = text.strip()
+        values = line.split("&")
+        data.append(values)
+
+    df = pd.DataFrame(data, columns=["Model", "Year", "Front Tire", "Rear Tire", "Additional Column(s)"])
 
     base_name = os.path.splitext(os.path.basename(file))[0]
     file_id = uuid.uuid4()
