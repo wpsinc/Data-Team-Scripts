@@ -1,7 +1,6 @@
 import os
 import re
 import uuid
-import io
 from tkinter import Tk, filedialog
 from PyPDF2 import PdfReader
 import pandas as pd
