@@ -20,7 +20,7 @@ def process_file(file):
     def add_amp(match):
         year_range = match.group(0)
         numbers = list(map(int, year_range.split("-")))
-        if any(25 <= number <= 69 for number in numbers):
+        if any(25 <= number <= 40 for number in numbers):
             return year_range
         return f"&{year_range}&"
 
