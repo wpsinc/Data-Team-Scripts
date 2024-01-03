@@ -3,6 +3,10 @@ import shutil
 from datetime import datetime
 from dotenv import load_dotenv
 
+# Create a .env file in the repo (.env is already in .gitignore)
+# and add the following line:
+# REPORTS_DIR = <path to directory>
+
 load_dotenv()
 reports_dir = os.getenv("REPORTS_DIR")
 vendor_dirs = [
@@ -47,6 +51,6 @@ for vendor_dir in vendor_dirs:
 
         try:
             shutil.move(os.path.join(src_dir, file), os.path.join(month_dir, file))
-            print(f"Successfully moved {file} to {dir_name}_{month}-{year[2:]}")
+            print(f"Successfully moved {file} to {actual_dir_name}_{month}-{year[2:]}")
         except Exception as e:
             print(f"Error moving {file} to {month_dir}: {e}")
