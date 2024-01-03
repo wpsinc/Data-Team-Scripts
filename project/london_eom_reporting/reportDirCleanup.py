@@ -4,7 +4,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 
 load_dotenv()
-reports_dir = os.getenv('REPORTS_DIR')
+reports_dir = os.getenv("REPORTS_DIR")
 vendor_dirs = [
     d for d in os.listdir(reports_dir) if os.path.isdir(os.path.join(reports_dir, d))
 ]
@@ -16,7 +16,8 @@ for vendor_dir in vendor_dirs:
     files = [f for f in os.listdir(src_dir) if os.path.isfile(os.path.join(src_dir, f))]
 
     if not files:
-        print(f"No files to process in {src_dir}")
+        dir_name = os.path.basename(src_dir)
+        print(f"No files to process for {dir_name}")
         continue
 
     for file in files:
@@ -26,8 +27,6 @@ for vendor_dir in vendor_dirs:
             creation_date = datetime.fromtimestamp(
                 os.path.getctime(os.path.join(src_dir, file))
             ).strftime("%Y-%m-%d")
-
-            dir_name = os.path.basename(src_dir)
             new_file = f"{dir_name}_{creation_date}.{file.split('.')[1]}"
             os.rename(os.path.join(src_dir, file), os.path.join(src_dir, new_file))
             file = new_file
