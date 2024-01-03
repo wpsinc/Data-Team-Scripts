@@ -2,6 +2,8 @@ import pandas as pd
 from tkinter import filedialog
 from tkinter import Tk
 import inquirer
+from tqdm import tqdm
+from colorama import Fore, Style
 
 root = Tk()
 root.withdraw()
@@ -25,6 +27,8 @@ def split_text(df, col_name, original_columns):
 
 
 def main():
+    print(Fore.GREEN + "Welcome to the text splitter script!" + Style.RESET_ALL)
+
     df = pd.read_excel(file_path, header=None)
     if df.loc[0].isnull().all():
         df = df.loc[1:]
@@ -44,9 +48,11 @@ def main():
     col_name = answers["col_name"]
 
     if df[col_name].isnull().all():
-        print("Selected column is empty. Skipping the splitting process.")
+        print(Fore.RED + "Selected column is empty. Skipping the splitting process." + Style.RESET_ALL)
     else:
+        print("Splitting text...")
         df = split_text(df, col_name, original_columns)  # Pass original_columns here
+        print(Fore.GREEN + "Splitting completed!" + Style.RESET_ALL)
 
     update_choices = [
         inquirer.List(
@@ -58,9 +64,11 @@ def main():
     update_answer = inquirer.prompt(update_choices)
     if update_answer["update_excel"] == "Yes":
         df.to_excel(file_path, index=False)
+        print(Fore.GREEN + "Excel file updated successfully!" + Style.RESET_ALL)
     else:
         print(df.head())
 
+    print(Fore.GREEN + "Thank you for using the text splitter script!" + Style.RESET_ALL)
 
 if __name__ == "__main__":
     main()
