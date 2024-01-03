@@ -46,6 +46,6 @@ for vendor_dir in vendor_dirs:
 
         try:
             shutil.move(os.path.join(src_dir, file), os.path.join(month_dir, file))
-            print(f"Successfully moved {file} to {month_dir}")
+            print(f"Successfully moved {file} to {dir_name}_{month}-{year[2:]}")
         except Exception as e:
             print(f"Error moving {file} to {month_dir}: {e}")
