@@ -26,11 +26,12 @@ for vendor_dir in vendor_dirs:
         except IndexError:
             creation_date = datetime.fromtimestamp(
                 os.path.getctime(os.path.join(src_dir, file))
-            ).strftime("%Y-%m-%d")
-            new_file = f"{dir_name}_{creation_date}.{file.split('.')[1]}"
+            ).strftime("%Y-%m")
+            actual_dir_name = os.path.basename(os.path.dirname(os.path.join(src_dir, file)))
+            new_file = f"{actual_dir_name}_{creation_date}-01.{file.split('.')[1]}"
             os.rename(os.path.join(src_dir, file), os.path.join(src_dir, new_file))
             file = new_file
-            year, month, _ = creation_date.split("-")
+            year, month = creation_date.split("-")
 
         year_dir = os.path.join(dst_dir, year)
 
