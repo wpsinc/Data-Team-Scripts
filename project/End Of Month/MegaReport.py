@@ -1,5 +1,7 @@
 import pandas as pd
 import os
+from tqdm import tqdm
+
 
 # Navigate to folder containing Stock Status
 StockStatus = "C:/Users/megan.partridge/OneDrive - Arrowhead EP/Data Tech/End of Month Templates/Linked Reports/Stock Status"
@@ -24,3 +26,7 @@ merged_df = pd.merge(StockStatusDF[['WPS Part Number', 'ItemStatus', 'Product Ma
 merged_df.columns
 merged_df = merged_df.drop_duplicates()
 merged_df.to_excel('C:/Users/megan.partridge/OneDrive - Arrowhead EP/Data Tech/End of Month Templates/Linked Reports/Mega Report.xlsx', index = False)
+with tqdm(total=merged_df.shape[0]) as pbar:
+    for index, row in merged_df.iterrows():
+        merged_df.at[index, 'A'] = row['A'] * 2
+        pbar.update(1)
