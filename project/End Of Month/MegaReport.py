@@ -5,10 +5,35 @@ import warnings
 
 warnings.simplefilter("ignore")
 
+# Get the current user's home directory
+home_dir = os.path.expanduser("~")
+
+# Replace hardcoded paths
+base_path = os.path.join(
+    home_dir, "OneDrive - Arrowhead EP/Data Tech/End of Month Templates/Linked Reports"
+)
+
+# Check if base_path exists
+if not os.path.exists(base_path):
+    print(f"Error: The path {base_path} does not exist for this user.")
+    exit()
+
 # Navigate to folder containing Stock Status
-StockStatus = "C:/Users/megan.partridge/OneDrive - Arrowhead EP/Data Tech/End of Month Templates/Linked Reports/Stock Status"
+StockStatus = os.path.join(base_path, "Stock Status")
+
+# Check if StockStatus exists
+if not os.path.exists(StockStatus):
+    print(f"Error: The path {StockStatus} does not exist for this user.")
+    exit()
+
 # Navigate to folder containing inventory files
-Mega = "C:/Users/megan.partridge/OneDrive - Arrowhead EP/Data Tech/End of Month Templates/Linked Reports/Mega Report"
+Mega = os.path.join(base_path, "Mega Report")
+
+# Check if Mega exists
+if not os.path.exists(Mega):
+    print(f"Error: The path {Mega} does not exist for this user.")
+    exit()
+
 
 # Create an empty dataframe
 StockStatusDF = pd.DataFrame()
@@ -68,6 +93,6 @@ merged_df = pd.merge(
 merged_df.columns
 merged_df = merged_df.drop_duplicates()
 merged_df.to_excel(
-    "C:/Users/megan.partridge/OneDrive - Arrowhead EP/Data Tech/End of Month Templates/Linked Reports/Mega Report.xlsx",
+    os.path.join(Mega, "Mega Report.xlsx"),
     index=False,
 )
