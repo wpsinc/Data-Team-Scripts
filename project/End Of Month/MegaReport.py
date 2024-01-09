@@ -34,7 +34,6 @@ if not os.path.exists(Mega):
     print(f"Error: The path {Mega} does not exist for this user.")
     exit()
 
-
 # Create an empty dataframe
 StockStatusDF = pd.DataFrame()
 
@@ -50,7 +49,7 @@ for filename in xlsx_files:
     # Read the file into a dataframe
     file_df = pd.read_excel(os.path.join(StockStatus, filename))
     # Append the file dataframe to the main dataframe
-    StockStatusDF = StockStatusDF.append(file_df)
+    StockStatusDF = StockStatusDF._append(file_df)
     pbar.update(1)
 
 pbar.close()
