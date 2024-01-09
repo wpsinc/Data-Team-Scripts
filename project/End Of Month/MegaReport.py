@@ -1,8 +1,8 @@
 import pandas as pd
 import os
-import warnings
+# import warnings
 # from tqdm import tqdm
-warnings.simplefilter("ignore")
+# warnings.simplefilter("ignore")
 
 # Navigate to folder containing Stock Status
 StockStatus = "C:/Users/megan.partridge/OneDrive - Arrowhead EP/Data Tech/End of Month Templates/Linked Reports/Stock Status"
@@ -27,17 +27,8 @@ for filename in os.listdir(StockStatus):
 # Drop duplicates from the main dataframe
 StockStatusDF.drop_duplicates(inplace=True)
 StockStatusDF = StockStatusDF.rename(columns={'ItemNumber': 'WPS Part Number'})
-# MegaDF = pd.read_excel(os.path.join(Mega, 'Mega Report.xlsx'))
+MegaDF = pd.read_excel(os.path.join(Mega, 'Mega Report.xlsx'))
 print(StockStatusDF.columns)
-MegaDF = pd.DataFrame()
-for filename in os.listdir(Mega):
-    if filename.endswith('.xlsx'):
-        # Read the file into a dataframe
-        file_df = pd.read_excel(os.path.join(Mega, filename))
-        # Append the file dataframe to the main dataframe
-        MegaDF = MegaDF._append(file_df)
-# Drop duplicates from the main dataframe
-
 print(MegaDF.columns)
 merged_df = pd.merge(StockStatusDF[['WPS Part Number', 'ItemStatus', 'Product Manager', 'OEMPartNumber', 'Description1', 'Description2', 'Division', 'Class', 'Sub-Class', 'Sub-Sub-Class', 'ModelDesc', 'StyleDesc', 'ColorDesc', 'SizeDescription', 'ApparelDesc', 'YearDesign', 'Segment', 'Sub-Segment', 'PreferredVendor', 'Vendor', 'ItemCategory', 'Brand']], MegaDF, on='WPS Part Number', how='inner')
 merged_df.columns
