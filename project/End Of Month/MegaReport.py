@@ -1,7 +1,8 @@
 import pandas as pd
 import os
 from tqdm import tqdm
-
+import warnings
+warnings.simplefilter("ignore")
 
 # Navigate to folder containing Stock Status
 StockStatus = "C:/Users/megan.partridge/OneDrive - Arrowhead EP/Data Tech/End of Month Templates/Linked Reports/Stock Status"
@@ -10,7 +11,10 @@ Mega = "C:/Users/megan.partridge/OneDrive - Arrowhead EP/Data Tech/End of Month 
 
 # Create an empty dataframe
 StockStatusDF = pd.DataFrame()
-
+with tqdm(total=StockStatusDF.shape[0], desc='Processing rows', unit='row') as pbar:
+    for index, row in StockStatusDF.iterrows():
+        StockStatusDF.at[index, 'A'] = row['A'] * 2
+        pbar.update(1)
 # Loop through all files in the folder
 for filename in os.listdir(StockStatus):
     if filename.endswith('.xlsx'):
@@ -25,8 +29,9 @@ MegaDF = pd.read_excel(os.path.join(Mega, 'Mega Report.xlsx'))
 merged_df = pd.merge(StockStatusDF[['WPS Part Number', 'ItemStatus', 'Product Manager', 'OEMPartNumber', 'Description1', 'Description2', 'Division', 'Class', 'Sub-Class', 'Sub-Sub-Class', 'ModelDesc', 'StyleDesc', 'ColorDesc', 'SizeDescription', 'ApparelDesc', 'YearDesign', 'Segment', 'Sub-Segment', 'PreferredVendor', 'Vendor', 'ItemCategory', 'Brand']], MegaDF, on='WPS Part Number', how='inner')
 merged_df.columns
 merged_df = merged_df.drop_duplicates()
-merged_df.to_excel('C:/Users/megan.partridge/OneDrive - Arrowhead EP/Data Tech/End of Month Templates/Linked Reports/Mega Report.xlsx', index = False)
-with tqdm(total=merged_df.shape[0]) as pbar:
+with tqdm(total=merged_df.shape[0], desc='Processing rows', unit='row') as pbar:
     for index, row in merged_df.iterrows():
         merged_df.at[index, 'A'] = row['A'] * 2
         pbar.update(1)
+merged_df.to_excel('C:/Users/megan.partridge/OneDrive - Arrowhead EP/Data Tech/End of Month Templates/Linked Reports/Mega Report.xlsx', index = False)
+
