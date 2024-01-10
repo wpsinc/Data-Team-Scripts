@@ -40,7 +40,7 @@ StockStatusDF = pd.DataFrame()
 
 # Get a list of all .xlsx files in the directory
 xlsx_files = [
-    filename for filename in os.listdir(StockStatus) if filename.endswith(".xlsx")
+    entry.name for entry in os.scandir(StockStatus) if entry.is_file() and entry.name.endswith(".xlsx")
 ]
 
 dfs = []
@@ -112,7 +112,7 @@ spinner.stop_and_persist(symbol="✔️".encode("utf-8"), text=" Dataframes Merg
 
 spinner = Halo(text="Cleaning file...", spinner="dots")
 spinner.start()
-merged_df = merged_df.drop_duplicates()
+merged_df = merged_df.drop_duplicates(inplace=True)
 merged_df.to_excel(
     r"C:\Users\London.Perry\OneDrive - Arrowhead EP\Data Tech\End of Month Templates\Linked Reports\Mega Report\Mega Report1.xlsx",
     index=False,
