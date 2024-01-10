@@ -52,7 +52,7 @@ spinner = Halo(text="Reading files...", spinner="dots")
 spinner.start()
 
 start_time = time.time()
-
+start_time_operation = time.time()
 
 def read_file(filename):
     # Read the file into a dataframe
@@ -74,10 +74,13 @@ StockStatusDF.drop_duplicates(inplace=True)
 
 MegaDF = pd.read_excel(os.path.join(Mega, "Mega Report.xlsx"), sheet_name="page")
 
-spinner.stop_and_persist(symbol="✔️ ".encode("utf-8"), text="Files Read")
+end_time_operation = time.time()
+operation_duration = round((end_time_operation - start_time_operation)/60, 5)
+spinner.stop_and_persist(symbol="✔️ ".encode("utf-8"), text=f"Files Read. Process Time: {operation_duration} minutes.")
 
 spinner = Halo(text="Merging dataframes...", spinner="dots")
 spinner.start()
+start_time_operation = time.time()
 
 merged_df = pd.merge(
     StockStatusDF[
@@ -108,21 +111,25 @@ merged_df = pd.merge(
     ],
     MegaDF,
     on="WPS Part Number",
-    how="inner",
+    how="right",
 )
-
-spinner.stop_and_persist(symbol="✔️ ".encode("utf-8"), text=" Dataframes Merged")
+end_time_operation = time.time()
+operation_duration = round((end_time_operation - start_time_operation)/60, 5)
+spinner.stop_and_persist(symbol="✔️ ".encode("utf-8"), text=f"Dataframes Merged. Process Time: {operation_duration} minutes.")
 
 spinner = Halo(text="Cleaning file...", spinner="dots")
 spinner.start()
+start_time_operation = time.time()
 
 merged_df.drop_duplicates(inplace=True)
+merged_df = merged_df[merged_df['WPS Part Number'].notnull()]
 merged_df.to_excel(
     os.path.join(Mega, "Mega Report1.xlsx"),
     index=False,
 )
-
-spinner.stop_and_persist(symbol="✔️ ".encode("utf-8"), text=" File Cleaned")
+end_time_operation = time.time()
+operation_duration = round((end_time_operation - start_time_operation)/60, 5)
+spinner.stop_and_persist(symbol="✔️ ".encode("utf-8"), text=f"File Cleaned. Process Time: {operation_duration} minutes.")
 
 end_time = time.time()
 print(f"Merging took {round((end_time - start_time)/60, 5)} minutes.")
