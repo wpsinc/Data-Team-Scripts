@@ -69,7 +69,34 @@ with ThreadPoolExecutor(max_workers=5) as executor:
 StockStatusDF = pd.concat(dfs)
 
 # Use in-place operations
-StockStatusDF.rename(columns={"ItemNumber": "WPS Part Number"}, inplace=True)
+# Use in-place operations
+StockStatusDF.rename(
+    columns={
+        "ItemLookup[ItemNumber]": "WPS Part Number",
+        "Item Detail[ItemStatus]": "ItemStatus",
+        "ItemLookup[Product Manager]": "Product Manager",
+        "Item Detail[OEMPartNumber]": "OEMPartNumber",
+        "ItemLookup[Description1]": "Description1",
+        "ItemLookup[Description2]": "Description2",
+        "Division[Division]": "Division",
+        "Class[Class]": "Class",
+        "SubClass[Sub-Class]": "Sub-Class",
+        "SubSubClass[Sub-Sub-Class]": "Sub-Sub-Class",
+        "Item Flags[ModelDesc]": "ModelDesc",
+        "Item Flags[StyleDesc]": "StyleDesc",
+        "Item Flags[ColorDesc]": "ColorDesc",
+        "Item Flags[SizeDescription]": "SizeDescription",
+        "Item Flags[ApparelDesc]": "ApparelDesc",
+        "[SumYearDesign]": "YearDesign",
+        "Segment[Segment]": "Segment",
+        "SubSegment[Sub-Segment]": "Sub-Segment",
+        "Item Detail[PreferredVendor]": "PreferredVendor",
+        "VendorDetail[Vendor]": "Vendor",
+        "Item Detail[ItemCategory]": "ItemCategory",
+        "Brand Lookup[Brand]": "Brand",
+    },
+    inplace=True,
+)
 StockStatusDF["WPS Part Number"] = StockStatusDF["WPS Part Number"].astype(str)
 StockStatusDF.drop_duplicates(inplace=True)
 
