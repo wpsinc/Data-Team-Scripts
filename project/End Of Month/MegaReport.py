@@ -128,8 +128,8 @@ spinner = Halo(text="Cleaning file...", spinner="dots")
 spinner.start()
 start_time_operation = time.time()
 
-merged_df.drop_duplicates(inplace=True)
 merged_df = merged_df[merged_df["WPS Part Number"].notnull()]
+merged_df.drop_duplicates(inplace=True)
 merged_df.to_excel(
     os.path.join(Mega, "Mega Report1.xlsx"),
     index=False,
