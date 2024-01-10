@@ -47,17 +47,23 @@ pbar = tqdm(total=len(xlsx_files))
 # Loop through all files in the folder
 for filename in xlsx_files:
     # Read the file into a dataframe
-    file_df = pd.read_excel(os.path.join(StockStatus, filename))
+    file_df = pd.read_excel(os.path.join(StockStatus, filename), engine="openpyxl")
     # Append the file dataframe to the main dataframe
     StockStatusDF = StockStatusDF._append(file_df)
     pbar.update(1)
+
+# Rename the column 'ItemNumber' to 'WPS Part Number'
+StockStatusDF = StockStatusDF.rename(columns={"ItemNumber": "WPS Part Number"})
+
+# Convert 'WPS Part Number' column in StockStatusDF to string type
+StockStatusDF["WPS Part Number"] = StockStatusDF["WPS Part Number"].astype(str)
 
 pbar.close()
 
 # Drop duplicates from the main dataframe
 StockStatusDF.drop_duplicates(inplace=True)
-StockStatusDF = StockStatusDF.rename(columns={"ItemNumber": "WPS Part Number"})
-MegaDF = pd.read_excel(os.path.join(Mega, "Mega Report.xlsx"))
+MegaDF = pd.read_excel(os.path.join(Mega, "Mega Report.xlsx"),sheet_name="page")
+print(MegaDF.columns)
 merged_df = pd.merge(
     StockStatusDF[
         [
@@ -92,6 +98,6 @@ merged_df = pd.merge(
 merged_df.columns
 merged_df = merged_df.drop_duplicates()
 merged_df.to_excel(
-    os.path.join(Mega, "Mega Report.xlsx"),
+    r"C:\Users\London.Perry\OneDrive - Arrowhead EP\Data Tech\End of Month Templates\Linked Reports\Mega Report\Mega Report1.xlsx",
     index=False,
 )
