@@ -69,7 +69,6 @@ with ThreadPoolExecutor(max_workers=5) as executor:
 StockStatusDF = pd.concat(dfs)
 
 # Use in-place operations
-# Use in-place operations
 StockStatusDF.rename(
     columns={
         "ItemLookup[ItemNumber]": "WPS Part Number",
