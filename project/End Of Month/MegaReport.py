@@ -54,6 +54,7 @@ spinner.start()
 start_time = time.time()
 start_time_operation = time.time()
 
+
 def read_file(filename):
     # Read the file into a dataframe
     file_df = pd.read_excel(os.path.join(StockStatus, filename), engine="openpyxl")
@@ -75,8 +76,11 @@ StockStatusDF.drop_duplicates(inplace=True)
 MegaDF = pd.read_excel(os.path.join(Mega, "Mega Report.xlsx"), sheet_name="page")
 
 end_time_operation = time.time()
-operation_duration = round((end_time_operation - start_time_operation)/60, 5)
-spinner.stop_and_persist(symbol="✔️ ".encode("utf-8"), text=f"Files Read. Process Time: {operation_duration} minutes.")
+operation_duration = round((end_time_operation - start_time_operation) / 60, 5)
+spinner.stop_and_persist(
+    symbol="✔️ ".encode("utf-8"),
+    text=f"Files Read. Process Time: {operation_duration} minutes",
+)
 
 spinner = Halo(text="Merging dataframes...", spinner="dots")
 spinner.start()
@@ -114,22 +118,28 @@ merged_df = pd.merge(
     how="right",
 )
 end_time_operation = time.time()
-operation_duration = round((end_time_operation - start_time_operation)/60, 5)
-spinner.stop_and_persist(symbol="✔️ ".encode("utf-8"), text=f"Dataframes Merged. Process Time: {operation_duration} minutes.")
+operation_duration = round((end_time_operation - start_time_operation) / 60, 5)
+spinner.stop_and_persist(
+    symbol="✔️ ".encode("utf-8"),
+    text=f"Dataframes Merged. Process Time: {operation_duration} minutes",
+)
 
 spinner = Halo(text="Cleaning file...", spinner="dots")
 spinner.start()
 start_time_operation = time.time()
 
 merged_df.drop_duplicates(inplace=True)
-merged_df = merged_df[merged_df['WPS Part Number'].notnull()]
+merged_df = merged_df[merged_df["WPS Part Number"].notnull()]
 merged_df.to_excel(
     os.path.join(Mega, "Mega Report1.xlsx"),
     index=False,
 )
 end_time_operation = time.time()
-operation_duration = round((end_time_operation - start_time_operation)/60, 5)
-spinner.stop_and_persist(symbol="✔️ ".encode("utf-8"), text=f"File Cleaned. Process Time: {operation_duration} minutes.")
+operation_duration = round((end_time_operation - start_time_operation) / 60, 5)
+spinner.stop_and_persist(
+    symbol="✔️ ".encode("utf-8"),
+    text=f"File Cleaned. Process Time: {operation_duration} minutes",
+)
 
 end_time = time.time()
-print(f"Merging took {round((end_time - start_time)/60, 5)} minutes.")
+print(f"Merging took {round((end_time - start_time)/60, 5)} minutes")
