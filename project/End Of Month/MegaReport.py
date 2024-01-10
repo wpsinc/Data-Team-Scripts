@@ -1,6 +1,7 @@
 import pandas as pd
 import os
-from tqdm import tqdm
+import time
+from halo import Halo
 import warnings
 
 warnings.simplefilter("ignore")
@@ -42,15 +43,23 @@ xlsx_files = [
     filename for filename in os.listdir(StockStatus) if filename.endswith(".xlsx")
 ]
 
-pbar = tqdm(total=len(xlsx_files))
+dfs = []
+
+spinner = Halo(text="Reading files...", spinner="dots")
+spinner.start()
+
+start_time = time.time()
 
 # Loop through all files in the folder
 for filename in xlsx_files:
     # Read the file into a dataframe
     file_df = pd.read_excel(os.path.join(StockStatus, filename), engine="openpyxl")
-    # Append the file dataframe to the main dataframe
-    StockStatusDF = StockStatusDF._append(file_df)
-    pbar.update(1)
+    # Append the dataframe to the list
+    dfs.append(file_df)
+
+# Concatenate all dataframes in the list
+StockStatusDF = pd.concat(dfs)
+
 
 # Rename the column 'ItemNumber' to 'WPS Part Number'
 StockStatusDF = StockStatusDF.rename(columns={"ItemNumber": "WPS Part Number"})
@@ -58,12 +67,15 @@ StockStatusDF = StockStatusDF.rename(columns={"ItemNumber": "WPS Part Number"})
 # Convert 'WPS Part Number' column in StockStatusDF to string type
 StockStatusDF["WPS Part Number"] = StockStatusDF["WPS Part Number"].astype(str)
 
-pbar.close()
-
 # Drop duplicates from the main dataframe
 StockStatusDF.drop_duplicates(inplace=True)
-MegaDF = pd.read_excel(os.path.join(Mega, "Mega Report.xlsx"),sheet_name="page")
-print(MegaDF.columns)
+MegaDF = pd.read_excel(os.path.join(Mega, "Mega Report.xlsx"), sheet_name="page")
+
+spinner.stop_and_persist(symbol="✔️".encode("utf-8"), text=" Files Read")
+
+spinner = Halo(text="Merging dataframes...", spinner="dots")
+spinner.start()
+
 merged_df = pd.merge(
     StockStatusDF[
         [
@@ -95,9 +107,17 @@ merged_df = pd.merge(
     on="WPS Part Number",
     how="inner",
 )
-merged_df.columns
+
+spinner.stop_and_persist(symbol="✔️".encode("utf-8"), text=" Dataframes Merged")
+
+spinner = Halo(text="Cleaning file...", spinner="dots")
+spinner.start()
 merged_df = merged_df.drop_duplicates()
 merged_df.to_excel(
     r"C:\Users\London.Perry\OneDrive - Arrowhead EP\Data Tech\End of Month Templates\Linked Reports\Mega Report\Mega Report1.xlsx",
     index=False,
 )
+spinner.stop_and_persist(symbol="✔️".encode("utf-8"), text=" File Cleaned")
+
+end_time = time.time()
+print(f"Merging took {round((end_time - start_time)/60, 5)} minutes.")
