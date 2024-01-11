@@ -3,9 +3,15 @@ import os
 import time
 from halo import Halo
 import warnings
-from concurrent.futures import ThreadPoolExecutor
+import chardet
 
 warnings.simplefilter("ignore")
+
+def find_encoding(fname):
+    r_file = open(fname, "rb").read()
+    result = chardet.detect(r_file)
+    charenc = result["encoding"]
+    return charenc
 
 # Get the current user's home directory
 home_dir = os.path.expanduser("~")
@@ -15,8 +21,10 @@ base_path = os.path.join(
     home_dir, "OneDrive - Arrowhead EP/Teamwork Data/2024-01/Karen Project PO Data"
 )
 output_path = os.path.join(
-    home_dir, "OneDrive - Arrowhead EP/Teamwork Data/2024-01/Karen Project PO Data/Purchase Order Data"
+    home_dir,
+    "OneDrive - Arrowhead EP/Teamwork Data/2024-01/Karen Project PO Data/Purchase Order Data",
 )
+
 # Check if base_path exists
 if not os.path.exists(base_path):
     print(f"Error: The path {base_path} does not exist for this user.")
@@ -38,14 +46,15 @@ if not os.path.exists(Purchases):
     print(f"Error: The path {Purchases} does not exist for this user.")
     exit()
 
-dfs = []
 
 spinner = Halo(text="Reading files...", spinner="dots")
 spinner.start()
 
 start_time = time.time()
 
-ReceiptsDF = pd.read_csv(os.path.join(Receipts, 'P.O. Receipts Karen.csv'), dtype = str)
+Receipts_file = os.path.join(Receipts, "P.O. Receipts Karen.csv")
+Receipts_encoding = find_encoding(Receipts_file)
+ReceiptsDF = pd.read_csv(Receipts_file, dtype=str, encoding=Receipts_encoding)
 
 spinner.stop_and_persist(symbol="✔️ ".encode("utf-8"), text="Files Read")
 
@@ -54,10 +63,17 @@ spinner = Halo(text="Cleaning file...", spinner="dots")
 spinner.start()
 start_time = time.time()
 
-PurchasesDF = pd.read_csv(os.path.join(Purchases, 'Purchase Order Data Karen.csv'), dtype = str)
-PurchasesDF.rename(columns={"P.O. #": "Purchase Order Number",
-                            "P.O. Line": "Purchase Order Line Number",
-                            "Item Code": "Part Number",}, inplace=True)
+Purchases_file = os.path.join(Purchases, "Purchase Order Data Karen.csv")
+Purchases_encoding = find_encoding(Purchases_file)
+PurchasesDF = pd.read_csv(Purchases_file, dtype=str, encoding=Purchases_encoding)
+PurchasesDF.rename(
+    columns={
+        "P.O. #": "Purchase Order Number",
+        "P.O. Line": "Purchase Order Line Number",
+        "Item Code": "Part Number",
+    },
+    inplace=True,
+)
 
 spinner.stop_and_persist(symbol="✔️ ".encode("utf-8"), text="Files Read")
 
@@ -65,10 +81,12 @@ spinner.stop_and_persist(symbol="✔️ ".encode("utf-8"), text="Files Read")
 spinner = Halo(text="Merging dataframes...", spinner="dots")
 spinner.start()
 
-merged_df = pd.merge(PurchasesDF, ReceiptsDF, 
-                     how = 'left',
-                     on = ['Purchase Order Number', 'Purchase Order Line Number'],
-                     )
+merged_df = pd.merge(
+    PurchasesDF,
+    ReceiptsDF,
+    how="left",
+    on=["Purchase Order Number", "Purchase Order Line Number"],
+)
 spinner.stop_and_persist(symbol="✔️ ".encode("utf-8"), text=" Dataframes Merged")
 
 spinner = Halo(text="Cleaning file...", spinner="dots")
