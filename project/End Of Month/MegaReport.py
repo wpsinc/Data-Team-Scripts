@@ -1,12 +1,9 @@
 import pandas as pd
 import os
 import time
-from openpyxl import load_workbook
 from halo import Halo
-import warnings
 from concurrent.futures import ThreadPoolExecutor
-
-warnings.simplefilter("ignore")
+import win32com.client
 
 # Get the current user's home directory
 home_dir = os.path.expanduser("~")
@@ -178,6 +175,37 @@ operation_duration = round((end_time_operation - start_time_operation) / 60, 5)
 spinner.stop_and_persist(
     symbol="✔️ ".encode("utf-8"),
     text=f"File Cleaned. Process Time: {operation_duration} minutes",
+)
+
+spinner = Halo(text="Refreshing File Queries...", spinner="dots")
+spinner.start()
+start_time_operation = time.time()
+
+# Define the output file
+output_file = os.path.join(output_path, "Mega Report Output.xlsx")
+
+# Open Excel
+Excel = win32com.client.Dispatch("Excel.Application")
+Excel.Visible = False  # Excel will run in the background
+
+# Open workbook
+wb = Excel.Workbooks.Open(output_file)
+
+# Refresh all data connections.
+wb.RefreshAll()
+
+# Save and close
+wb.Save()
+wb.Close()
+
+# Quit Excel
+Excel.Quit()
+
+end_time_operation = time.time()
+operation_duration = round((end_time_operation - start_time_operation) / 60, 5)
+spinner.stop_and_persist(
+    symbol="✔️ ".encode("utf-8"),
+    text=f"File Queries Refreshed. Process Time: {operation_duration} minutes",
 )
 
 end_time = time.time()
