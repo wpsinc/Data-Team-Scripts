@@ -198,7 +198,7 @@ wb.Save()
 wb.Close()
 
 # Quit Excel
-Excel.Quit()
+# Excel.Quit()
 
 end_time_operation = time.time()
 operation_duration = round((end_time_operation - start_time_operation) / 60, 5)
