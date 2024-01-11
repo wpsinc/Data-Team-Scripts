@@ -1,6 +1,7 @@
 import pandas as pd
 import os
 import time
+from openpyxl import load_workbook
 from halo import Halo
 import warnings
 from concurrent.futures import ThreadPoolExecutor
@@ -13,6 +14,13 @@ home_dir = os.path.expanduser("~")
 # Replace hardcoded paths
 base_path = os.path.join(
     home_dir, "OneDrive - Arrowhead EP/Data Tech/End of Month Templates/Linked Reports"
+)
+eom_path = os.path.join(
+    home_dir, "OneDrive - Arrowhead EP/Data Tech/End of Month Templates"
+)
+# Replace hardcoded paths
+output_path = os.path.join(
+    home_dir, "OneDrive - Arrowhead EP/Data Tech/End of Month Templates/Linked Reports/Mega Report Output Reference"
 )
 
 # Check if base_path exists
@@ -96,7 +104,8 @@ StockStatusDF.rename(
     },
     inplace=True,
 )
-StockStatusDF["WPS Part Number"] = StockStatusDF["WPS Part Number"].astype(str)
+# Sort the DataFrame before dropping duplicates
+StockStatusDF.sort_values("WPS Part Number", inplace=True)
 StockStatusDF.drop_duplicates(inplace=True)
 
 MegaDF = pd.read_excel(os.path.join(Mega, "Mega Report.xlsx"), sheet_name="page")
@@ -107,6 +116,8 @@ spinner.stop_and_persist(
     symbol="✔️ ".encode("utf-8"),
     text=f"Files Read. Process Time: {operation_duration} minutes",
 )
+
+MegaDF.sort_values("WPS Part Number", inplace=True)
 
 spinner = Halo(text="Merging dataframes...", spinner="dots")
 spinner.start()
@@ -143,6 +154,11 @@ merged_df = pd.merge(
     on="WPS Part Number",
     how="right",
 )
+
+# Sort and drop duplicates after merging
+merged_df.sort_values("WPS Part Number", inplace=True)
+merged_df.drop_duplicates(inplace=True)
+
 end_time_operation = time.time()
 operation_duration = round((end_time_operation - start_time_operation) / 60, 5)
 spinner.stop_and_persist(
@@ -155,11 +171,8 @@ spinner.start()
 start_time_operation = time.time()
 
 merged_df = merged_df[merged_df["WPS Part Number"].notnull()]
-merged_df.drop_duplicates(inplace=True)
-merged_df.to_excel(
-    os.path.join(Mega, "Mega Report1.xlsx"),
-    index=False,
-)
+
+merged_df.to_excel(os.path.join(output_path, "Mega Report Output.xlsx"), index=False)
 end_time_operation = time.time()
 operation_duration = round((end_time_operation - start_time_operation) / 60, 5)
 spinner.stop_and_persist(
