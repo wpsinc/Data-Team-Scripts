@@ -54,7 +54,7 @@ start_time = time.time()
 
 Receipts_file = os.path.join(Receipts, "P.O. Receipts Karen.csv")
 Receipts_encoding = find_encoding(Receipts_file)
-ReceiptsDF = pd.read_csv(Receipts_file, dtype=str, encoding=Receipts_encoding)
+ReceiptsDF = pd.read_csv(Receipts_file, dtype=str, encoding=Receipts_encoding, engine='python')
 
 spinner.stop_and_persist(symbol="✔️ ".encode("utf-8"), text="Files Read")
 
@@ -65,7 +65,7 @@ start_time = time.time()
 
 Purchases_file = os.path.join(Purchases, "Purchase Order Data Karen.csv")
 Purchases_encoding = find_encoding(Purchases_file)
-PurchasesDF = pd.read_csv(Purchases_file, dtype=str, encoding=Purchases_encoding)
+PurchasesDF = pd.read_csv(Purchases_file, dtype=str, encoding=Purchases_encoding, engine='python')
 PurchasesDF.rename(
     columns={
         "P.O. #": "Purchase Order Number",
