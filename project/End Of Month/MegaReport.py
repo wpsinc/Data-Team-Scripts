@@ -15,7 +15,6 @@ base_path = os.path.join(
 eom_path = os.path.join(
     home_dir, "OneDrive - Arrowhead EP/Data Tech/End of Month Templates"
 )
-# Replace hardcoded paths
 output_path = os.path.join(
     home_dir, "OneDrive - Arrowhead EP/Data Tech/End of Month Templates/Linked Reports/Mega Report Output Reference"
 )
@@ -182,7 +181,7 @@ spinner.start()
 start_time_operation = time.time()
 
 # Define the output file
-output_file = os.path.join(output_path, "Mega Report Output.xlsx")
+output_file = os.path.join(eom_path, "Mega Report Output.xlsx")
 
 # Open Excel
 Excel = win32com.client.Dispatch("Excel.Application")
