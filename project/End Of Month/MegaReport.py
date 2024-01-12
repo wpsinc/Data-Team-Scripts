@@ -1,6 +1,7 @@
 import pandas as pd
 import os
 import time
+from openpyxl import load_workbook
 from halo import Halo
 import warnings
 from concurrent.futures import ThreadPoolExecutor
@@ -13,6 +14,13 @@ home_dir = os.path.expanduser("~")
 # Replace hardcoded paths
 base_path = os.path.join(
     home_dir, "OneDrive - Arrowhead EP/Data Tech/End of Month Templates/Linked Reports"
+)
+eom_path = os.path.join(
+    home_dir, "OneDrive - Arrowhead EP/Data Tech/End of Month Templates"
+)
+# Replace hardcoded paths
+output_path = os.path.join(
+    home_dir, "OneDrive - Arrowhead EP/Data Tech/End of Month Templates/Linked Reports/Mega Report Output Reference"
 )
 
 # Check if base_path exists
@@ -52,6 +60,7 @@ spinner = Halo(text="Reading files...", spinner="dots")
 spinner.start()
 
 start_time = time.time()
+start_time_operation = time.time()
 
 
 def read_file(filename):
@@ -68,37 +77,51 @@ with ThreadPoolExecutor(max_workers=5) as executor:
 StockStatusDF = pd.concat(dfs)
 
 # Use in-place operations
-StockStatusDF.rename(columns={"ItemLookup[ItemNumber]": "WPS Part Number",
-                            "Item Detail[ItemStatus]": "ItemStatus",
-                            "ItemLookup[Product Manager]": "Product Manager",
-                            "Item Detail[OEMPartNumber]":"OEMPartNumber",
-                            "ItemLookup[Description1]": "Description1",
-                            "ItemLookup[Description2]": "Description2",
-                            "Division[Division]":  "Division",
-                            "Class[Class]":  "Class",
-                            "SubClass[Sub-Class]": "Sub-Class",
-                            "SubSubClass[Sub-Sub-Class]": "Sub-Sub-Class",
-                            "Item Flags[ModelDesc]": "ModelDesc",
-                            "Item Flags[StyleDesc]": "StyleDesc",
-                            "Item Flags[ColorDesc]": "ColorDesc",
-                            "Item Flags[SizeDescription]": "SizeDescription",
-                            "Item Flags[ApparelDesc]": "ApparelDesc",
-                            "[SumYearDesign]": "YearDesign",
-                            "Segment[Segment]": "Segment",
-                            "SubSegment[Sub-Segment]": "Sub-Segment",
-                            "Item Detail[PreferredVendor]": "PreferredVendor",
-                            "VendorDetail[Vendor]": "Vendor",
-                            "Item Detail[ItemCategory]": "ItemCategory",
-                            "Brand Lookup[Brand]": "Brand"}, inplace=True)
-StockStatusDF["WPS Part Number"] = StockStatusDF["WPS Part Number"].astype(str)
+StockStatusDF.rename(
+    columns={
+        "ItemLookup[ItemNumber]": "WPS Part Number",
+        "Item Detail[ItemStatus]": "ItemStatus",
+        "ItemLookup[Product Manager]": "Product Manager",
+        "Item Detail[OEMPartNumber]": "OEMPartNumber",
+        "ItemLookup[Description1]": "Description1",
+        "ItemLookup[Description2]": "Description2",
+        "Division[Division]": "Division",
+        "Class[Class]": "Class",
+        "SubClass[Sub-Class]": "Sub-Class",
+        "SubSubClass[Sub-Sub-Class]": "Sub-Sub-Class",
+        "Item Flags[ModelDesc]": "ModelDesc",
+        "Item Flags[StyleDesc]": "StyleDesc",
+        "Item Flags[ColorDesc]": "ColorDesc",
+        "Item Flags[SizeDescription]": "SizeDescription",
+        "Item Flags[ApparelDesc]": "ApparelDesc",
+        "[SumYearDesign]": "YearDesign",
+        "Segment[Segment]": "Segment",
+        "SubSegment[Sub-Segment]": "Sub-Segment",
+        "Item Detail[PreferredVendor]": "PreferredVendor",
+        "VendorDetail[Vendor]": "Vendor",
+        "Item Detail[ItemCategory]": "ItemCategory",
+        "Brand Lookup[Brand]": "Brand",
+    },
+    inplace=True,
+)
+# Sort the DataFrame before dropping duplicates
+StockStatusDF.sort_values("WPS Part Number", inplace=True)
 StockStatusDF.drop_duplicates(inplace=True)
 
 MegaDF = pd.read_excel(os.path.join(Mega, "Mega Report.xlsx"), sheet_name="page")
 
-spinner.stop_and_persist(symbol="✔️ ".encode("utf-8"), text="Files Read")
+end_time_operation = time.time()
+operation_duration = round((end_time_operation - start_time_operation) / 60, 5)
+spinner.stop_and_persist(
+    symbol="✔️ ".encode("utf-8"),
+    text=f"Files Read. Process Time: {operation_duration} minutes",
+)
+
+MegaDF.sort_values("WPS Part Number", inplace=True)
 
 spinner = Halo(text="Merging dataframes...", spinner="dots")
 spinner.start()
+start_time_operation = time.time()
 
 merged_df = pd.merge(
     StockStatusDF[
@@ -129,21 +152,33 @@ merged_df = pd.merge(
     ],
     MegaDF,
     on="WPS Part Number",
-    how="inner",
+    how="right",
 )
 
-spinner.stop_and_persist(symbol="✔️ ".encode("utf-8"), text=" Dataframes Merged")
+# Sort and drop duplicates after merging
+merged_df.sort_values("WPS Part Number", inplace=True)
+merged_df.drop_duplicates(inplace=True)
+
+end_time_operation = time.time()
+operation_duration = round((end_time_operation - start_time_operation) / 60, 5)
+spinner.stop_and_persist(
+    symbol="✔️ ".encode("utf-8"),
+    text=f"Dataframes Merged. Process Time: {operation_duration} minutes",
+)
 
 spinner = Halo(text="Cleaning file...", spinner="dots")
 spinner.start()
+start_time_operation = time.time()
 
-merged_df.drop_duplicates(inplace=True)
-merged_df.to_excel(
-    os.path.join(Mega, "Mega Report1.xlsx"),
-    index=False,
+merged_df = merged_df[merged_df["WPS Part Number"].notnull()]
+
+merged_df.to_excel(os.path.join(output_path, "Mega Report Output.xlsx"), index=False)
+end_time_operation = time.time()
+operation_duration = round((end_time_operation - start_time_operation) / 60, 5)
+spinner.stop_and_persist(
+    symbol="✔️ ".encode("utf-8"),
+    text=f"File Cleaned. Process Time: {operation_duration} minutes",
 )
 
-spinner.stop_and_persist(symbol="✔️ ".encode("utf-8"), text=" File Cleaned")
-
 end_time = time.time()
-print(f"Merging took {round((end_time - start_time)/60, 5)} minutes.")
+print(f"Merging took {round((end_time - start_time)/60, 5)} minutes")
