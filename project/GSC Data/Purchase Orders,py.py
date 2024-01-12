@@ -92,7 +92,8 @@ spinner.stop_and_persist(symbol="✔️ ".encode("utf-8"), text=" Dataframes Mer
 
 spinner = Halo(text="Cleaning file...", spinner="dots")
 spinner.start()
-
+merged_df.rename(columns={'Order Date_x': 'Order Date', 'Part Number_x': 'Part Number'}, inplace=True)
+merged_df.drop(['Part Number_y', 'Order Date_y'], axis=1, inplace=True)
 merged_df.drop_duplicates(inplace=True)
 merged_df.to_csv(
     os.path.join(output_path, "Purchase Orders.csv"),
