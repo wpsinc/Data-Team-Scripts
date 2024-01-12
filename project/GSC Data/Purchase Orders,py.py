@@ -114,6 +114,17 @@ merged_df['Total Spend Local'] = merged_df['New Total Spend USD']
 merged_df.rename(columns={'New Total Spend USD': 'Total Spend USD'}, inplace=True)
 
 new_order = ['Company ID', 'Purchase Order Number', 'Purchase Order Line Number', 'Purchase Order Date', 'Order Date', 'Supplier Master ID', 'Supplier Name', 'Part Number', 'Part Name', 'Part Description', 'Unit of Measure', 'Quantity Ordered', 'Quantity Received', 'Unit Price', 'Total Spend Local', 'Total Spend USD', 'Currency Code', 'Facility ID', 'Facility', 'Received Date', 'Buyer Number', 'Buyer Name', 'Payment Terms Code', 'Payment Terms definition', 'Facility Address 1', 'Facility City', 'Facility State/Province', 'Facility Country']
+# convert the date columns to datetime format
+merged_df['Order Date'] = pd.to_datetime(merged_df['Order Date'])
+merged_df['Purchase Order Date'] = pd.to_datetime(merged_df['Purchase Order Date'])
+merged_df['Received Date'] = pd.to_datetime(merged_df['Received Date'])
+
+# reformat the date columns
+merged_df['Order Date'] = merged_df['Order Date'].dt.strftime('%m/%d/%Y')
+merged_df['Purchase Order Date'] = merged_df['Purchase Order Date'].dt.strftime('%m/%d/%Y')
+merged_df['Received Date'] = merged_df['Received Date'].dt.strftime('%m/%d/%Y')
+
+
 merged_df = merged_df.reindex(columns=new_order)
 merged_df.to_csv(
     os.path.join(output_path, "Purchase Orders.csv"),
