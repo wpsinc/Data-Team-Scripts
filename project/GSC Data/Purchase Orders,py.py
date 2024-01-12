@@ -54,8 +54,15 @@ start_time = time.time()
 
 Receipts_file = os.path.join(Receipts, "P.O. Receipts Karen.csv")
 Receipts_encoding = find_encoding(Receipts_file)
-ReceiptsDF = pd.read_csv(Receipts_file, dtype=str, encoding=Receipts_encoding, engine='python')
-
+ReceiptsDF = pd.read_csv(Receipts_file, dtype=str, encoding=Receipts_encoding, sep= '\t', engine='python')
+ReceiptsDF.rename(
+    columns={
+        "P.O. #": "Purchase Order Number",
+        "P.O. Line": "Purchase Order Line Number",
+        "Item Code": "Part Number",
+    },
+    inplace=True,
+)
 spinner.stop_and_persist(symbol="✔️ ".encode("utf-8"), text="Files Read")
 
 spinner = Halo(text="Cleaning file...", spinner="dots")
@@ -65,16 +72,10 @@ start_time = time.time()
 
 Purchases_file = os.path.join(Purchases, "Purchase Order Data Karen.csv")
 Purchases_encoding = find_encoding(Purchases_file)
-PurchasesDF = pd.read_csv(Purchases_file, dtype=str, encoding=Purchases_encoding, engine='python')
-PurchasesDF.rename(
-    columns={
-        "P.O. #": "Purchase Order Number",
-        "P.O. Line": "Purchase Order Line Number",
-        "Item Code": "Part Number",
-    },
-    inplace=True,
-)
+PurchasesDF = pd.read_csv(Purchases_file, dtype=str, encoding=Purchases_encoding, sep= '\t', engine='python')
 
+print('PurchasesDF: ',PurchasesDF.columns)
+print(ReceiptsDF.columns)
 spinner.stop_and_persist(symbol="✔️ ".encode("utf-8"), text="Files Read")
 
 
