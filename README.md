@@ -30,6 +30,17 @@ On Unix or MacOS, use:
 pip install -r requirements.txt
 ```
 
+3.1 (Alternative) Install all dependencies and run any of the dedicated scripts in the terminal without having to navigate to the file itself
+    
+```bash
+pip install -e . # This installs all dependencies required for any of the scripts
+```
+Available Commands:
+```bash
+EOM_MegaReport
+EOM_Directory_Cleanup
+```
+
 4. Create your own branch: It's recommended to create your own branch to work on for changes you are applying to the repository. It is also recommended to create a branch dedicated to a major feature implementation to isolate large scale changes. You can create a new branch using the following command:
     
 ```bash
