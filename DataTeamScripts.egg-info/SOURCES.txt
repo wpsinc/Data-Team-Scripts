@@ -4,9 +4,12 @@ DataTeamScripts.egg-info/PKG-INFO
 DataTeamScripts.egg-info/SOURCES.txt
 DataTeamScripts.egg-info/dependency_links.txt
 DataTeamScripts.egg-info/entry_points.txt
+DataTeamScripts.egg-info/requires.txt
 DataTeamScripts.egg-info/top_level.txt
 project/__init__.py
 project/End Of Month/MegaReport.py
 project/End Of Month/__init__.py
 project/london_eom_reporting/__init__.py
 project/london_eom_reporting/reportDirCleanup.py
+terminal_dashboard/__init__.py
+terminal_dashboard/run_scripts.py

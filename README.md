@@ -40,6 +40,10 @@ Available Commands:
 EOM_MegaReport
 EOM_Directory_Cleanup
 ```
+or
+```bash
+python terminal_dashboard\run_scripts.py # Starts an interactive dashboard to run any of the scripts
+```
 
 4. Create your own branch: It's recommended to create your own branch to work on for changes you are applying to the repository. It is also recommended to create a branch dedicated to a major feature implementation to isolate large scale changes. You can create a new branch using the following command:
     
