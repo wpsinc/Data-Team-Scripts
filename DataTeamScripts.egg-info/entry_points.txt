@@ -1,3 +1,0 @@
-[console_scripts]
-EOM_Directory_Cleanup = project.london_eom_reporting.reportDirCleanup:main
-EOM_MegaReport = project.End_Of_Month.MegaReport:main
