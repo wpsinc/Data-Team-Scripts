@@ -4,7 +4,6 @@ from tkinter import filedialog
 import os
 from rich.progress import Progress
 
-
 def select_files():
     root = tk.Tk()
     root.withdraw()
@@ -16,8 +15,7 @@ def select_files():
 
     return file_paths
 
-
-def compare_dataframes(df1, df2):
+def compare_dataframes(df1, df2, old_year_file, new_year_file):
     df1.set_index("WICITEM", inplace=True)
     df2.set_index("WICITEM", inplace=True)
 
@@ -28,10 +26,15 @@ def compare_dataframes(df1, df2):
 
     comparison_df = df1.compare(df2)
 
-    comparison_df.columns = comparison_df.columns.set_levels(["2023", "2024"], level=1)
+    # Extract the first 4 characters from the filenames
+    old_year = os.path.basename(old_year_file)[:4]
+    new_year = os.path.basename(new_year_file)[:4]
 
-    return comparison_df
+    # Use the extracted years to set the levels of the columns
+    comparison_df.columns = comparison_df.columns.set_levels([old_year, new_year], level=1)
 
+    # Return the extracted years along with the comparison DataFrame
+    return comparison_df, old_year, new_year
 
 def main():
     print("Select the year files")
@@ -49,7 +52,8 @@ def main():
         new_year_df = pd.read_excel(new_year_file)
         progress.update(task, advance=50)
 
-        comparison_df = compare_dataframes(old_year_df, new_year_df)
+        comparison_df, old_year, new_year = compare_dataframes(old_year_df, new_year_df, old_year_file, new_year_file)
+
 
         # Get the name of the last column
         column_name = comparison_df.columns[-1]
@@ -57,9 +61,12 @@ def main():
         # Fill blank values in the column with 'REMOVED'
         comparison_df.loc[comparison_df[column_name].isna(), column_name] = "REMOVED"
 
-        output_file = os.path.join(os.path.dirname(new_year_file), "changes.xlsx")
-        comparison_df.to_excel(output_file)
+        # Get the directory of the current script
+        downloads_folder = os.path.join(os.path.expanduser("~"), "Downloads")
 
+        # Format the output filename using the extracted years
+        output_file = os.path.join(downloads_folder, f"{old_year}to{new_year}_Catalog_Changes.xlsx")
+        comparison_df.to_excel(output_file)
 
 if __name__ == "__main__":
     main()

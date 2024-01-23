@@ -96,9 +96,11 @@ These instructions will get you a copy of the project up and running on your loc
 ## Project List
 
 - `london_eom_reporting`: Monthly reporting done for specified brands completed by London
-- `End of Month`: Waiting for Description
+- `End of Month`: 
     - **MegaReport.py**: Generates monthly MegaReport that then updates existing MegaReport file in the shared drive
 - `transform_scripts`: Used to transform data based on variable file schema structures
+- `Catalog`:
+    - **year_compare.py**: Compares two years of catalog data and outputs a report of the differences and outputs file of the differences which goes to your downloads folder
 
 ## Author
 
