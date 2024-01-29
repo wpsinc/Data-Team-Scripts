@@ -4,6 +4,7 @@ import tkinter as tk
 from tkinter import filedialog
 
 def rename_files(directory):
+    renamed_files = 0
     for filename in os.listdir(directory):
         match = re.match(r"(.*-)(\d+)(_Page_)(\d+)(\.tif)", filename)
         if match:
@@ -12,6 +13,9 @@ def rename_files(directory):
             new_filename = base + new_number + ext
             print(f"Old File Name: {filename} Changed to: {new_filename}")
             os.rename(os.path.join(directory, filename), os.path.join(directory, new_filename))
+            renamed_files += 1
+    if renamed_files == 0:
+        print("No files were renamed.")
 
 def select_directory():
     root = tk.Tk()
