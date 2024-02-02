@@ -15,6 +15,7 @@ def main():
     scripts = {
         'EOM_MegaReport': (os.path.join(current_dir, "..", "project", "End Of Month", "MegaReport.py"), "End of month mega report transformation and creation/edit"),
         'EOM_Directory_Cleanup': (os.path.join(current_dir, "..", "project", "london_eom_reporting", "reportDirCleanup.py"), "Transfers and renames files in a directory to a new directory structure for their respective date created"),
+        'Catalog_Photo_File_Renamer': (os.path.join(current_dir, "..", "project", "catalog", "photo_file_renamer.py"), "Renames files in a directory to a new naming convention"),
     }
 
     script_completer = WordCompleter(scripts.keys(), ignore_case=True)

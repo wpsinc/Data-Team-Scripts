@@ -36,6 +36,8 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtCore import Qt
 
+# todo Add OEM Part Number to the list
+
 class FitmentDialog(QDialog):
     def __init__(self, parent=None, selected_items=None):
         super().__init__(parent)
@@ -209,8 +211,6 @@ class FitmentDialog(QDialog):
             item = self.list_widget.item(i)
             item.setCheckState(Qt.Unchecked)
 
-
-
 class CustomTable(QTableWidget):
     def __init__(self, rows, cols, columns, df, excel_file, parent=None):
         super().__init__(rows, cols, parent)
@@ -264,7 +264,7 @@ class CustomTable(QTableWidget):
                     return
 
             if all(value for value in data.values()):
-                self.df = self.df.append(data, ignore_index=True)
+                self.df = self.df._append(data, ignore_index=True)
 
         self.df.to_excel(self.EXCEL_FILE, index=False)
         QMessageBox.information(
@@ -428,6 +428,13 @@ class MainWindow(QMainWindow):
             button.clicked.connect(func)
             self.layout.addWidget(button)
 
+    def open_fitment_dialog(self):
+        dialog = FitmentDialog(self)
+        result = dialog.exec_()
+        if result == QDialog.Accepted:
+            selected_items = dialog.selected_items()
+            # Do something with selected_items
+
     def add_section(
         self,
         title,
@@ -450,6 +457,11 @@ class MainWindow(QMainWindow):
         header_layout.addWidget(QLabel("End Row:"))
         header_layout.addWidget(end_row_input)
         header_layout.addStretch()
+
+        fitment_button = QPushButton("Open Fitment Dialog")
+        fitment_button.clicked.connect(self.open_fitment_dialog)
+        header_layout.addWidget(fitment_button)
+
         header_widget = QWidget()
         header_widget.setLayout(header_layout)
         self.layout.addWidget(header_widget)
@@ -469,6 +481,7 @@ class MainWindow(QMainWindow):
                 item = self.table.item(row, col)
                 if item is not None:
                     item.setText("")
+
 
     def create_table(self, columns):
         table = CustomTable(50, len(columns), columns, self.df, self.EXCEL_FILE)
