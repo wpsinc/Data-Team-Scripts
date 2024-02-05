@@ -37,8 +37,6 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtCore import Qt
 
-# todo Add OEM Part Number to the list
-
 class FitmentDialog(QDialog):
     def __init__(self, parent=None, selected_items=None):
         super().__init__(parent)
@@ -158,6 +156,7 @@ class FitmentDialog(QDialog):
             ],
             selected_items,
         )
+    
 
     def clear_selections(self):
         for i in range(self.list_widget.count()):
@@ -211,6 +210,7 @@ class FitmentDialog(QDialog):
         for i in range(self.list_widget.count()):
             item = self.list_widget.item(i)
             item.setCheckState(Qt.Unchecked)
+
 
 class CustomTable(QTableWidget):
     def __init__(self, rows, cols, columns, df, excel_file, parent=None):
@@ -289,7 +289,7 @@ class CustomTable(QTableWidget):
                     self.setItem(row, column, item)
                 item.setText(selected_items)
 
-
+# todo Add OEM Part Number to the list
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
@@ -306,6 +306,7 @@ class MainWindow(QMainWindow):
                 "Item Life Cycle",
                 "Vendor #",
                 "WPS Item #",
+                "OEM Part #",
                 "Description 1 (30)",
                 "Description 2 (30)",
                 "Brand",
@@ -482,7 +483,6 @@ class MainWindow(QMainWindow):
                 item = self.table.item(row, col)
                 if item is not None:
                     item.setText("")
-
 
     def create_table(self, columns):
         table = CustomTable(50, len(columns), columns, self.df, self.EXCEL_FILE)
