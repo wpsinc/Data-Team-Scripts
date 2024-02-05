@@ -12,27 +12,31 @@ from PyQt5.QtWidgets import (
     QMessageBox,
     QDialog,
     QListWidget,
-    QListWidgetItem
+    QListWidgetItem,
 )
 from PyQt5.QtGui import QKeySequence, QFont, QIntValidator, QColor
 from PyQt5.QtCore import Qt
 import pandas as pd
 import sys
 from PyQt5.QtWidgets import QLineEdit
-
 from PyQt5.QtWidgets import QDialog, QListWidget, QVBoxLayout, QPushButton
-
-
 from PyQt5.QtWidgets import QComboBox
+import os
 
 class FitmentDialog(QDialog):
     def __init__(self, parent=None, selected_items=None):
         super().__init__(parent)
-        self.setWindowTitle("Select Fitment") 
+        self.setWindowTitle("Select Fitment")
         self.layout = QVBoxLayout(self)
 
+        # Get the directory of the current script
+        script_dir = os.path.dirname(os.path.realpath(__file__))
+
+        # Create the full path to the file
+        file_path = os.path.join(script_dir, "FitmentVehicles.xlsx")
+
         # Read the vehicles from the Excel file
-        self.df = pd.read_excel("FitmentVehicles.xlsx")
+        self.df = pd.read_excel(file_path)
         self.vehicles = self.df["agg"].tolist()
 
         # Create combo boxes for Year and Make, and a search box for Model
@@ -42,9 +46,13 @@ class FitmentDialog(QDialog):
 
         # Populate the combo boxes with the unique values from the respective columns
         self.year_combo.addItem("Select Year")
-        self.year_combo.addItems([str(year) for year in self.df["year"].unique().tolist()])
+        self.year_combo.addItems(
+            sorted([str(year) for year in self.df["year"].unique().tolist()])
+        )
         self.make_combo.addItem("Select Make")
-        self.make_combo.addItems([str(make) for make in self.df["make"].unique().tolist()])
+        self.make_combo.addItems(
+            sorted([str(make) for make in self.df["make"].unique().tolist()])
+        )
 
         # Connect the currentIndexChanged signal of the combo boxes to the filter_vehicles method
         self.year_combo.currentIndexChanged.connect(self.filter_vehicles)
@@ -60,7 +68,7 @@ class FitmentDialog(QDialog):
         self.populate_list_widget(self.vehicles, selected_items)
 
         self.clear_all_button = QPushButton("Clear All", self)
-        self.clear_all_button.setToolTip("Clear all models currently visible") 
+        self.clear_all_button.setToolTip("Clear all models currently visible")
         self.clear_all_button.clicked.connect(self.clear_all)
         self.layout.addWidget(self.clear_all_button)
 
@@ -70,7 +78,9 @@ class FitmentDialog(QDialog):
         self.layout.addWidget(self.select_all_button)
 
         self.ok_button = QPushButton("Apply", self)
-        self.ok_button.setToolTip("Apply the selected fitment to the cell")  # Set tooltip after defining the button
+        self.ok_button.setToolTip(
+            "Apply the selected fitment to the cell"
+        )  # Set tooltip after defining the button
         self.ok_button.clicked.connect(self.accept)
         self.layout.addWidget(self.list_widget)
         self.layout.addWidget(self.ok_button)
@@ -79,10 +89,14 @@ class FitmentDialog(QDialog):
         self.list_widget.clear()
         for vehicle in vehicles:
             item = QListWidgetItem(vehicle)
-            item.setFlags(item.flags() | Qt.ItemIsUserCheckable)  # Make the item checkable
+            item.setFlags(
+                item.flags() | Qt.ItemIsUserCheckable
+            )  # Make the item checkable
             item.setCheckState(Qt.Unchecked)  # Set initial check state to unchecked
             if selected_items and vehicle in selected_items:
-                item.setCheckState(Qt.Checked)  # Pre-select the item if it was previously selected
+                item.setCheckState(
+                    Qt.Checked
+                )  # Pre-select the item if it was previously selected
             self.list_widget.addItem(item)
 
     def select_all(self):
@@ -92,8 +106,16 @@ class FitmentDialog(QDialog):
             item.setCheckState(Qt.Checked)
 
     def filter_vehicles(self):
-        year = int(self.year_combo.currentText()) if self.year_combo.currentText().isdigit() else None
-        make = self.make_combo.currentText() if self.make_combo.currentText() != "Select Make" else None
+        year = (
+            int(self.year_combo.currentText())
+            if self.year_combo.currentText().isdigit()
+            else None
+        )
+        make = (
+            self.make_combo.currentText()
+            if self.make_combo.currentText() != "Select Make"
+            else None
+        )
         model = self.model_search.text()
 
         filtered_df = self.df
@@ -102,7 +124,9 @@ class FitmentDialog(QDialog):
         if make:
             filtered_df = filtered_df[filtered_df["make"] == make]
         if model:
-            filtered_df = filtered_df[filtered_df["model"].str.contains(model, case=False)]
+            filtered_df = filtered_df[
+                filtered_df["model"].str.contains(model, case=False)
+            ]
 
         self.update_combo_boxes(filtered_df)
         self.populate_list_widget(filtered_df["agg"].tolist(), None)
@@ -114,10 +138,16 @@ class FitmentDialog(QDialog):
         current_make = self.make_combo.currentText()
 
         # Filter the DataFrame by the selected year only
-        year_df = self.df[self.df["year"] == int(self.year_combo.currentText())] if self.year_combo.currentText().isdigit() else self.df
+        year_df = (
+            self.df[self.df["year"] == int(self.year_combo.currentText())]
+            if self.year_combo.currentText().isdigit()
+            else self.df
+        )
 
         self.make_combo.clear()
-        self.make_combo.addItems([str(make) for make in year_df["make"].unique().tolist()])
+        self.make_combo.addItems(
+            [str(make) for make in year_df["make"].unique().tolist()]
+        )
 
         self.make_combo.setCurrentText(current_make)
 
@@ -131,12 +161,12 @@ class FitmentDialog(QDialog):
             if item.checkState() == Qt.Checked:
                 selected_items.append(item.text())
         return selected_items
+
     def clear_all(self):
         # Iterate over all items in the QListWidget and set their check state to Qt.Unchecked
         for i in range(self.list_widget.count()):
             item = self.list_widget.item(i)
             item.setCheckState(Qt.Unchecked)
-
 
 
 class CustomTable(QTableWidget):
@@ -169,7 +199,6 @@ class CustomTable(QTableWidget):
     def clear_selected_cells(self):
         for item in self.selectedItems():
             item.setText("")
-    
 
     def submit(self):
         for row in range(self.rowCount()):
@@ -193,7 +222,7 @@ class CustomTable(QTableWidget):
                     return
 
             if all(value for value in data.values()):
-                self.df = self.df.append(data, ignore_index=True)
+                self.df = self.df._append(data, ignore_index=True)
 
         self.df.to_excel(self.EXCEL_FILE, index=False)
         QMessageBox.information(
@@ -217,17 +246,37 @@ class CustomTable(QTableWidget):
                     self.setItem(row, column, item)
                 item.setText(selected_items)
 
+
+class LimitedItem(QTableWidgetItem):
+    def __init__(self, text=""):
+        super().__init__(text)
+
+    def setData(self, role, value):
+        if role == Qt.EditRole and len(value) > 30:
+            super().setData(role, value[:30])
+        else:
+            super().setData(role, value)
+
+
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
         self.setWindowTitle("Simple data entry form")
-        self.EXCEL_FILE = "Data_Entry.xlsx"
+
+        # Get the directory of the current script
+        script_dir = os.path.dirname(os.path.realpath(__file__))
+
+        # Create the full path to the file
+        self.EXCEL_FILE = os.path.join(script_dir, "Data_Entry.xlsx")
+
+        # Now use EXCEL_FILE in your pandas read_excel function
         self.df = pd.read_excel(self.EXCEL_FILE)
         self.sections = {
             "Item Info": [
                 "Part Number",
-                "Description 1",
-                "Description 2",
+                "OEM Part Number",
+                "Description 1 (30)",
+                "Description 2 (30)",
                 "Brand Name",
                 "UPC #",
                 "Supersede",
@@ -336,6 +385,13 @@ class MainWindow(QMainWindow):
         table.setVerticalHeaderLabels([str(i + 1) for i in range(50)])
         table.setSelectionMode(QTableWidget.ExtendedSelection)
         table.setDragDropMode(QTableWidget.InternalMove)
+
+        desc1_col = columns.index("Description 1 (30)")
+        desc2_col = columns.index("Description 2 (30)")
+        for row in range(table.rowCount()):
+            table.setItem(row, desc1_col, LimitedItem())
+            table.setItem(row, desc2_col, LimitedItem())
+
         return table
 
     def submit(self):
