@@ -181,10 +181,9 @@ merged_df["Purchase Order Date"] = pd.to_datetime(merged_df["Purchase Order Date
 merged_df["Received Date"] = pd.to_datetime(merged_df["Received Date"], errors='coerce')
 
 # reformat the date columns
-merged_df["Order Date"] = merged_df["Order Date"].dt.strftime("%m/%d/%Y", errors='coerce')
-merged_df["Purchase Order Date"] = merged_df["Purchase Order Date"].dt.strftime("%m/%d/%Y", errors='coerce')
-merged_df["Received Date"] = merged_df["Received Date"].dt.strftime("%m/%d/%Y", errors='coerce')
-
+merged_df["Order Date"] = merged_df["Order Date"].dt.strftime("%m/%d/%Y")
+merged_df["Purchase Order Date"] = merged_df["Purchase Order Date"].dt.strftime("%m/%d/%Y")
+merged_df["Received Date"] = merged_df["Received Date"].dt.strftime("%m/%d/%Y")
 
 merged_df = merged_df.reindex(columns=new_order)
 merged_df.to_csv(
