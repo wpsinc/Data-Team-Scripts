@@ -1,63 +1,108 @@
-## Data Team Misc Scripts
+# Data Team Misc Scripts
 
-> This repository contains miscellaneous Python scripts used for unique cases on an as needed basis
+This repository contains miscellaneous Python scripts used for unique cases on an as needed basis.
 
-### Getting Started
+## Table of Contents
 
-Follow these steps to get started with this project:
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Project List](#project-list)
+- [Author](#author)
 
-1. **Clone the repository**: Use the following command to clone this repository to your local machine:
-    
-```bash
-git clone https://github.com/wpsinc/Data-Team-Scripts.git
-```
+## Getting Started
 
-2. Create a virtual environment: It's recommended to create a virtual environment to isolate the dependencies of this project. If you're using venv, you can create a virtual environment using the following command:
+These instructions will get you a copy of the project up and running on your local machine.
 
-```bash
-python3 -m venv /path/to/new/virtual/environment
-```
+### Prerequisites
 
-Then, activate the virtual environment. On Windows, use:
-`/path/to/new/virtual/environment/Scripts/activate`
+- Git
+- Python 3
+- pip
+- venv (optional)
 
-On Unix or MacOS, use:  
-`source /path/to/new/virtual/environment/bin/activate`
+### Installation
 
-3. Install the requirements: This project has some dependencies which are listed in the requirements.txt file. After activating the virtual environment, install these dependencies using the following command:
-    
-```bash
-pip install -r requirements.txt
-```
+1. **Clone the repository**:
 
-4. Create your own branch: It's recommended to create your own branch to work on for changes you are applying to the repository. It is also recommended to create a branch dedicated to a major feature implementation to isolate large scale changes. You can create a new branch using the following command:
-    
-```bash
-git checkout -b <branch-name>
-```
+    ```bash
+    git clone https://github.com/wpsinc/Data-Team-Scripts.git
+    ```
 
-5. Make your changes: Make any changes you want to make to the project. Once you're done, you can commit your changes using the following commands:
-    
-```bash
-git add .
-git commit -m "Your commit message"
-```
+2. **Create and activate a virtual environment** (optional):
 
-6. Push your changes: Push your changes to the remote repository using the following command:
-    
-```bash
-git push origin <branch-name>
-```
+    ```bash
+    python3 -m venv /path/to/new/virtual/environment
+    ```
 
-7. Create a pull request: Create a pull request to merge your changes into the master branch. Once your pull request is approved, you can merge your changes into the master branch.
+    On Windows, activate the virtual environment with:
 
+    ```bash
+    /path/to/new/virtual/environment/Scripts/activate
+    ```
 
-### Project List:
+    On Unix or MacOS, use:
 
-- london_eom_reporting: Monthly reporting done for specified brands completed by London
-- monthly_sales_reporting: Waiting for Description
-- transform_scripts: Used to transform data based on variable file schema structures
+    ```bash
+    source /path/to/new/virtual/environment/bin/activate
+    ```
 
+3. **Install the requirements**:
 
-Author: London Perry
-Date: 11/13/2023
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+    Alternatively, install all dependencies and run any of the dedicated scripts in the terminal without having to navigate to the file itself:
+
+    ```bash
+    pip install -e .
+    ```
+
+    Available Commands:
+
+    ```bash
+    EOM_MegaReport
+    EOM_Directory_Cleanup
+    ```
+
+    or
+
+    ```bash
+    python terminal_dashboard\run_scripts.py
+    ```
+
+4. **Create your own branch**:
+
+    ```bash
+    git checkout -b <branch-name>
+    ```
+
+5. **Make your changes**:
+
+    ```bash
+    git add .
+    git commit -m "Your commit message"
+    ```
+
+6. **Push your changes**:
+
+    ```bash
+    git push origin <branch-name>
+    ```
+
+7. **Create a pull request**: Create a pull request to merge your changes into the master branch. Once your pull request is approved, you can merge your changes into the master branch.
+
+## Project List
+
+- `london_eom_reporting`: Monthly reporting done for specified brands completed by London
+- `End of Month`: 
+    - **MegaReport.py**: Generates monthly MegaReport that then updates existing MegaReport file in the shared drive
+- `transform_scripts`: Used to transform data based on variable file schema structures
+- `Catalog`:
+    - **year_compare.py**: Compares two years of catalog data and outputs a report of the differences and outputs file of the differences which goes to your downloads folder
+
+## Author
+
+- London Perry
+- Date: 11/13/2023
