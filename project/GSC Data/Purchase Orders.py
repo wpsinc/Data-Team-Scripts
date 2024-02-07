@@ -176,9 +176,9 @@ new_order = [
 merged_df.loc[merged_df['Received Date'] == '0', 'Received Date'] = None
 
 # convert the date columns to datetime format
-merged_df["Order Date"] = pd.to_datetime(merged_df["Order Date"])
-merged_df["Purchase Order Date"] = pd.to_datetime(merged_df["Purchase Order Date"])
-merged_df["Received Date"] = pd.to_datetime(merged_df["Received Date"])
+merged_df["Order Date"] = pd.to_datetime(merged_df["Order Date"], errors='coerce')
+merged_df["Purchase Order Date"] = pd.to_datetime(merged_df["Purchase Order Date"], errors='coerce')
+merged_df["Received Date"] = pd.to_datetime(merged_df["Received Date"], errors='coerce')
 
 # reformat the date columns
 merged_df["Order Date"] = merged_df["Order Date"].dt.strftime("%m/%d/%Y")
