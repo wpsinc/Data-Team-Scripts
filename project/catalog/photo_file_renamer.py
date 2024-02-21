@@ -7,13 +7,13 @@ import inquirer
 def rename_files(directory, step, start=0):
     renamed_files = 0
     for filename in os.listdir(directory):
-        match = re.match(r"(.*-)(\d+\.?\d*)(_Page_)(\d+)(\.tif)", filename)
+        match = re.match(r"(.*)(_Page_)(\d+)(\.tif)", filename)
         if match:
-            base, number, _, page, ext = match.groups()
+            base, _, page, ext = match.groups()
             if step == 0.1:
                 new_number = format(start + (float(page) - 1) * step, '.1f')
             else:
-                new_number = str(int(number) + (int(page) - 1) * int(step)).zfill(len(number.split('.')[0]))
+                new_number = str(int(page)).zfill(4)  # zero-fill to 4 digits
             new_filename = base + new_number + ext
             print(f"Old File Name: {filename} Changed to: {new_filename}")
             os.rename(os.path.join(directory, filename), os.path.join(directory, new_filename))
