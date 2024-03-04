@@ -42,7 +42,7 @@ email_details = [
         "message": "Hello Jody, \r\n\r\nAttached is the monthly report for Burly Brand. Please feel free to reach out anytime with any questions or concerns regarding the content of this file. \r\nLondon Perry, \r\nProduct Content Specialist | Western Power Sports Inc.",
     },
     {
-        "to": "jcastro@dunlopmotorcycletires.com,sdewey@dunlopmotorcycletires.com,mcotter@srnatire.com",
+        "to": "jcastro@dunlopmotorcycletires.com; sdewey@dunlopmotorcycletires.com; mcotter@srnatire.com",
         "cc": "aabreu@wps-inc.com",
         "subject": "WPS Monthly Report",
         "message": "Hello All, \r\n\r\nAttached is the monthly report for Dunlop. Please feel free to reach out anytime with any questions or concerns regarding the content of this file. \r\nLondon Perry, \r\nProduct Content Specialist | Western Power Sports Inc.",
@@ -72,13 +72,13 @@ email_details = [
         "message": "Hello Thomas, \r\n\r\nAttached is the monthly report for Rizoma. Please feel free to reach out anytime with any questions or concerns regarding the content of this file. \r\nLondon Perry, \r\nProduct Content Specialist | Western Power Sports Inc.",
     },
     {
-        "to": "dt@sawickispeedshop.com,chris@sawickispeedshop.com",
-        "cc": "kbrown@wps-inc.com, jeremy.anderson@wps-inc.com",
+        "to": "dt@sawickispeedshop.com; chris@sawickispeedshop.com",
+        "cc": "kbrown@wps-inc.com; jeremy.anderson@wps-inc.com",
         "subject": "WPS Monthly Report",
         "message": "Hello All, \r\n\r\nAttached is the monthly report for Sawicki Speed Shop. Please feel free to reach out anytime with any questions or concerns regarding the content of this file. \r\nLondon Perry, \r\nProduct Content Specialist | Western Power Sports Inc.",
     },
     {
-        "to": "Helge.Koenig@sp-united.com,brian.valverde@sp-united.com,Gerald.Samer@sp-united.com",
+        "to": "Helge.Koenig@sp-united.com; brian.valverde@sp-united.com; Gerald.Samer@sp-united.com",
         "cc": "jlehan@wps-inc.com",
         "subject": "WPS Monthly Report",
         "message": "Hello All, \r\n\r\nAttached is the monthly report for SP Connect. Please feel free to reach out anytime with any questions or concerns regarding the content of this file. \r\nLondon Perry, \r\nProduct Content Specialist | Western Power Sports Inc.",
