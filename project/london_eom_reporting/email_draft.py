@@ -12,8 +12,8 @@ class EmailDraft:
 
     def open_in_client(self):
         message = urllib.parse.quote(self.message)
-        to_emails = ','.join(email.strip() for email in self.to.split(','))
-        cc_emails = ','.join(email.strip() for email in self.cc.split(','))
+        to_emails = ';'.join(email.strip() for email in self.to.split(';'))
+        cc_emails = ';'.join(email.strip() for email in self.cc.split(';'))
         url = f"mailto:{to_emails}?cc={cc_emails}&subject={self.subject}&body={message}"
         try:
             os.startfile(url)
