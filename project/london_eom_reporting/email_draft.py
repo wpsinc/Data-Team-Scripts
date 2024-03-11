@@ -12,8 +12,8 @@ class EmailDraft:
 
     def open_in_client(self):
         message = urllib.parse.quote(self.message)
-        to_emails = ';'.join(email.strip() for email in self.to.split(';'))
-        cc_emails = ';'.join(email.strip() for email in self.cc.split(';'))
+        to_emails = ";".join(email.strip() for email in self.to.split(";"))
+        cc_emails = ";".join(email.strip() for email in self.cc.split(";"))
         url = f"mailto:{to_emails}?cc={cc_emails}&subject={self.subject}&body={message}"
         try:
             os.startfile(url)
@@ -24,7 +24,11 @@ class EmailDraft:
 def generate_email_drafts(email_details):
     email_drafts = []
     for details in email_details:
-        email_drafts.append(EmailDraft(details['to'], details['cc'], details['subject'], details['message']))
+        email_drafts.append(
+            EmailDraft(
+                details["to"], details["cc"], details["subject"], details["message"]
+            )
+        )
     return email_drafts
 
 
@@ -88,6 +92,12 @@ email_details = [
         "cc": "aabreu@wps-inc.com",
         "subject": "WPS Monthly Report",
         "message": "Hello Tim, \r\n\r\nAttached is the monthly report for Yoshimura. Please feel free to reach out anytime with any questions or concerns regarding the content of this file. \r\nLondon Perry, \r\nProduct Content Specialist | Western Power Sports Inc.",
+    },
+    {
+        "to": "curtis@hofmann-designs.com",
+        "cc": "jeremy.anderson@wps-inc.com",
+        "subject": "WPS Monthly Report",
+        "message": "Hello Curtis, \r\n\r\nAttached is the monthly report for Hofmann Designs. Please feel free to reach out anytime with any questions or concerns regarding the content of this file. \r\nLondon Perry, \r\nProduct Content Specialist | Western Power Sports Inc.",
     }
 ]
 
