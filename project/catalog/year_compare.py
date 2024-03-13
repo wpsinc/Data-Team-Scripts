@@ -54,7 +54,6 @@ def main():
 
         comparison_df, old_year, new_year = compare_dataframes(old_year_df, new_year_df, old_year_file, new_year_file)
 
-
         # Get the name of the last column
         column_name = comparison_df.columns[-1]
 
