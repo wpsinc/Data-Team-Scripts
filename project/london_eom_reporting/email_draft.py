@@ -116,6 +116,12 @@ email_details = [
         "cc": "jlehan@wps-inc.com",
         "subject": "WPS Monthly Report for Nelson-Rigg",
         "message": "Hello, \r\n\r\nAttached is the monthly report for Nelson-Rigg. Please feel free to reach out anytime with any questions or concerns regarding the content of this file. \r\nLondon Perry, \r\nProduct Content Specialist | Western Power Sports Inc.",
+    },
+    {
+        "to": "export@shinkotire.co.kr",
+        "cc": "",
+        "subject": "WPS Monthly Report for Shinko",
+        "message": "Hello, \r\n\r\nAttached is the monthly report for Shinko. Please feel free to reach out anytime with any questions or concerns regarding the content of this file. \r\nLondon Perry, \r\nProduct Content Specialist | Western Power Sports Inc.",
     }
 ]
 
