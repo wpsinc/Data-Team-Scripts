@@ -3,7 +3,8 @@ import json
 
 # Specify the file path
 file_path = r"C:\Users\megan.partridge\OneDrive - Arrowhead EP\Data Tech\Fitment Audit\Fitment Templates\Offroad\Fitment Json\Online Fitment.json"
-
+output_file_path = r"C:\Users\megan.partridge\OneDrive - Arrowhead EP\Data Tech\Fitment Audit\Fitment Templates\Offroad\onlinefitment.csv"
+FitmentFile_Path = r"C:\Users\megan.partridge\OneDrive - Arrowhead EP\Data Tech\Fitment Audit\Fitment Templates\Offroad\ToUpload.csv"
 # Read the JSON data
 with open(file_path, "r") as json_file:
     data = json.load(json_file)
@@ -36,8 +37,6 @@ for entry in vehicle_data:
 # Create a DataFrame
 df = pd.DataFrame(rows, columns=["Skus", "vehicle_ids"])
 df["concat"] = df["vehicle_ids"] + "&" + df["Skus"]
-
-output_file_path = r"C:\Users\megan.partridge\OneDrive - Arrowhead EP\Data Tech\Fitment Audit\Fitment Templates\Offroad\onlinefitment.csv"
 
 # Save the DataFrame to a CSV file
 df.to_csv(output_file_path, index=False)
