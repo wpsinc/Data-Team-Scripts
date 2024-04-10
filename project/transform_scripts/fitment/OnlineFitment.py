@@ -26,7 +26,7 @@ for entry in vehicle_data:
 
 # Create a DataFrame
 df = pd.DataFrame(rows, columns=["Skus", "vehicle_ids"])
-df["concat"] = df["vehicle_ids"] + " & " + df["Skus"]
+df["concat"] = df["vehicle_ids"] + "&" + df["Skus"]
 
 # Save the DataFrame to a CSV file
 df.to_csv(output_file_path, index=False)
