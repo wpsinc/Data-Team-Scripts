@@ -68,37 +68,38 @@ selected_columns = ['URL', 'SKU', 'vehicle_type', 'year', 'make', 'model']
 filtered_df = separate_df [selected_columns]
 # Display a preview of the data
 # Display data in chunks of 25 rows
-chunk_size = 25
-total_rows = len(filtered_df)
+#chunk_size = 25
+#total_rows = len(filtered_df)
 
 # Initialize an empty list to store approved indices
-approved_indices = []
+#approved_indices = []
 
-for start_idx in range(0, total_rows, chunk_size):
-    end_idx = min(start_idx + chunk_size, total_rows)
-    chunk_df = filtered_df.iloc[start_idx:end_idx]
+# for start_idx in range(0, total_rows, chunk_size):
+   #  end_idx = min(start_idx + chunk_size, total_rows)
+   #  chunk_df = filtered_df.iloc[start_idx:end_idx]
 
-    print("\nChunk of rows {} to {}:".format(start_idx + 1, end_idx))
-    print(chunk_df)  # Display the chunk of data
+    # print("\nChunk of rows {} to {}:".format(start_idx + 1, end_idx))
+    # print(chunk_df)  # Display the chunk of data
 
     # Prompt user for approval
-    user_approval = input("Is this chunk okay? (y/n): ").lower()
-    if user_approval == 'y':
+    # user_approval = input("Is this chunk okay? (y/n): ").lower()
+    # if user_approval == 'y':
         # User approves, add indices to the approved list
-        approved_indices.extend(range(start_idx, end_idx))
-    else:
-        print("Chunk not approved. Moving to the next chunk.")
+     #   approved_indices.extend(range(start_idx, end_idx))
+    # else:
+        # print("Chunk not approved. Moving to the next chunk.")
 
 # Filter the data based on approved indices
-cleaned_df = filtered_df.loc[approved_indices][['URL']].drop_duplicates()
+# cleaned_df = filtered_df.loc[approved_indices][['URL']].drop_duplicates()
 
 # Save the cleaned data to a new file (replace 'cleaned_data.csv' with your desired filename)
-cleaned_df.to_csv('cleaned_data.csv', index=True)
+# cleaned_df.to_csv('cleaned_data.csv', index=True)
 
-print("Cleaned data saved to 'onlinefitment_toremove.csv'.")
+# print("Cleaned data saved to 'onlinefitment_toremove.csv'.")
 
-cleaned_df.to_csv(output_file_path_Compare)
+filtered_df.to_csv(output_file_path_Compare)
 # Save the DataFrame to a CSV file
-OnlineFitment.to_csv(output_file_path, index=True) 
+OnlineFitment.to_csv(output_file_path, index=False) 
 
 print(f"Saved DataFrame to {output_file_path}")
+print(f"Saved DataFrame to {output_file_path_Compare}")
