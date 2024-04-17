@@ -1,12 +1,65 @@
 import pandas as pd
 import json
-
+import os
+# Get the current user's home directory
+home_dir = os.path.expanduser("~")
 # Specify the file path
-file_path = r"C:\Users\megan.partridge\OneDrive - Arrowhead EP\Data Tech\Fitment Audit\Fitment Templates\Offroad\Fitment Json\Online Fitment.json"
-output_file_path = r"C:\Users\megan.partridge\OneDrive - Arrowhead EP\Data Tech\Fitment Audit\Fitment Templates\Offroad\onlinefitment.csv"
-FitmentFile_Path = r"C:\Users\megan.partridge\OneDrive - Arrowhead EP\Data Tech\Fitment Audit\Fitment Templates\Offroad\ToUpload.csv"
-output_file_path_Compare = r"C:\Users\megan.partridge\OneDrive - Arrowhead EP\Data Tech\Fitment Audit\Fitment Templates\Offroad\onlinefitment_toremove.csv"
-Vehicles_file = r"C:\Users\megan.partridge\OneDrive - Arrowhead EP\Data Tech\Fitment Audit\Vehicle File\Vehicles.xlsx"
+
+file_path = os.path.join(
+    home_dir, "OneDrive - Arrowhead EP/Data Tech/Fitment Audit/Fitment Templates/Offroad/Fitment Json/Online Fitment.json"
+)
+output_file_path = os.path.join(
+    home_dir, "OneDrive - Arrowhead EP/Data Tech/Fitment Audit/Fitment Templates/Offroad/onlinefitment.csv"
+)
+FitmentFile_Path = os.path.join(
+    home_dir, "OneDrive - Arrowhead EP/Data Tech/Fitment Audit/Fitment Templates/Offroad/ToUpload.csv"
+)
+output_file_path_Compare = os.path.join(
+    home_dir, "OneDrive - Arrowhead EP/Data Tech/Fitment Audit/Fitment Templates/Offroad/onlinefitment_toremove.csv"
+)
+Vehicles_file = os.path.join(
+    home_dir, "OneDrive - Arrowhead EP/Data Tech/Fitment Audit/Vehicle File/Vehicles.xlsx"
+)
+output_path = os.path.join(
+    home_dir, "OneDrive - Arrowhead EP/Data Tech/Fitment Audit\Fitment Removed and Updated"
+)
+NewFitment = pd.read_csv(FitmentFile_Path, header=None, encoding='utf-8')
+# Copy the 2nd Column into a Separate DataFrame
+Third_column_df = NewFitment.iloc[:, 2].copy()
+
+# Remove Duplicates from the Second Column
+Third_column_df.drop_duplicates(inplace=True)
+
+# Concatenate the Column into a Single String
+concatenated_string = ','.join(Third_column_df.astype(str))
+
+# Print the Concatenated String for the User
+print(f"Concatenated string from the 2nd column:\n{concatenated_string}")
+
+# Wait for user confirmation
+input("Press Enter when you're ready to continue...")
+NewFitment[1] = NewFitment[1].astype(str)
+grouping_column = 'grouping_numbers'
+
+# Group by the first column
+grouped = NewFitment.groupby(NewFitment.columns[0])
+
+# Create separate DataFrames for each group
+for group_number, group_df in grouped:
+    # Drop the first column (index 0)
+    group_df = group_df.iloc[:, 1:]
+    
+    # Create the filename (e.g., '1-Fitment.csv')
+    filename = f"{group_number}- Fitment.csv"
+    
+    # Write the group DataFrame to a CSV file without index columns
+    output_csv = os.path.join(output_path, filename)
+    group_df.to_csv(output_csv, index=False, header=False)  # Avoid writing index columns
+    print(f"Saved {filename} to {output_csv}")
+
+print("All groups saved to separate CSV files.")
+# Create a new column by concatenating Column1 and Column2
+NewFitment["NewColumn"] = NewFitment[1] + "&" + NewFitment[2]
 vehicles_df = pd.read_excel(Vehicles_file)
 # Read the JSON data
 with open(file_path, "r") as json_file:
@@ -49,11 +102,7 @@ OnlineFitment['Vehicle_ID'] = OnlineFitment['Vehicle_ID'].astype(str)
 OnlineFitment['SKU'] = OnlineFitment['SKU'].astype(str)
 OnlineFitment["concat"] = OnlineFitment["Vehicle_ID"] + "&" + OnlineFitment["SKU"]  # Create the new column
 
-NewFitment = pd.read_csv(FitmentFile_Path, header=None, encoding='utf-8')
-NewFitment[0] = NewFitment[0].astype(str)
-# Create a new column by concatenating Column1 and Column2
-NewFitment["NewColumn"] = NewFitment[0] + "&" + NewFitment[1]
-non_matching_rows = OnlineFitment[~OnlineFitment.iloc[:, 3].isin(NewFitment.iloc[:, 2])]
+non_matching_rows = OnlineFitment[~OnlineFitment.iloc[:, 3].isin(NewFitment.iloc[:, 3])]
 separate_df = non_matching_rows.copy()
 separate_df['Product_ID'] = separate_df['Product_ID'].fillna('').astype(str)
 
