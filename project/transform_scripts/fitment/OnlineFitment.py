@@ -113,7 +113,7 @@ separate_df['Product_ID'] = separate_df['Product_ID'].str.replace(r'\.0$', '', r
 separate_df['URL'] = "https://acp.wps-inc.com/items/" + separate_df['Product_ID'] + "/edit"
 separate_df['Vehicle_ID'] = pd.to_numeric(separate_df['Vehicle_ID'], errors='coerce')
 separate_df = pd.merge(separate_df, vehicles_df, left_on='Vehicle_ID', right_on='vehicle_id')
-selected_columns = ['URL', 'SKU', 'vehicle_type', 'year', 'make', 'model']
+selected_columns = ['Vehicle_ID', 'URL', 'SKU', 'vehicle_type', 'year', 'make', 'model']
 filtered_df = separate_df [selected_columns]
 # Display a preview of the data
 # Display data in chunks of 25 rows
