@@ -18,16 +18,18 @@ def get_input_file_path():
     file_path = filedialog.askopenfilename(defaultextension=".xlsm", filetypes=[("Excel files", "*.xlsm")])
     return file_path
 
-Demand = pd.read_excel(demand_file_path, sheet_name="Purchasing")
 # Read data from the Purchasing tab
-df_existing = pd.read_excel(get_input_file_path(), sheet_name="Purchasing")
+with pd.ExcelFile(get_input_file_path()) as xlsm:
+    df_existing = pd.read_excel(xlsm, sheet_name="Purchasing")
 
-new_records = df_existing.copy()  # Example: Copy existing data
+# Read data from the Demand file
+with pd.ExcelFile(demand_file_path) as xlsx:
+    Demand = pd.read_excel(xlsx, sheet_name="Purchasing")
 
 # Append new records to existing data
-df_combined = pd.concat([Demand, new_records], ignore_index=True)
+Demand = pd.concat([Demand, df_existing], ignore_index=True)
 
 # Save the combined data to the specified output file
-df_combined.to_excel(demand_file_path, sheet_name="Purchasing", index=False)
+Demand.to_excel(demand_file_path, sheet_name="Purchasing", index=False)
 
 print(f"Records appended successfully to {demand_file_path}!")
