@@ -128,6 +128,12 @@ email_details = [
         "cc": "jlehan@wps-inc.com",
         "subject": "WPS Monthly Report for K&S",
         "message": "Hello, \r\n\r\nAttached is the monthly report for K&S. Please feel free to reach out anytime with any questions or concerns regarding the content of this file. \r\nLondon Perry, \r\nProduct Content Specialist | Western Power Sports Inc.",
+    },
+    {
+        "to": "jason.mccune@uswe.com",
+        "cc": "jlehan@wps-inc.com",
+        "subject": "WPS Monthly Report for Giant Loop",
+        "message": "Hello, \r\n\r\nAttached is the monthly report for Giant Loop. Please feel free to reach out anytime with any questions or concerns regarding the content of this file. \r\nLondon Perry, \r\nProduct Content Specialist | Western Power Sports Inc.",
     }
 ]
 
