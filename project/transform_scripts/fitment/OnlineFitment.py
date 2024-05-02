@@ -38,9 +38,12 @@ print(f"Concatenated string from the 2nd column:\n{concatenated_string}")
 
 # Wait for user confirmation
 input("Press Enter when you're ready to continue...")
-NewFitment[1] = NewFitment[1].astype(str)
-grouping_column = 'grouping_numbers'
+# Replace NaN values with 0
+NewFitment[1] = NewFitment[1].fillna(0)
 
+# Now convert to integer and then to string
+NewFitment[1] = NewFitment[1].astype(int).astype(str)
+grouping_column = 'grouping_numbers'
 # Group by the first column
 grouped = NewFitment.groupby(NewFitment.columns[0])
 
