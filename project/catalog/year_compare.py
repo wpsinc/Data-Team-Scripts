@@ -1,3 +1,15 @@
+"""
+This Python script is designed to compare two Excel files (specifically, .xlsx files) from different years and identify the changes between them. The script uses the pandas library to handle the Excel files as dataframes, and the tkinter library to open a file dialog for the user to select the files to compare. Here's a step-by-step breakdown:
+
+The select_files function opens a file dialog for the user to select multiple Excel files. It then filters the selected files to only include those with "Final.xlsx" in their names, sorts them, and returns the sorted list of file paths.
+
+The compare_dataframes function takes two dataframes and two file names as input. It sets the index of both dataframes to the "WICITEM" column, then adds a new column to the second dataframe that indicates whether each row is new (i.e., not present in the first dataframe). It aligns the two dataframes along both axes, then creates a new dataframe that compares the two original dataframes. It also extracts the first four characters from each file name (presumably the year), and uses these to set the levels of the comparison dataframe's columns. It returns the comparison dataframe along with the extracted years.
+
+The main function is the entry point of the script. It prompts the user to select the year files, then reads the first two selected files into dataframes. It uses the compare_dataframes function to compare these dataframes and get the comparison dataframe and the years. It then fills any blank values in the last column of the comparison dataframe with the string "REMOVED". Finally, it saves the comparison dataframe to an Excel file in the user's Downloads folder, with a filename formatted using the years.
+
+If the script is run as a standalone program (i.e., not imported as a module), it calls the main function to start the comparison process.
+"""
+
 import pandas as pd
 import tkinter as tk
 from tkinter import filedialog

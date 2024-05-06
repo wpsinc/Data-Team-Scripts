@@ -1,3 +1,15 @@
+"""
+This Python script is designed to automate the process of drafting and opening emails in the default email client. It uses the webbrowser and os modules to open the email client, and the urllib.parse module to encode the email message into a URL-friendly format.
+
+The script defines a class EmailDraft with four attributes: to, cc, subject, and message. The to and cc attributes are expected to be strings containing one or more email addresses separated by semicolons. The subject and message attributes are expected to be strings containing the subject line and body of the email, respectively.
+
+The EmailDraft class has a method open_in_client which constructs a mailto: URL with the to, cc, subject, and message attributes. This URL is then opened using the os.startfile function, which opens the URL in the default program for handling mailto: URLs (typically the default email client). If os.startfile is not available (which can be the case on some non-Windows platforms), the webbrowser.open function is used as a fallback.
+
+The script also defines a function generate_email_drafts which takes a list of dictionaries, where each dictionary contains the details for one email (the to, cc, subject, and message). This function creates an EmailDraft object for each dictionary and returns a list of these objects.
+
+Finally, the script contains a list of dictionaries email_details with the details for several emails, and a loop that generates an EmailDraft for each dictionary and opens it in the default email client. This is where the actual work of the script is done.
+"""
+
 import webbrowser
 import os
 import urllib.parse
@@ -82,7 +94,7 @@ email_details = [
         "message": "Hello All, \r\n\r\nAttached is the monthly report for Sawicki Speed Shop. Please feel free to reach out anytime with any questions or concerns regarding the content of this file. \r\nLondon Perry, \r\nProduct Content Specialist | Western Power Sports Inc.",
     },
     {
-        "to": "Helge.Koenig@sp-united.com; brian.valverde@sp-united.com; Gerald.Samer@sp-united.com",
+        "to": "Helge.Koenig@sp-united.com; brian.valverde@sp-united.com; Gerald.Samer@sp-united.com; Ryan.Lewis@sp-united.com",
         "cc": "jlehan@wps-inc.com",
         "subject": "WPS Monthly Report for SP Connect",
         "message": "Hello All, \r\n\r\nAttached is the monthly report for SP Connect. Please feel free to reach out anytime with any questions or concerns regarding the content of this file. \r\nLondon Perry, \r\nProduct Content Specialist | Western Power Sports Inc.",
