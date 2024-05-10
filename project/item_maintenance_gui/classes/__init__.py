@@ -1,1 +1,1 @@
-from .fitmentDialog import FitmentDialog
+from classes import FitmentDialog

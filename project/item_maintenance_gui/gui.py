@@ -23,6 +23,7 @@ from PyQt5.QtWidgets import QLineEdit
 from PyQt5.QtWidgets import QDialog, QListWidget, QVBoxLayout, QPushButton
 
 import os
+import pandas as pd
 from PyQt5.QtWidgets import QComboBox
 
 
@@ -155,6 +156,7 @@ class FitmentDialog(QDialog):
             ],
             selected_items,
         )
+    
 
     def clear_selections(self):
         for i in range(self.list_widget.count()):
@@ -210,7 +212,6 @@ class FitmentDialog(QDialog):
             item.setCheckState(Qt.Unchecked)
 
 
-
 class CustomTable(QTableWidget):
     def __init__(self, rows, cols, columns, df, excel_file, parent=None):
         super().__init__(rows, cols, parent)
@@ -264,7 +265,7 @@ class CustomTable(QTableWidget):
                     return
 
             if all(value for value in data.values()):
-                self.df = self.df.append(data, ignore_index=True)
+                self.df = self.df._append(data, ignore_index=True)
 
         self.df.to_excel(self.EXCEL_FILE, index=False)
         QMessageBox.information(
@@ -288,7 +289,7 @@ class CustomTable(QTableWidget):
                     self.setItem(row, column, item)
                 item.setText(selected_items)
 
-
+# todo Add OEM Part Number to the list
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
@@ -305,6 +306,7 @@ class MainWindow(QMainWindow):
                 "Item Life Cycle",
                 "Vendor #",
                 "WPS Item #",
+                "OEM Part #",
                 "Description 1 (30)",
                 "Description 2 (30)",
                 "Brand",
@@ -428,6 +430,13 @@ class MainWindow(QMainWindow):
             button.clicked.connect(func)
             self.layout.addWidget(button)
 
+    def open_fitment_dialog(self):
+        dialog = FitmentDialog(self)
+        result = dialog.exec_()
+        if result == QDialog.Accepted:
+            selected_items = dialog.selected_items()
+            # Do something with selected_items
+
     def add_section(
         self,
         title,
@@ -450,6 +459,11 @@ class MainWindow(QMainWindow):
         header_layout.addWidget(QLabel("End Row:"))
         header_layout.addWidget(end_row_input)
         header_layout.addStretch()
+
+        fitment_button = QPushButton("Open Fitment Dialog")
+        fitment_button.clicked.connect(self.open_fitment_dialog)
+        header_layout.addWidget(fitment_button)
+
         header_widget = QWidget()
         header_widget.setLayout(header_layout)
         self.layout.addWidget(header_widget)

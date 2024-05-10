@@ -13,6 +13,7 @@ def main():
             'console_scripts': [
                 'EOM_MegaReport=project.End_Of_Month.MegaReport:main',
                 'EOM_Directory_Cleanup=project.london_eom_reporting.reportDirCleanup:main',
+                'Catalog_Photo_File_Renamer=project.catalog.photo_file_renamer:main',
             ],
         }
     }
