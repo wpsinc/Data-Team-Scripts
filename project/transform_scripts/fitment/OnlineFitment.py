@@ -4,24 +4,62 @@ import os
 # Get the current user's home directory
 home_dir = os.path.expanduser("~")
 # Specify the file path
+def display_menu(options):
+    """
+    Displays a menu with the provided options.
+    Args:
+        options (list): List of menu options.
+    """
+    print("Select an option:")
+    for i, option in enumerate(options, start=1):
+        print(f"{i}. {option}")
 
+def get_user_choice(options):
+    """
+    Gets the user's choice from the menu.
+    Args:
+        options (list): List of menu options.
+    Returns:
+        int: User's selected option (1-based index).
+    """
+    while True:
+        try:
+            choice = int(input("Enter the number of your choice: "))
+            if 1 <= choice <= len(options):
+                return choice
+            else:
+                print("Invalid choice. Please select a valid option.")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+
+# List of categories
+categories = ["Offroad", "ATV", "Snow", "Street", "Watercraft"]
+
+# Display the menu
+display_menu(categories)
+
+# Get user's choice
+selected_index = get_user_choice(categories)
+selected_category = categories[selected_index - 1]
+
+# Construct the paths
 file_path = os.path.join(
-    home_dir, "OneDrive - Arrowhead EP/Data Tech/Fitment Audit/Fitment Templates/Offroad/Fitment Json/Online Fitment.json"
+    home_dir, f"OneDrive - Arrowhead EP/Data Tech/Fitment Audit/Fitment Templates/{selected_category}/Fitment Json/Online Fitment.json"
 )
 output_file_path = os.path.join(
-    home_dir, "OneDrive - Arrowhead EP/Data Tech/Fitment Audit/Fitment Templates/Offroad/onlinefitment.csv"
+    home_dir, f"OneDrive - Arrowhead EP/Data Tech/Fitment Audit/Fitment Templates/{selected_category}/onlinefitment.csv"
 )
 FitmentFile_Path = os.path.join(
-    home_dir, "OneDrive - Arrowhead EP/Data Tech/Fitment Audit/Fitment Templates/Offroad/ToUpload.csv"
+    home_dir, f"OneDrive - Arrowhead EP/Data Tech/Fitment Audit/Fitment Templates/{selected_category}/ToUpload.csv"
 )
 output_file_path_Compare = os.path.join(
-    home_dir, "OneDrive - Arrowhead EP/Data Tech/Fitment Audit/Fitment Templates/Offroad/onlinefitment_toremove.csv"
+    home_dir, f"OneDrive - Arrowhead EP/Data Tech/Fitment Audit/Fitment Templates/{selected_category}/onlinefitment_toremove.csv"
 )
 Vehicles_file = os.path.join(
     home_dir, "OneDrive - Arrowhead EP/Data Tech/Fitment Audit/Vehicle File/Vehicles.xlsx"
 )
 output_path = os.path.join(
-    home_dir, "OneDrive - Arrowhead EP/Data Tech/Fitment Audit\Fitment Removed and Updated"
+    home_dir, f"OneDrive - Arrowhead EP/Data Tech/Fitment Audit/Fitment Removed and Updated"
 )
 NewFitment = pd.read_csv(FitmentFile_Path, header=None, encoding='utf-8')
 # Copy the 2nd Column into a Separate DataFrame
