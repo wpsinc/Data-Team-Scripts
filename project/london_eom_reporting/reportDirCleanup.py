@@ -81,8 +81,16 @@ def main():
     inplace=True,
 )
         # Perform a right join on the "Brand" column with the data from data.xlsx
-        merged_df = report_df.merge(data_df, on="Brand", how="right")
+        merged_df = report_df.merge(data_df, on="Brand", how="left")
+        # Get a list of columns in the merged DataFrame
+        cols = merged_df.columns
 
+        # Create a list of '_x' columns
+        x_cols = [col for col in cols if '_x' in col]
+
+        # Drop the '_x' columns
+        merged_df = merged_df.drop(columns=x_cols)
+        print(merged_df.head())
         # Include only specific columns from data.xlsx
         merged_df[["WPS Part Number", "Vendor Code", "Vendor", "Vendor Part Number", "UPC Number", "Item Category", "Item Life Cycle", "Item Description 1", "Item Description 2", "Brand", "Division", "Item Segment", "Year Design", "Model", "Color", "Style"]]
 
