@@ -1,24 +1,20 @@
 import pandas as pd
 import os
 
-current_dir = os.path.dirname(os.path.abspath(__file__))
-
-input_folder = os.path.join(current_dir, 'WPS_Harley')
-output_file = os.path.join(input_folder, 'output.xlsx')
-
-#input_folder = 'C:\Users\LucyHaskew\Downloads\WPS Harley'
-#output_file = 'C:\Users\LucyHaskew\Downloads\WPS Harley\output.xlsx'
-common_start = 'WPS HARLEY DAVIDSON'
-
+input_folder = 'C:/Users/LucyHaskew/Downloads/WPS_Harley'
+output_file = 'C:/Users/LucyHaskew/Downloads/WPS_Harley/output.xlsx'
+common_end = '.xlsx'
+ 
 dataframes = []
 
 for files in os.listdir(input_folder):
-    if files.startswith(common_start):
+    if files.endswith(common_end):
         file_path = os.path.join(input_folder, files)
         read_files = pd.read_excel(file_path)
+        read_files = read_files.dropna(axis=1, how='all')
 
-        dataframes.append()
+        dataframes.append(read_files)
 
-combined_read_files = pd.concat(dataframes, ignore_index=True, sort=False)
+combined_read_files = pd.concat(dataframes, axis=1)
 
 combined_read_files.to_excel(output_file, index=False)
