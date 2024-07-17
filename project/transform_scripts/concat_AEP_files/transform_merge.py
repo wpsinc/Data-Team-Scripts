@@ -11,7 +11,7 @@ condensed_data = {col: [] for col in align_columns}
 
 for col in df.columns:
     if col in align_columns:
-        condensed_data[col].extend(df[col].dropna().tolist())
+        pd.concat(condensed_data[col])
 
     else:
         if df[col].dtype != ['Type','Make','CC','Model','Years']:
