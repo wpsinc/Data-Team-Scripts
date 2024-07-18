@@ -1,7 +1,7 @@
 import pandas as pd
 
-temp_output_file = 'C:/Users/LucyHaskew/Downloads/WPS_Harley/output.xlsx'
-transformed_output_file = 'C:/Users/LucyHaskew/Downloads/WPS_Harley/transformed_output.xlsx'
+temp_output_file = 'C:/Users/Megan.Partridge/Downloads/WPS_Harley/output.xlsx'
+transformed_output_file = 'C:/Users/Megan.Partridge/Downloads/WPS_Harley/transformed_output.xlsx'
 
 align_columns = ['Type','Make','CC','Model','Years','Value']
 

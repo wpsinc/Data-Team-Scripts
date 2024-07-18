@@ -1,8 +1,8 @@
 import pandas as pd
 import os
 
-input_folder = 'C:/Users/LucyHaskew/Downloads/WPS_Harley'
-output_file = 'C:/Users/LucyHaskew/Downloads/WPS_Harley/output.xlsx'
+input_folder = 'C:/Users/Megan.Partridge/Downloads/WPS_Harley'
+output_file = 'C:/Users/Megan.Partridge/Downloads/WPS_Harley/output.xlsx'
 common_end = '.xlsx'
 
 dataframes = []
