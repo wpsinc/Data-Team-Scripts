@@ -13,8 +13,8 @@ for files in os.listdir(input_folder):
         read_files = pd.read_excel(file_path)
         read_files = read_files.dropna(axis=1, how='all')
 
-        dataframes.append(read_files)
+        combined_read_files = dataframes.stack(read_files)
 
-combined_read_files = pd.concat(dataframes, axis=1)
+
 
 combined_read_files.to_excel(output_file, index=False)
