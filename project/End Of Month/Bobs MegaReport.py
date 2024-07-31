@@ -1,6 +1,7 @@
 import pandas as pd
 import os
 import time
+import chardet
 from openpyxl import load_workbook
 from halo import Halo
 import warnings
@@ -20,7 +21,7 @@ eom_path = os.path.join(
 )
 # Replace hardcoded paths
 output_path = os.path.join(
-    home_dir, "OneDrive - Arrowhead EP/Data Tech/End of Month Templates/Linked Reports/Mega Report Output Reference"
+    home_dir, "OneDrive - Arrowhead EP/Data Tech/End of Month Templates/Linked Reports/Bobs Mega Report"
 )
 def check_path(path, name):
     if not os.path.exists(path):
@@ -36,7 +37,7 @@ StockStatus = os.path.join(base_path, "Stock Status")
 check_path(StockStatus, "StockStatus")
 
 # Navigate to folder containing inventory files
-Mega = os.path.join(base_path, "Mega Report")
+Mega = os.path.join(base_path, "Bobs Mega Report")
 
 # Check if Mega exists
 if not os.path.exists(Mega):
@@ -100,9 +101,12 @@ StockStatusDF.rename(
 # Sort the DataFrame before dropping duplicates
 StockStatusDF.sort_values("WPS Part Number", inplace=True)
 StockStatusDF.drop_duplicates(inplace=True)
+with open(os.path.join(Mega, "Bobs Mega Report.csv"), 'rb') as f:
+    result = chardet.detect(f.read())
+    encoding = result['encoding']
 
-MegaDF = pd.read_excel(os.path.join(Mega, "Mega Report.xlsx"), sheet_name="page")
-
+MegaDF = pd.read_csv(os.path.join(Mega, "Bobs Mega Report.csv"), encoding=encoding, sep="\t", header=0)
+print(MegaDF.columns)
 end_time_operation = time.time()
 operation_duration = round((end_time_operation - start_time_operation) / 60, 5)
 spinner.stop_and_persist(
@@ -165,7 +169,7 @@ start_time_operation = time.time()
 
 merged_df = merged_df[merged_df["WPS Part Number"].notnull()]
 
-merged_df.to_excel(os.path.join(output_path, "Mega Report Output.xlsx"), index=False)
+merged_df.to_csv(os.path.join(output_path, "Bobs Merged Mega Report Output.csv"), index=False)
 end_time_operation = time.time()
 operation_duration = round((end_time_operation - start_time_operation) / 60, 5)
 spinner.stop_and_persist(
