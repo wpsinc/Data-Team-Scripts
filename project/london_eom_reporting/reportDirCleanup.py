@@ -38,84 +38,25 @@ home_dir = os.path.expanduser("~")
 data_path = os.path.join(
     home_dir, "OneDrive - Arrowhead EP/Data Tech/End of Month Templates/Linked Reports/Stock Status", "data.xlsx")
 
+ven_reports_dir = os.path.join(
+    home_dir, "OneDrive - Arrowhead EP/Data Tech/Monthly Vendor Reports")
+
+reports_dir = os.path.join(
+    home_dir, "OneDrive - Arrowhead EP/Data Tech/Monthly Vendor Reports/Monthly Reports")
+
 def main():
-    Tk().withdraw()
-    reports_dir = askdirectory(title="Select the directory containing the reports")
-    print(f"reports_dir: {reports_dir}")
-
-    # Read the data.xlsx file into a pandas DataFrame
+        # Read the data.xlsx file into a pandas DataFrame
     data_df = pd.read_excel(data_path)
+    column_names = data_df.columns.tolist()
+    dupe_file = pd.DataFrame(columns=column_names)
+    dupe_file.to_excel(os.path.join(reports_dir, "Data_Columns.xlsx"), index=False)
 
-    # Get all the files in the "Monthly Reports" folder within the selected directory
-    monthly_reports_dir = os.path.join(reports_dir, "Monthly Reports")
-    report_files = [
-        f for f in os.listdir(monthly_reports_dir) if os.path.isfile(os.path.join(monthly_reports_dir, f))
-    ]
-
-    # Process each report file
-    for report_file in report_files:
-        report_path = os.path.join(monthly_reports_dir, report_file)
-        report_df = pd.read_excel(report_path)
-        report_df['Brand'] = report_df['Brand'].str.strip()
-        data_df.rename(
-    columns={
-        "ItemLookup[ItemNumber]": "WPS Part Number",
-        "Item Detail[PreferredVendor]": "Vendor Code",
-        "VendorDetail[Vendor]": "Vendor",
-        "Item Detail[OEMPartNumber]": "Vendor Part Number",
-        "Item Detail[UPC]" : "UPC Number",
-        "Item Detail[ItemCategory]": "Item Category",
-        "Item Detail[ItemStatus]": "Item Life Cycle",
-        "ItemLookup[Description1]": "Item Description 1",
-        "ItemLookup[Description2]": "Item Description 2",
-        "Brand Lookup[Brand]": "Brand",
-        "Division[Division]": "Division",
-        "Segment[Segment]": "Item Segment",
-        "[SumYearDesign]": "Year Design",
-        "Item Flags[ModelDesc]": "Model",
-        "Item Flags[ColorDesc]": "Color",
-        "Item Flags[StyleDesc]": "Style",   
-        "Item Flags[ApparelDesc]": "ApparelType",
-        "[SumYearDesign]": "YearDesign",
-    },
-    inplace=True,
-)
-        # Perform a right join on the "Brand" column with the data from data.xlsx
-        merged_df = report_df.merge(data_df, on="Brand", how="left")
-        # Get a list of columns in the merged DataFrame
-        cols = merged_df.columns
-
-        # Create a list of '_x' columns
-        x_cols = [col for col in cols if '_x' in col]
-
-        # Drop the '_x' columns
-        merged_df = merged_df.drop(columns=x_cols)
-        print(merged_df.head())
-        # Include only specific columns from data.xlsx
-        merged_df[["WPS Part Number", "Vendor Code", "Vendor", "Vendor Part Number", "UPC Number", "Item Category", "Item Life Cycle", "Item Description 1", "Item Description 2", "Brand", "Division", "Item Segment", "Year Design", "Model", "Color", "Style"]]
-
-        # Save the merged report back to the "Monthly Reports" directory
-        merged_report_path = os.path.join(monthly_reports_dir, f"merged_{report_file}")
-        merged_df.to_excel(merged_report_path, index=False)
-
-        # Determine the matching folder name based on the "Brand" column
-        brand_folder = report_file.split('.xlsx')
-        brand_folder_path = os.path.join(reports_dir, brand_folder)
-
-        # Create the matching folder if it doesn't exist
-        if not os.path.exists(brand_folder_path):
-            os.makedirs(brand_folder_path)
-            print(f"Created new directory: {brand_folder_path}")
-
-        # Move the modified report file to the corresponding folder
-        shutil.move(merged_report_path, os.path.join(brand_folder_path, report_file))
-        print(f"Moved {report_file} to {brand_folder_path}")
     vendor_dirs = [
-        d for d in os.listdir(reports_dir) if os.path.isdir(os.path.join(reports_dir, d))
+        d for d in os.listdir(ven_reports_dir) if os.path.isdir(os.path.join(ven_reports_dir, d))
     ]
 
     for vendor_dir in vendor_dirs:
-        src_dir = os.path.join(reports_dir, vendor_dir)
+        src_dir = os.path.join(ven_reports_dir, vendor_dir)
         dst_dir = os.path.join(src_dir, "Report History")
 
         files = [f for f in os.listdir(src_dir) if os.path.isfile(os.path.join(src_dir, f))]
