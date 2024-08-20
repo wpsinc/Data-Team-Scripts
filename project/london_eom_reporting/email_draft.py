@@ -59,7 +59,7 @@ email_details = [
     },
     {
         "to": "jcastro@dunlopmotorcycletires.com; sdewey@dunlopmotorcycletires.com; mcotter@srnatire.com",
-        "cc": "",
+        "cc": "cynthia.pierce@wps-inc.com",
         "subject": "WPS Monthly Report for Dunlop",
         "message": "Hello All, \r\n\r\nAttached is the monthly report for Dunlop. Please feel free to reach out anytime with any questions or concerns regarding the content of this file. \r\nMegan Partridge, \r\nProduct Data Manager | Western Power Sports Inc.",
     },
@@ -95,7 +95,7 @@ email_details = [
     },
     {
         "to": "twelch@yoshimura-rd.com",
-        "cc": "",
+        "cc": "cynthia.pierce@wps-inc.com",
         "subject": "WPS Monthly Report for Yoshimura",
         "message": "Hello Tim, \r\n\r\nAttached is the monthly report for Yoshimura. Please feel free to reach out anytime with any questions or concerns regarding the content of this file. \r\nMegan Partridge, \r\nProduct Data Manager | Western Power Sports Inc.",
     },
@@ -125,7 +125,7 @@ email_details = [
     },
     {
         "to": "export@shinkotire.co.kr",
-        "cc": "",
+        "cc": "cynthia.pierce@wps-inc.com",
         "subject": "WPS Monthly Report for Shinko",
         "message": "Hello, \r\n\r\nAttached is the monthly report for Shinko. Please feel free to reach out anytime with any questions or concerns regarding the content of this file. \r\nMegan Partridge, \r\nProduct Data Manager | Western Power Sports Inc.",
     },
