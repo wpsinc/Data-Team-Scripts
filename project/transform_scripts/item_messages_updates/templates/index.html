@@ -1,20 +1,22 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Select Messages</title>
-  </head>
-  <body>
-    <form method="post">
-      {% for message in tables[0].split('<tr>')[1:] %}
-        <input type="checkbox" name="messages" value="{{ message.split('<td>')[1].split('</td>')[0] }}"> {{ message.split('<td>')[1].split('</td>')[0] }}<br>
-      {% endfor %}
-      <input type="submit" value="Filter Messages">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+    <form method="POST">
+        {% for explanation in explanations %}
+            <input type="checkbox" name="explanations" value="{{ explanation }}">{{ explanation }}<br>
+        {% endfor %}
+        <input type="submit" value="Submit">
     </form>
-    <h2>Filtered Messages</h2>
-    {% for table in tables %}
-      {{ table|safe }}
-    {% endfor %}
-  </body>
+
+    {% if tables %}
+        <h2>Select Messages to Remove</h2>
+        {% for table in tables %}
+            {{ table|safe }}
+        {% endfor %}
+    {% endif %}
+</body>
 </html>
