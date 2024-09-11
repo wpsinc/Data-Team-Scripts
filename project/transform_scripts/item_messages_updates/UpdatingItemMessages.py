@@ -250,25 +250,26 @@ def process_special_messages(df):
 message_creation_merge_df = MessageCreation_merge.get_dataframe()
 processed_df = process_special_messages(message_creation_merge_df)
 processed_df.to_excel('WarrantyMessageCreation.xlsx', index=False)
-
-# Your function definition
-def create_messages(processed_df, warranty_dup):
+def create_messages(processed_df, warranty_dup, filtered_df):
     # Check if inputs are DataFrames
     if not isinstance(processed_df, pd.DataFrame):
         raise TypeError("processed_df is not a pandas DataFrame")
     if not isinstance(warranty_dup, pd.DataFrame):
         raise TypeError("warranty_dup is not a pandas DataFrame")
+    if not isinstance(filtered_df, pd.DataFrame):
+        raise TypeError("filtered_df is not a pandas DataFrame")
     
     # Print column names to debug
     print("Columns in processed_df:", processed_df.columns)
     print("Columns in warranty_dup:", warranty_dup.columns)
+    print("Columns in filtered_df:", filtered_df.columns)
     
     # Merge dataframes
-    processed_df = DataProcessor.merge_dataframes(processed_df, warranty_dup, left_on='Messages', right_on='Source.Name.1')
+    processed_df = pd.merge(processed_df, warranty_dup, left_on='Messages', right_on='Source.Name.1', how='left')
     
     # List of columns to keep
     columns_to_keep = [
-        "ItemNumber"
+        "ItemNumber",
         "Sequence",
         "Explanation",
         "Pick Ticket Program",
@@ -285,24 +286,19 @@ def create_messages(processed_df, warranty_dup):
         "Expiration Date"
     ]
     
-    # Initialize DataframeOperations with the merged dataframe
-    df_ops = DataframeOperations(processed_df)
-    
     # Trim columns
-    df_ops.trim_columns(columns_to_keep)
+    processed_df = processed_df[columns_to_keep]
     
-    # Get the trimmed dataframe
-    processed_df = df_ops.get_dataframe()
-    processed_df["Sequence"] = processed_df["sequence"].apply(lambda x: str(int(float(x))) if x.replace('.', '', 1).isdigit() else str(x))
-    return processed_df
-
-# Example usage
-message_creation_merge_df = MessageCreation_merge.get_dataframe()
-processed_df = process_special_messages(message_creation_merge_df)
-result_df = create_messages(processed_df, warranty_dup)
-
-# Now result_df contains the merged dataframe with the specified columns
-print(result_df)
+    # Concatenate with filtered_df
+    combined_df = pd.concat([processed_df, filtered_df], ignore_index=True)
+    
+    # Sort by ItemNumber, Messages, and Sequence
+    combined_df = combined_df.sort_values(by=["ItemNumber", "Messages", "Sequence"])
+    
+    # Renumber Sequence by ItemNumber
+    combined_df['Sequence'] = combined_df.groupby('ItemNumber').cumcount() + 1
+    
+    return combined_df
 
 def main(messages, warranty_path):
     # Clean the 'Explanation Text' column
@@ -322,12 +318,14 @@ def main(messages, warranty_path):
 
 # Run the main function to get non_matching_messages and messagestokeep
 non_matching_messages, messagestokeep = main(messages, warranty_path)
+
 def shutdown_server():
     func = request.environ.get('werkzeug.server.shutdown')
     if func is None:
         print('Not running with the Werkzeug Server')
     else:
         func()
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
@@ -354,23 +352,29 @@ def teardown_request(exception):
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=False)
+
 print("Thanks for your submissions")
 
+# Example usage
+message_creation_merge_df = MessageCreation_merge.get_dataframe()
+processed_df = process_special_messages(message_creation_merge_df)
+filtered_df = pd.read_csv("filtered_messages.csv")  # Assuming filtered_df is read from a CSV file
+result_df = create_messages(processed_df, warranty_dup, filtered_df)
 
+# Now result_df contains the merged dataframe with the specified columns
+print(result_df)
 
-# Store messages to keep
+# Define filtered_messages
 filtered_messages = pd.read_csv("filtered_messages.csv")
-# List of new columns to create and their respective columns to concatenate
+
 messages_toKeep = DataframeOperations(filtered_messages)
 new_columns = {
-"Item-Seq": ["Item Code", "Sequence"]
-
+    "Item-Seq": ["Item Code", "Sequence"]
 }
 
 # Loop to create new columns
 for new_col, cols in new_columns.items():
     messages_toKeep.concat_colon(new_col, cols)
-
 
     
     #"Filtered Rows1" = Table.SelectRows(#"Expanded WarrantyFile", each [Explanation] <> null and [Explanation] <> ""),
