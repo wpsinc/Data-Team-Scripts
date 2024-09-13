@@ -17,6 +17,7 @@ class PathManager:
         self.messages_cur_path = os.path.join(self.message_path, "Item Messages Download.csv")
         self.warranty_path = os.path.join(self.base_path, "WARRANTY NOTES/Warranty Master File/Warranty Notes File.xlsx")
         self.un_path = os.path.join(self.base_path, "End Of Month Templates/Linked Reports/UNCodes.xlsx")
+        self.output_path = os.path.join(self.home_dir, "OneDrive - Arrowhead EP/Templates")
 
 class FileHandler:
     @staticmethod
@@ -70,7 +71,47 @@ class DataframeOperations:
     def get_dataframe(self):
         """Return the dataframe."""
         return self.df
+    
+    def drop_column(self, column_name):
+        self.df = self.df.drop(columns=[column_name])
+        return self.df
+    
+    def add_columns(self):
+        self.df['ADD/DEL'] = self.df.apply(
+            lambda row: 'U' if pd.notna(row['Company Code_dup']) and pd.notna(row['Company Code_merge']) else 
+                                'D' if pd.notna(row['Company Code_dup']) else
+                                'A' if pd.notna(row['Company Code_merge']) else
+                                None,
+            axis=1
+        )
 
+        columns_to_add = {
+            'COMPANY #': ['Company Code_dup', 'Company Code_merge'],
+            'WPS Item #': ['ItemNumber_dup', 'ItemNumber_merge'],
+            'Sequence': ['Sequence_dup', 'Sequence_merge'],
+            'Explanation/Message (CAPS, 60)': ['Explanation_dup', 'Explanation_merge'],
+            'PT/Pick Ticket Program': ['Pick Ticket Program_dup', 'Pick Ticket Program_merge'],
+            'Invoice Program': ['Invoice Program_dup', 'Invoice Program_merge'],
+            'Labels': ['Labels_dup', 'Labels_merge'],
+            'Return Auth/Warranty (X or blank)': ['R/A_dup', 'R/A_merge'],
+            'Order Entry/Customer Service (X or blank)': ['O/E_dup', 'O/E_merge'],
+            'PO Entry': ['P.O. Entry_dup', 'P.O. Entry_merge'],
+            'PO Form': ['P.O. Print_dup', 'P.O. Print_merge'],
+            'MO Entry': ['M.O. Entry_dup', 'M.O. Entry_merge'],
+            'MO Form': ['M.O. Print_dup', 'M.O. Print_merge'],
+            'PO Receiving': ['P.O. Receiving_dup', 'P.O. Receiving_merge'],
+            'WEB': ['WEB_dup', 'WEB_merge'],
+            'Expiration Date': ['Expiration Date_dup', 'Expiration Date_merge']
+        }
+
+        for new_col, (dup_col, merge_col) in columns_to_add.items():
+            self.df[new_col] = self.df.apply(
+                lambda row: row[dup_col] if pd.notna(row[dup_col]) and pd.notna(row[merge_col]) else 
+                                    row[dup_col] if pd.notna(row[merge_col]) else
+                                    row[merge_col] if pd.notna(row[dup_col]) else
+                                    None,
+                axis=1
+            )
 class DataProcessor:
     @staticmethod
     def clean_text_column(df, column_name):
@@ -96,6 +137,7 @@ item_messages_lookup_file = paths.item_lookup_path
 updating_item_messages_file = paths.messages_cur_path
 warranty_path = FileHandler.read_excel(paths.warranty_path, sheet_name="For Upload")
 warranty_dup = warranty_path.copy()
+output_path = paths.output_path
 
 # Detect encoding and read CSV files
 encoding_type = FileHandler.detect_encoding(item_messages_lookup_file)
@@ -104,6 +146,15 @@ encoding_type = FileHandler.detect_encoding(updating_item_messages_file)
 messages = FileHandler.read_csv(updating_item_messages_file, encoding=encoding_type, sep="\t")
 messages_dup = messages.copy()
 
+messages_dup = DataframeOperations(messages_dup)
+new_columns = {
+    "Item-Seq": ["Item Code", "Sequence"]
+}
+
+for new_col, cols in new_columns.items():
+    messages_dup.concat_colon(new_col, cols)
+messages_dup = messages_dup.get_dataframe()
+messages_dup['Company Code'] = 1
 # Read the UNCodes file
 UN = FileHandler.read_excel(paths.un_path, sheet_name="page")
 
@@ -242,31 +293,25 @@ def process_special_messages(df):
     # Trim columns (example: keeping only specific columns)
     df_exploded = df_exploded[['ItemNumber', 'Messages']]
 
-    
-
     return df_exploded
 
 # Example usage
 message_creation_merge_df = MessageCreation_merge.get_dataframe()
 processed_df = process_special_messages(message_creation_merge_df)
-processed_df.to_excel('WarrantyMessageCreation.xlsx', index=False)
-def create_messages(processed_df, warranty_dup, filtered_df):
+def create_messages(processed_df, warranty_dup):
     # Check if inputs are DataFrames
     if not isinstance(processed_df, pd.DataFrame):
         raise TypeError("processed_df is not a pandas DataFrame")
     if not isinstance(warranty_dup, pd.DataFrame):
         raise TypeError("warranty_dup is not a pandas DataFrame")
-    if not isinstance(filtered_df, pd.DataFrame):
-        raise TypeError("filtered_df is not a pandas DataFrame")
     
-    # Print column names to debug
-    print("Columns in processed_df:", processed_df.columns)
-    print("Columns in warranty_dup:", warranty_dup.columns)
-    print("Columns in filtered_df:", filtered_df.columns)
+    # Remove duplicates from each DataFrame
+    processed_df = processed_df.drop_duplicates(ignore_index=True)
+    warranty_dup = warranty_dup.drop_duplicates(ignore_index=True)
     
-    # Merge dataframes
-    processed_df = pd.merge(processed_df, warranty_dup, left_on='Messages', right_on='Source.Name.1', how='left')
-    
+    # Merge processed_df with warranty_dup by the Message and Source.Name.1 column
+    merged_df = pd.merge(processed_df, warranty_dup, left_on='Messages', right_on='Source.Name.1', how='left')
+    merged_df['Company Code'] = 1
     # List of columns to keep
     columns_to_keep = [
         "ItemNumber",
@@ -287,21 +332,37 @@ def create_messages(processed_df, warranty_dup, filtered_df):
     ]
     
     # Trim columns
-    processed_df = processed_df[columns_to_keep]
+    merged_df = merged_df[columns_to_keep]
     
-    # Concatenate with filtered_df
-    combined_df = pd.concat([processed_df, filtered_df], ignore_index=True)
+    # Drop rows with NaN in Explanation
+    merged_df = merged_df.dropna(subset=['Explanation'])
+    merged_df = merged_df.dropna(subset = ['Sequence'])
+    #Drop Duplicates
+    merged_df = merged_df.drop_duplicates(ignore_index=True)
+    merged_df['Company Code'] = 1
+  
+    return merged_df
+
+def append_messages(merged_df, filtered_df):
+    # Concatenate the DataFrames
+    appended = pd.concat([merged_df, filtered_df])
     
-    # Sort by ItemNumber, Messages, and Sequence
-    combined_df = combined_df.sort_values(by=["ItemNumber", "Messages", "Sequence"])
-    
-    # Renumber Sequence by ItemNumber
-    combined_df['Sequence'] = combined_df.groupby('ItemNumber').cumcount() + 1
-    
-    return combined_df
+    # Create new column Item-Seq
+    appended.drop_duplicates(ignore_index=True)
+    appended = appended.dropna(subset=['Expiration Date'])
+    appended = appended.sort_values(by=['ItemNumber', 'Company Code', 'Sequence'])
+    # Renumber Sequence based on ItemNumber
+    appended['Sequence'] = appended.groupby('ItemNumber').cumcount() + 1
+    appended['Item-Seq'] = appended['ItemNumber'].astype(str) + ':' + appended['Sequence'].astype(str)
+    return appended
 
 def main(messages, warranty_path):
-    # Clean the 'Explanation Text' column
+    # Create an instance of the class with the messages DataFrame
+    df_operations = DataframeOperations(messages)
+    messages = df_operations.get_dataframe()
+    # Drop the 'Explanation' column
+    
+    messages = messages.dropna(subset=['Explanation Text'])
     messages = DataProcessor.clean_text_column(messages, "Explanation Text")
 
     # Clean the 'Explanation' column
@@ -310,6 +371,7 @@ def main(messages, warranty_path):
 
     # Merge the dfs
     messagestokeep = DataProcessor.merge_dataframes(messages, warranty, left_on="Explanation Text", right_on="Explanation", indicator=True)
+    messagestokeep = messagestokeep.drop(columns=["Explanation"])
 
     # Filter non-matching rows
     non_matching_messages = DataProcessor.filter_non_matching_rows(messagestokeep)
@@ -329,20 +391,45 @@ def shutdown_server():
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        # Rename the column
-        messagestokeep.rename(columns={'Item Code': 'ItemNumber'}, inplace=True)
         selected_explanations = request.form.getlist('explanations')
-        filtered_df = messagestokeep[~messagestokeep['Explanation Text'].isin(selected_explanations)]
-        filtered_df.to_csv('filtered_messages.csv', index=False)  # Save the filtered dataset
+        print("Selected explanations:", selected_explanations)  # Debug: Print selected explanations
 
-        # Render the shutdown page
+        if not selected_explanations:
+            print("No explanations selected")
+        pass
+
+        left_only_df = messagestokeep[messagestokeep['_merge'] == 'left_only']
+ 
+        # Replace 'nan' strings with actual NaN values
+        left_only_df['Explanation Text'] = left_only_df['Explanation Text'].replace('nan', pd.NA)
+
+        # Ensure data types match and strip spaces
+        left_only_df['Explanation Text'] = left_only_df['Explanation Text'].astype(str).str.strip()
+        selected_explanations = [str(explanation).strip() for explanation in selected_explanations]
+
+        # Filter out the selected explanations
+        filtered_df = left_only_df[~left_only_df['Explanation Text'].isin(selected_explanations)]
+        filtered_df.rename(columns={
+            "Item Code": "ItemNumber",
+            "Explanation Text": "Explanation",
+            "Message Expire Date": "Expiration Date"
+        }, inplace=True)
+        
+        filtered_df = filtered_df.drop_duplicates()
+        filtered_df['Company Code'] = 0
+
+        filtered_df.to_csv('filtered_messages.csv', index=False)
+        
         response = render_template('shutdown.html')
-
-        # Set a custom flag to shutdown the server
         request.environ['shutdown_flag'] = True
-
         return response
-    explanations = non_matching_messages['Explanation Text'].unique()
+
+    if 'Explanation Text' in non_matching_messages.columns:
+        explanations = non_matching_messages['Explanation Text'].unique()
+        
+    else:
+        explanations = []
+        print("Column 'Explanation Text' not found in non_matching_messages")
     return render_template('index.html', explanations=explanations)
 
 @app.teardown_request
@@ -353,49 +440,144 @@ def teardown_request(exception):
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=False)
 
-print("Thanks for your submissions")
-
 # Example usage
 message_creation_merge_df = MessageCreation_merge.get_dataframe()
 processed_df = process_special_messages(message_creation_merge_df)
 filtered_df = pd.read_csv("filtered_messages.csv")  # Assuming filtered_df is read from a CSV file
-result_df = create_messages(processed_df, warranty_dup, filtered_df)
+result_df = create_messages(processed_df, warranty_dup)
+appendmessages = append_messages(result_df,filtered_df)
 
-# Now result_df contains the merged dataframe with the specified columns
-print(result_df)
+# Rename columns in messages_dup
+messages_dup = messages_dup.rename(columns={'Item Code': 'ItemNumber', 'Explanation Text': 'Explanation', 'Web': 'WEB', 'Message Expire Date': 'Expiration Date'})
 
-# Define filtered_messages
-filtered_messages = pd.read_csv("filtered_messages.csv")
+# Remove 'Vendor Code' column from both dataframes
+messages_dup = messages_dup.drop(columns=['Vendor Code'])
 
-messages_toKeep = DataframeOperations(filtered_messages)
-new_columns = {
-    "Item-Seq": ["Item Code", "Sequence"]
-}
+# Add 'Company Code' column with value 1 to both dataframes
+appendmessages['Company Code'] = 1
 
-# Loop to create new columns
-for new_col, cols in new_columns.items():
-    messages_toKeep.concat_colon(new_col, cols)
+# Ensure column names are correct
+assert 'Item-Seq' in messages_dup.columns, "Column 'Item-Seq' not found in messages_dup"
+assert 'Item-Seq' in appendmessages.columns, "Column 'Item-Seq' not found in result_df"
 
+# Check for overlapping 'Item-Seq' values
+common_item_seq = set(messages_dup['Item-Seq']).intersection(set(appendmessages['Item-Seq']))
+print(f"Number of common 'Item-Seq' values: {len(common_item_seq)}")
+
+# Merge dataframes
+merged_df = pd.merge(messages_dup, appendmessages, on='Item-Seq', how='outer', suffixes=('_dup', '_merge'))
+merged_df.drop_duplicates(ignore_index=True)
+
+def check_sequence(row, col_dup, col_merge):
+    if pd.notna(row['Sequence_dup']) and pd.notna(row['Sequence_merge']):
+        return row[col_dup] if pd.notna(row[col_dup]) else row[col_merge]
+    elif pd.notna(row['Sequence_dup']):
+        return row[col_dup]
+    elif pd.notna(row['Sequence_merge']):
+        return row[col_merge]
+    else:
+        return None
+# Apply the function to each column
+merged_df['ADD/DEL'] = merged_df.apply(
+    lambda row: 'U' if pd.notna(row['Sequence_dup']) and pd.notna(row['Sequence_merge']) else 
+                        'D' if pd.notna(row['Sequence_dup']) else
+                        'A' if pd.notna(row['Sequence_merge']) else
+                        None,
+    axis=1
+)
+
+merged_df['COMPANY #'] = merged_df.apply(
+    lambda row: check_sequence(row, 'Company Code_dup', 'Company Code_merge'),
+    axis=1
+)
+
+merged_df['WPS Item #'] = merged_df.apply(
+    lambda row: check_sequence(row, 'ItemNumber_dup', 'ItemNumber_merge'),
+    axis=1
+)
+
+merged_df['Sequence'] = merged_df.apply(
+    lambda row: check_sequence(row, 'Sequence_dup', 'Sequence_merge'),
+    axis=1
+)
+
+merged_df['Explanation/Message (CAPS, 60)'] = merged_df.apply(
+    lambda row: check_sequence(row, 'Explanation_dup', 'Explanation_merge'),
+    axis=1
+)
+
+merged_df['PT/Pick Ticket Program'] = merged_df.apply(
+    lambda row: check_sequence(row, 'Pick Ticket Program_dup', 'Pick Ticket Program_merge'),
+    axis=1
+)
+
+merged_df['Invoice Program'] = merged_df.apply(
+    lambda row: check_sequence(row, 'Invoice Program_dup', 'Invoice Program_merge'),
+    axis=1
+)
+
+merged_df['Labels'] = merged_df.apply(
+    lambda row: check_sequence(row, 'Labels_dup', 'Labels_merge'),
+    axis=1
+)
+
+merged_df['Return Auth/Warranty (X or blank)'] = merged_df.apply(
+    lambda row: check_sequence(row, 'R/A_dup', 'R/A_merge'),
+    axis=1
+)
+
+merged_df['Order Entry/Customer Service (X or blank)'] = merged_df.apply(
+    lambda row: check_sequence(row, 'O/E_dup', 'O/E_merge'),
+    axis=1
+)
+
+merged_df['PO Entry'] = merged_df.apply(
+    lambda row: check_sequence(row, 'P.O. Entry_dup', 'P.O. Entry_merge'),
+    axis=1
+)
+
+merged_df['PO Form'] = merged_df.apply(
+    lambda row: check_sequence(row, 'P.O. Print_dup', 'P.O. Print_merge'),
+    axis=1
+)
+
+merged_df['MO Entry'] = merged_df.apply(
+    lambda row: check_sequence(row, 'M.O. Entry_dup', 'M.O. Entry_merge'),
+    axis=1
+)
+
+merged_df['MO Form'] = merged_df.apply(
+    lambda row: check_sequence(row, 'M.O. Print_dup', 'M.O. Print_merge'),
+    axis=1
+)
+
+merged_df['PO Receiving'] = merged_df.apply(
+    lambda row: check_sequence(row, 'P.O. Receiving_dup', 'P.O. Receiving_merge'),
+    axis=1
+)
+
+merged_df['WEB'] = merged_df.apply(
+    lambda row: check_sequence(row, 'WEB_dup', 'WEB_merge'),
+    axis=1
+)
+
+merged_df['Expiration Date'] = merged_df.apply(
+    lambda row: check_sequence(row, 'Expiration Date_dup', 'Expiration Date_merge'),
+    axis=1
+)
+merged_df = DataframeOperations(merged_df)
+merged_df.trim_columns(['ADD/DEL', 'COMPANY #', 'WPS Item #', 'Sequence', 'Explanation/Message (CAPS, 60)', 
+    'PT/Pick Ticket Program', 'Invoice Program', 'Labels', 
+    'Return Auth/Warranty (X or blank)', 'Order Entry/Customer Service (X or blank)', 
+    'PO Entry', 'PO Form', 'MO Entry', 'MO Form', 'PO Receiving', 'WEB', 'Expiration Date'
+])
+# Access the DataFrame stored in the 'df' attribute
+data = merged_df.df
+
+# Ensure 'data' is a pandas DataFrame
+if isinstance(data, pd.DataFrame):
+    data.to_csv('ItemUpload.csv', index=False)
+    data.to_csv(os.path.join(output_path, 'ItemMessages Template.csv'), index=False)
+else:
+    print("The 'df' attribute is not a pandas DataFrame.")
     
-    #"Filtered Rows1" = Table.SelectRows(#"Expanded WarrantyFile", each [Explanation] <> null and [Explanation] <> ""),
-    #"Added Custom3" = Table.AddColumn(#"Filtered Rows1", "Messages.1", each if Text.Start([Messages],2)="UN" then "1-"&[Messages] else [Messages]),
-    #"Removed Columns1" = Table.RemoveColumns(#"Added Custom3",{"Messages"}),
-    #"Renamed Columns2" = Table.RenameColumns(#"Removed Columns1",{{"Messages.1", "Messages"}}),
-    #"Sorted Rows" = Table.Sort(#"Renamed Columns2",{{"Item Code", Order.Ascending}, {"Messages", Order.Ascending}, {"Sequence", Order.Ascending}}),
-    #"Added Index" = Table.AddIndexColumn(#"Sorted Rows", "Index", 0, 1, Int64.Type),
-    #"Added Index1" = Table.AddIndexColumn(#"Added Index", "Index.1", 1, 1, Int64.Type),
-    #"Merged Queries2" = Table.NestedJoin(#"Added Index1", {"Index"}, #"Added Index1", {"Index.1"}, "Added Index1", JoinKind.LeftOuter),
-    #"Expanded Added Index1" = Table.ExpandTableColumn(#"Merged Queries2", "Added Index1", {"Item Code"}, {"Added Index1.Item Code"}),
-    #"Sorted Rows1" = Table.Sort(#"Expanded Added Index1",{{"Index", Order.Ascending}}),
-    #"Added Custom" = Table.AddColumn(#"Sorted Rows1", "New Seq", each if [Item Code] <> [Added Index1.Item Code] then [Index] else null),
-    #"Filled Down" = Table.FillDown(#"Added Custom",{"New Seq"}),
-    #"Inserted Subtraction" = Table.AddColumn(#"Filled Down", "Subtraction", each [Index.1] - [New Seq], type number),
-    #"Removed Columns" = Table.RemoveColumns(#"Inserted Subtraction",{"Messages", "Sequence", "Index", "Index.1", "Added Index1.Item Code", "New Seq"}),
-    #"Reordered Columns" = Table.ReorderColumns(#"Removed Columns",{"Subtraction", "Item Code", "Explanation", "Pick Ticket Program", "Invoice Program", "Labels.1", "R/A", "O/E", "P.O. Entry", "P.O. Print", "M.O. Entry", "M.O. Print", "P.O. Receiving", "WEB", "Expiration Date"}),
-    #"Renamed Columns" = Table.RenameColumns(#"Reordered Columns",{{"Subtraction", "Sequence"}, {"Labels.1", "Labels"}}),
-    #"Added Custom1" = Table.AddColumn(#"Renamed Columns", "COMPANY #", each 1),
-    #"Added Custom2" = Table.AddColumn(#"Added Custom1", "ADD / DEL", each "A"),
-    #"Reordered Columns1" = Table.ReorderColumns(#"Added Custom2",{"COMPANY #", "ADD / DEL", "Sequence", "Item Code", "Explanation", "Pick Ticket Program", "Invoice Program", "Labels", "R/A", "O/E", "P.O. Entry", "P.O. Print", "M.O. Entry", "M.O. Print", "P.O. Receiving", "WEB", "Expiration Date"}),
-    #"Renamed Columns1" = Table.RenameColumns(#"Reordered Columns1",{{"Item Code", "Item"}, {"Expiration Date", "Message Expire Date"}}),
-    #"Inserted Merged Column" = Table.AddColumn(#"Renamed Columns1", "Merged", each Text.Combine({[Item], Text.From([Sequence], "en-US")}, ":"), type text),
-    #"Filtered Rows2" = Table.SelectRows(#"Inserted Merged Column", each [Item] <> null and [Item] <> "")

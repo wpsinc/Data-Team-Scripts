@@ -5,6 +5,8 @@
     <title>Index</title>
 </head>
 <body>
+    <h1>Select Messages to Remove</h1>
+    <p>Remove any Warranty, Shipping, Logistics, and Direct Ship Messages.</p>
     <form method="POST">
         {% for explanation in explanations %}
             <input type="checkbox" name="explanations" value="{{ explanation }}">{{ explanation }}<br>
