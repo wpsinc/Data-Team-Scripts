@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+    <h1>Select Messages to Remove</h1>
+    <p>Remove any Warranty, Shipping, Logistics, and Direct Ship Messages.</p>
+    <form method="POST">
+        {% for explanation in explanations %}
+            <input type="checkbox" name="explanations" value="{{ explanation }}">{{ explanation }}<br>
+        {% endfor %}
+        <input type="submit" value="Submit">
+    </form>
+
+    {% if tables %}
+        <h2>Select Messages to Remove</h2>
+        {% for table in tables %}
+            {{ table|safe }}
+        {% endfor %}
+    {% endif %}
+</body>
+</html>

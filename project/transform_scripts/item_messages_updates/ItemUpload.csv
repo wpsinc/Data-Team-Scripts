@@ -1,0 +1,191 @@
+ADD/DEL,COMPANY #,WPS Item #,Sequence,"Explanation/Message (CAPS, 60)",PT/Pick Ticket Program,Invoice Program,Labels,Return Auth/Warranty (X or blank),Order Entry/Customer Service (X or blank),PO Entry,PO Form,MO Entry,MO Form,PO Receiving,WEB,Expiration Date
+U,1,12-9068,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9065,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9062,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9028,2,NOT A PAIR                                                  , , , ,X,X, , , , , ,X,99999999
+U,1,12-9003,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9023,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9020,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9009,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9034,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9013,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9036,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9040,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,B12-9002,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9047,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9026,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9030,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,B12-9001,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,459-1200,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9067,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9005,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9044,3,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9002,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9029,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9092,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9008,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9033,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9012,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9049,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9046,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9025,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-90481,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9039,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9064,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9043,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9066,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9004,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9001,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9015,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9021,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9035,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9091,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9007,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9032,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9011,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9048,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9028,5,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9038,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9063,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9042,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9003,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9069,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9014,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9034,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9027,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9006,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9031,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9010,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9045,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9024,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9047,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9065,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9037,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9062,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9041,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9000,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9044,5,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9002,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9089,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9068,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9009,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9020,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9013,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-90391,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,459-1200,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9044,2,**ITEM SOLD PER LIGHT NOT A PAIR**                          , , , ,X,X, , , , , ,X,99999999
+U,1,12-9029,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9033,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9023,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-90481,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9064,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9040,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9015,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9067,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9092,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9008,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9012,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9026,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9005,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9030,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,B12-9001,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9032,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9046,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9039,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9043,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9036,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,B12-9002,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9063,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9049,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9001,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9014,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9091,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9025,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9004,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9044,1,A268                                               9/8/21 DD, , , ,X, , , , , , , ,99999999
+U,1,12-90491,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9045,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9038,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9042,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9021,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9035,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9028,1,THESE ARE SOLD INDIVIDUALLY                                 , , , ,X,X, , , , , ,X,99999999
+U,1,12-9062,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9069,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9048,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9000,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9066,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9007,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9028,4,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9011,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9089,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9013,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-90391,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9027,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9031,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9024,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9003,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-90491,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9034,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9009,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9065,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9006,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9010,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,459-1200,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9092,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9026,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9030,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9023,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,B12-9001,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9037,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9041,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9020,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9043,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9029,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9033,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9068,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9047,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9008,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-90481,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9012,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9064,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9005,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9044,4,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9002,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9025,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9039,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9036,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9015,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9040,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,B12-9002,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9067,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9046,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9091,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9007,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9011,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9063,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9004,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9001,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9038,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9042,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9035,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9014,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9049,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9032,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9069,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9066,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9045,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9028,3,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-90491,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9006,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9010,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9024,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9021,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-9000,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9037,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9089,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9041,3,Defect Description To RA Notes                              , , , ,X, , , , , , , ,99999999
+U,1,12-9048,1,Warranty Claims - Destroy in Field                          , , , ,X, , , , , , , ,99999999
+U,1,12-90391,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9027,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999
+U,1,12-9031,2,Please Add Photo Of Defect On Item And                      , , , ,X, , , , , , , ,99999999

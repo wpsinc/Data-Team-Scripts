@@ -1,0 +1,5 @@
+ItemNumber,Vendor Code,Sequence,Explanation,Pick Ticket Program,Invoice Program,Labels,R/A,O/E,P.O. Entry,P.O. Print,M.O. Entry,M.O. Print,P.O. Receiving,Web,Expiration Date,_merge,Company Code
+12-9028,6017,2,not a pair, , , ,X,X, , , , , ,X,99999999,left_only,0
+12-9044,6017,2,**item sold per light not a pair**, , , ,X,X, , , , , ,X,99999999,left_only,0
+12-9044,6017,1,a268                                               9/8/21 dd, , , ,X, , , , , , , ,99999999,left_only,0
+12-9028,6017,1,these are sold individually, , , ,X,X, , , , , ,X,99999999,left_only,0
