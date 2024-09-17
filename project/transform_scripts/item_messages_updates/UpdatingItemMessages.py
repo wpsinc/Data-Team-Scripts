@@ -571,8 +571,10 @@ merged_df.trim_columns(['ADD/DEL', 'COMPANY #', 'WPS Item #', 'Sequence', 'Expla
     'Return Auth/Warranty (X or blank)', 'Order Entry/Customer Service (X or blank)', 
     'PO Entry', 'PO Form', 'MO Entry', 'MO Form', 'PO Receiving', 'WEB', 'Expiration Date'
 ])
+
 # Access the DataFrame stored in the 'df' attribute
 data = merged_df.df
+data = data.dropna(subset=['WPS Item #'])
 
 # Ensure 'data' is a pandas DataFrame
 if isinstance(data, pd.DataFrame):
