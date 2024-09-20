@@ -75,43 +75,8 @@ class DataframeOperations:
     def drop_column(self, column_name):
         self.df = self.df.drop(columns=[column_name])
         return self.df
-    
-    def add_columns(self):
-        self.df['ADD/DEL'] = self.df.apply(
-            lambda row: 'U' if pd.notna(row['Company Code_dup']) and pd.notna(row['Company Code_merge']) else 
-                                'D' if pd.notna(row['Company Code_dup']) else
-                                'A' if pd.notna(row['Company Code_merge']) else
-                                None,
-            axis=1
-        )
 
-        columns_to_add = {
-            'COMPANY #': ['Company Code_dup', 'Company Code_merge'],
-            'WPS Item #': ['ItemNumber_dup', 'ItemNumber_merge'],
-            'Sequence': ['Sequence_dup', 'Sequence_merge'],
-            'Explanation/Message (CAPS, 60)': ['Explanation_dup', 'Explanation_merge'],
-            'PT/Pick Ticket Program': ['Pick Ticket Program_dup', 'Pick Ticket Program_merge'],
-            'Invoice Program': ['Invoice Program_dup', 'Invoice Program_merge'],
-            'Labels': ['Labels_dup', 'Labels_merge'],
-            'Return Auth/Warranty (X or blank)': ['R/A_dup', 'R/A_merge'],
-            'Order Entry/Customer Service (X or blank)': ['O/E_dup', 'O/E_merge'],
-            'PO Entry': ['P.O. Entry_dup', 'P.O. Entry_merge'],
-            'PO Form': ['P.O. Print_dup', 'P.O. Print_merge'],
-            'MO Entry': ['M.O. Entry_dup', 'M.O. Entry_merge'],
-            'MO Form': ['M.O. Print_dup', 'M.O. Print_merge'],
-            'PO Receiving': ['P.O. Receiving_dup', 'P.O. Receiving_merge'],
-            'WEB': ['WEB_dup', 'WEB_merge'],
-            'Expiration Date': ['Expiration Date_dup', 'Expiration Date_merge']
-        }
 
-        for new_col, (dup_col, merge_col) in columns_to_add.items():
-            self.df[new_col] = self.df.apply(
-                lambda row: row[dup_col] if pd.notna(row[dup_col]) and pd.notna(row[merge_col]) else 
-                                    row[dup_col] if pd.notna(row[merge_col]) else
-                                    row[merge_col] if pd.notna(row[dup_col]) else
-                                    None,
-                axis=1
-            )
 class DataProcessor:
     @staticmethod
     def clean_text_column(df, column_name):
@@ -298,6 +263,7 @@ def process_special_messages(df):
 # Example usage
 message_creation_merge_df = MessageCreation_merge.get_dataframe()
 processed_df = process_special_messages(message_creation_merge_df)
+
 def create_messages(processed_df, warranty_dup):
     # Check if inputs are DataFrames
     if not isinstance(processed_df, pd.DataFrame):
@@ -328,7 +294,8 @@ def create_messages(processed_df, warranty_dup):
         "M.O. Print",
         "P.O. Receiving",
         "WEB",
-        "Expiration Date"
+        "Expiration Date",
+        "Messages"
     ]
     
     # Trim columns
@@ -350,10 +317,11 @@ def append_messages(merged_df, filtered_df):
     # Create new column Item-Seq
     appended.drop_duplicates(ignore_index=True)
     appended = appended.dropna(subset=['Expiration Date'])
-    appended = appended.sort_values(by=['ItemNumber', 'Company Code', 'Sequence'])
+    appended = appended.sort_values(by=['ItemNumber', 'Company Code', 'Messages', 'Sequence'])
     # Renumber Sequence based on ItemNumber
     appended['Sequence'] = appended.groupby('ItemNumber').cumcount() + 1
     appended['Item-Seq'] = appended['ItemNumber'].astype(str) + ':' + appended['Sequence'].astype(str)
+    appended = appended.drop('Messages', axis=1)
     return appended
 
 def main(messages, warranty_path):
@@ -443,6 +411,7 @@ if __name__ == '__main__':
 # Example usage
 message_creation_merge_df = MessageCreation_merge.get_dataframe()
 processed_df = process_special_messages(message_creation_merge_df)
+
 filtered_df = pd.read_csv("filtered_messages.csv")  # Assuming filtered_df is read from a CSV file
 result_df = create_messages(processed_df, warranty_dup)
 appendmessages = append_messages(result_df,filtered_df)
@@ -470,13 +439,14 @@ merged_df.drop_duplicates(ignore_index=True)
 
 def check_sequence(row, col_dup, col_merge):
     if pd.notna(row['Sequence_dup']) and pd.notna(row['Sequence_merge']):
-        return row[col_dup] if pd.notna(row[col_dup]) else row[col_merge]
-    elif pd.notna(row['Sequence_dup']):
-        return row[col_dup]
+        return row[col_merge] if pd.notna(row[col_merge]) else row[col_dup]
     elif pd.notna(row['Sequence_merge']):
         return row[col_merge]
+    elif pd.notna(row['Sequence_dup']):
+        return row[col_dup]
     else:
         return None
+
 # Apply the function to each column
 merged_df['ADD/DEL'] = merged_df.apply(
     lambda row: 'U' if pd.notna(row['Sequence_dup']) and pd.notna(row['Sequence_merge']) else 
@@ -485,86 +455,71 @@ merged_df['ADD/DEL'] = merged_df.apply(
                         None,
     axis=1
 )
-
 merged_df['COMPANY #'] = merged_df.apply(
     lambda row: check_sequence(row, 'Company Code_dup', 'Company Code_merge'),
     axis=1
 )
-
 merged_df['WPS Item #'] = merged_df.apply(
     lambda row: check_sequence(row, 'ItemNumber_dup', 'ItemNumber_merge'),
     axis=1
 )
-
 merged_df['Sequence'] = merged_df.apply(
     lambda row: check_sequence(row, 'Sequence_dup', 'Sequence_merge'),
     axis=1
 )
-
 merged_df['Explanation/Message (CAPS, 60)'] = merged_df.apply(
     lambda row: check_sequence(row, 'Explanation_dup', 'Explanation_merge'),
     axis=1
 )
-
 merged_df['PT/Pick Ticket Program'] = merged_df.apply(
     lambda row: check_sequence(row, 'Pick Ticket Program_dup', 'Pick Ticket Program_merge'),
     axis=1
 )
-
 merged_df['Invoice Program'] = merged_df.apply(
     lambda row: check_sequence(row, 'Invoice Program_dup', 'Invoice Program_merge'),
     axis=1
 )
-
 merged_df['Labels'] = merged_df.apply(
     lambda row: check_sequence(row, 'Labels_dup', 'Labels_merge'),
     axis=1
 )
-
 merged_df['Return Auth/Warranty (X or blank)'] = merged_df.apply(
     lambda row: check_sequence(row, 'R/A_dup', 'R/A_merge'),
     axis=1
 )
-
 merged_df['Order Entry/Customer Service (X or blank)'] = merged_df.apply(
     lambda row: check_sequence(row, 'O/E_dup', 'O/E_merge'),
     axis=1
 )
-
 merged_df['PO Entry'] = merged_df.apply(
     lambda row: check_sequence(row, 'P.O. Entry_dup', 'P.O. Entry_merge'),
     axis=1
 )
-
 merged_df['PO Form'] = merged_df.apply(
     lambda row: check_sequence(row, 'P.O. Print_dup', 'P.O. Print_merge'),
     axis=1
 )
-
 merged_df['MO Entry'] = merged_df.apply(
     lambda row: check_sequence(row, 'M.O. Entry_dup', 'M.O. Entry_merge'),
     axis=1
 )
-
 merged_df['MO Form'] = merged_df.apply(
     lambda row: check_sequence(row, 'M.O. Print_dup', 'M.O. Print_merge'),
     axis=1
 )
-
 merged_df['PO Receiving'] = merged_df.apply(
     lambda row: check_sequence(row, 'P.O. Receiving_dup', 'P.O. Receiving_merge'),
     axis=1
 )
-
 merged_df['WEB'] = merged_df.apply(
     lambda row: check_sequence(row, 'WEB_dup', 'WEB_merge'),
     axis=1
 )
-
 merged_df['Expiration Date'] = merged_df.apply(
     lambda row: check_sequence(row, 'Expiration Date_dup', 'Expiration Date_merge'),
     axis=1
 )
+
 merged_df = DataframeOperations(merged_df)
 merged_df.trim_columns(['ADD/DEL', 'COMPANY #', 'WPS Item #', 'Sequence', 'Explanation/Message (CAPS, 60)', 
     'PT/Pick Ticket Program', 'Invoice Program', 'Labels', 
@@ -572,9 +527,12 @@ merged_df.trim_columns(['ADD/DEL', 'COMPANY #', 'WPS Item #', 'Sequence', 'Expla
     'PO Entry', 'PO Form', 'MO Entry', 'MO Form', 'PO Receiving', 'WEB', 'Expiration Date'
 ])
 
+
 # Access the DataFrame stored in the 'df' attribute
 data = merged_df.df
+
 data = data.dropna(subset=['WPS Item #'])
+data = data.sort_values(by=['WPS Item #', 'Sequence'])
 
 # Ensure 'data' is a pandas DataFrame
 if isinstance(data, pd.DataFrame):
@@ -582,4 +540,5 @@ if isinstance(data, pd.DataFrame):
     data.to_csv(os.path.join(output_path, 'ItemMessages Template.csv'), index=False)
 else:
     print("The 'df' attribute is not a pandas DataFrame.")
+
     
