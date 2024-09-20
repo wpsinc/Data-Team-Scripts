@@ -1,23 +1,191 @@
 ItemNumber,Vendor Code,Sequence,Explanation,Pick Ticket Program,Invoice Program,Labels,R/A,O/E,P.O. Entry,P.O. Print,M.O. Entry,M.O. Print,P.O. Receiving,Web,Expiration Date,_merge,Company Code
-26-1124,5436,4.0,installation in order to properly fit in location., , , , ,X, , , , , ,X,99999999.0,left_only,0
-26-1121,5436,2.0,w/ 8 tooth gear, , , , ,X, , , , , ,X,99999999.0,left_only,0
-26-1124,5436,5.0,"will not fit on yamaha 1200cc machines, nothing currently", , , , ,X, , , , , ,X,99999999.0,left_only,0
-12-9363,5436,2.0,these are not flush mount lights, , , ,X,X, , , , , ,X,99999999.0,left_only,0
-26-1244,5436,2.0,this will not fit mule pro fxt use # 26-1100, , , ,X,X, , , , , ,X,99999999.0,left_only,0
-431-01022,5436,1.0,does not include wireless remote or rubber stopper, , , , ,X, , , , , ,X,99999999.0,left_only,0
-26-1261,5436,2.0,this will not work on ranger etx machine, , , ,X,X, , , , , ,X,99999999.0,left_only,0
-26-1231,5436,1.0,for diesel only,X,X, ,X,X, , , , , ,X,99999999.0,left_only,0
-26-1135,5436,1.0,this will also fit kawasaki sx-r 800 '03-11, , , , ,X, , , , , ,X,99999999.0,left_only,0
-26-1121,5436,1.0,order 26-1132 for `98 gtx rfi and `98-99 spx, , , , ,X, , , , , ,X,99999999.0,left_only,0
-26-6101,5436,1.0,*does not fit canam ryker/spyder*, , , ,X,X, , , , , ,X,99999999.0,left_only,0
-26-1244,5436,1.0,a500 112118 ch, , , ,X, , , , , , , ,99999999.0,left_only,0
-26-1124,5436,2.0,"when installing, clearance is tighter and", , , , ,X, , , , , ,X,99999999.0,left_only,0
-26-1124,5436,1.0,"this starter now has a dual o-ring design,", , , , ,X, , , , , ,X,99999999.0,left_only,0
-26-1261,5436,1.0,a603 051617 ch, , , ,X, , , , , , , ,99999999.0,left_only,0
-26-40135,5436,2.0,will not fit ninja zx-12r, , , , ,X, , , , , ,X,99999999.0,left_only,0
-26-40135,5436,1.0,street 669 2020-04-29 kk, , , , ,X, , , , , , ,99999999.0,left_only,0
-26-40088,5436,1.0,will not fit honda ft500 ascot models/no starter available, , , ,X,X, , , , , ,X,99999999.0,left_only,0
-26-1124,5436,6.0,available for those models, , , , ,X, , , , , ,X,99999999.0,left_only,0
-12-9362,5436,2.0,these are flush mount lights, , , ,X,X, , , , , ,X,99999999.0,left_only,0
-26-1124,5436,3.0,may need to be angled during, , , , ,X, , , , , ,X,99999999.0,left_only,0
-26-1135,5436,2.0,"this will not fit polaris sportsman 500, use #26-1137", , , ,X, , , , , , ,X,99999999.0,left_only,0
+821-0429,6239,1.0,"will not fit kaw z125 models,", , , ,X,X, , , , , ,X,99999999.0,left_only,0
+663-1082R,5660,1.0,also available as pair number 663-1082., , , , ,X, , , , , ,X,99999999.0,left_only,0
+821-0423,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0462,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0407,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-1080L,5660,1.0,also available as pair number 663-1080., , , , ,X, , , , , ,X,99999999.0,left_only,0
+821-03022,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03055,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0566,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0420,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03031,6239,1.0,"fits vn900 models with 38mm dia. pump, for vn900 with 35mm", , , ,X,X, , , , , ,X,99999999.0,left_only,0
+821-0404,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0532,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0449,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-1090L,5660,1.0,also available as pair number 663-1090., , , , ,X, , , , , ,X,99999999.0,left_only,0
+821-0435,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03003,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0439,6239,2.0,does not fit 14-18 teryx 800, , , ,X,X, , , , , ,X,99999999.0,left_only,0
+821-0438,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03025,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03036,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03047,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03044,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03058,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03069,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0460,6239,7.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0454,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0401,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0446,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0490,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0425,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-1092R,5660,1.0,also available as pair number 663-1092., , , , ,X, , , , , ,X,99999999.0,left_only,0
+821-03028,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03039,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-9996,5660,1.0,must go through sale dept. fax qualifying invoice to todd., , , , ,X, , , , , , ,99999999.0,left_only,0
+821-0448,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-1083L,5660,1.0,also available as pair number 663-1083., , , , ,X, , , , , ,X,99999999.0,left_only,0
+821-0469,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0471,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-1800,5660,1.0,note: this is not the ws91 wrist stabliizer use p/n 663-1801, , , ,X,X, , , , , ,X,99999999.0,left_only,0
+821-0445,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0443,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0432,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0427,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0466,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0421,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03040,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0536,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03051,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03062,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0440,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-1340,5660,1.0,this is not black it is a digi style pattern, , , ,X,X, , , , , ,X,99999999.0,left_only,0
+821-0429,6239,2.0,no pump available at this time, , , ,X,X, , , , , ,X,99999999.0,left_only,0
+821-03053,6239,2.0,"on gl1200, fits carbureted models only", , , ,X,X, , , , , ,X,99999999.0,left_only,0
+663-1081L,5660,1.0,also available as pair number 663-1081., , , , ,X, , , , , ,X,99999999.0,left_only,0
+821-0474,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0419,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0463,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0464,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03052,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-1025L,5660,1.0,sold individually, , , ,X,X, , , , , ,X,99999999.0,left_only,0
+821-03021,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03032,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-2339,5660,2.0,size graphic kit for medium size order 663-2341., , , , ,X, , , , , ,X,99999999.0,left_only,0
+821-03043,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-1081R,5660,1.0,also available as pair number 663-1081., , , , ,X, , , , , ,X,99999999.0,left_only,0
+821-0415,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03065,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0439,6239,1.0,2019 08-06 bp, , , ,X,X, , , , , , ,99999999.0,left_only,0
+663-1093L,5660,1.0,also available as pair number 663-1093., , , , ,X, , , , , ,X,99999999.0,left_only,0
+821-03002,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-1091R,5660,1.0,also available as pair number 663-1091., , , , ,X, , , , , ,X,99999999.0,left_only,0
+821-03035,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03046,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03057,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03068,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+Z2016112801,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-1082L,5660,1.0,also available as pair number 663-1082., , , , ,X, , , , , ,X,99999999.0,left_only,0
+821-0413,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0408,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0402,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0452,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0439,6239,7.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-2340,5660,1.0,evs has individual graphic kits for each size. this is large, , , , ,X, , , , , ,X,99999999.0,left_only,0
+821-0465,6239,6.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0447,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0486,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03027,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03038,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03031,6239,2.0,dia. pump use 821-03061, , , ,X,X, , , , , ,X,99999999.0,left_only,0
+821-0410,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-1020M,5660,1.0,sold individually, , , ,X,X, , , , , ,X,99999999.0,left_only,0
+821-0405,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0444,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03066,6239,1.0,does not fit honda gl 1800 or yamaha bolt models, , , ,X,X, , , , , ,X,99999999.0,left_only,0
+821-03000,6239,6.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0428,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0416,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03066,6239,6.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-1025X,5660,1.0,sold individually, , , ,X,X, , , , , ,X,99999999.0,left_only,0
+821-03050,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-1080R,5660,1.0,also available as pair number 663-1080., , , , ,X, , , , , ,X,99999999.0,left_only,0
+821-03061,6239,1.0,"fits vn900 models with 35mm dia. pump, for vn900 with 38mm", , , ,X,X, , , , , ,X,99999999.0,left_only,0
+821-0441,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-2340,5660,2.0,size graphic kit for x-large size order 663-2342., , , , ,X, , , , , ,X,99999999.0,left_only,0
+821-0513,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0436,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+Z2017101703,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-1092L,5660,1.0,also available as pair number 663-1092., , , , ,X, , , , , ,X,99999999.0,left_only,0
+821-03049,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0475,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-1020Y,5660,1.0,sold individually, , , ,X,X, , , , , ,X,99999999.0,left_only,0
+821-03061,6239,7.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0460,6239,2.0,no fuel pump avail. at this time, , , ,X,X, , , , , ,X,99999999.0,left_only,0
+821-0489,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03053,6239,1.0,this is a 2 wire pump for 4 wire pump order 821-03054, , , ,X,X, , , , , ,X,99999999.0,left_only,0
+821-03020,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03042,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0433,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0422,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-1020S,5660,1.0,sold individually, , , ,X,X, , , , , ,X,99999999.0,left_only,0
+821-0424,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0417,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0412,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0460,6239,1.0,"does not fit honda`13-15 nch50/2ac models,", , , ,X,X, , , , , ,X,99999999.0,left_only,0
+821-0516,6239,6.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03031,6239,7.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03053,6239,7.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03001,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03023,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03034,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0430,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03033,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0500,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0414,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0409,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-1025M,5660,1.0,sold individually, , , ,X,X, , , , , ,X,99999999.0,left_only,0
+663-1090R,5660,1.0,also available as pair number 663-1090., , , , ,X, , , , , ,X,99999999.0,left_only,0
+821-03064,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03004,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0518,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0488,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0411,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+421-0448,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0461,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0406,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0456,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0450,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03045,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03056,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03067,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-1083R,5660,1.0,also available as pair number 663-1083., , , , ,X, , , , , ,X,99999999.0,left_only,0
+821-0403,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0442,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0429,6239,7.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0437,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03026,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03037,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03048,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03059,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0507,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-1093R,5660,1.0,also available as pair number 663-1093., , , , ,X, , , , , ,X,99999999.0,left_only,0
+821-03061,6239,2.0,"dia. pump, use 821-03031", , , ,X,X, , , , , ,X,99999999.0,left_only,0
+821-03053,6239,8.0,24st pg418 cat error; doesn't fit cbr1000f hurricane, , , ,X,X, , , , , ,X,20250101.0,left_only,0
+821-0400,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-1020L,5660,1.0,sold individually, , , ,X,X, , , , , ,X,99999999.0,left_only,0
+821-0455,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03054,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-2339,5660,1.0,evs has individual graphic kits for each size. this is small, , , , ,X, , , , , ,X,99999999.0,left_only,0
+821-0434,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-1091L,5660,1.0,also available as pair number 663-1091., , , , ,X, , , , , ,X,99999999.0,left_only,0
+821-03029,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0473,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0418,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0468,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03060,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-9997,5660,1.0,must go through sale dept. fax qualifying invoice to todd., , , , ,X, , , , , , ,99999999.0,left_only,0
+821-0453,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0431,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0472,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-1025S,5660,1.0,sold individually, , , ,X,X, , , , , ,X,99999999.0,left_only,0
+821-0426,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0470,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03024,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-0487,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+663-1020X,5660,1.0,sold individually, , , ,X,X, , , , , ,X,99999999.0,left_only,0
+663-1340,5660,2.0,for a black knee guard order part # 663-1341, , , ,X,X, , , , , ,X,99999999.0,left_only,0
+821-03030,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03041,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
+821-03063,6239,5.0,dealer to provide date codes from pump to receive credit, , , ,X, , , , , , , ,99999999.0,left_only,0
