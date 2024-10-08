@@ -263,7 +263,6 @@ def process_special_messages(df):
 # Example usage
 message_creation_merge_df = MessageCreation_merge.get_dataframe()
 processed_df = process_special_messages(message_creation_merge_df)
-processed_df.to_csv('Messages.csv',index = False)
 def create_messages(processed_df, warranty_dup):
     # Check if inputs are DataFrames
     if not isinstance(processed_df, pd.DataFrame):
