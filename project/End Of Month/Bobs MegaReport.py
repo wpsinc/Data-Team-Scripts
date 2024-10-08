@@ -1,3 +1,6 @@
+#Move Bobs Mega Report.csv into Arrowhead EP\Data Tech\End of Month Templates\Linked Reports\Bobs Mega Report
+#Leave the file that is in Output alone
+
 import pandas as pd
 import os
 import time
@@ -20,7 +23,7 @@ base_path = os.path.join(
 eom_path = os.path.join(
     home_dir, "OneDrive - Arrowhead EP/Data Tech/End of Month Templates"
 )
-MergeOutput_path = os.path.join(
+BobsMega_Path = os.path.join(
     home_dir, "OneDrive - Arrowhead EP/Data Tech/End of Month Templates/Linked Reports/Bobs Mega Report"
 )
 output_path = os.path.join(
@@ -51,40 +54,24 @@ def detect_encoding(file_path):
 check_path(base_path, "base_path")
 check_path(eom_path, "eom_path")
 check_path(output_path, "output_path")
-check_path(MergeOutput_path, "MergeOutput_path")
+check_path(BobsMega_Path, "BobsMega_Path")
 
 # Navigate to folder containing Stock Status
 StockStatus = os.path.join(base_path, "Stock Status")
 check_path(StockStatus, "StockStatus")
 
-common_end = '.csv'
-Mega = os.path.join(output_path, "Bobs_Mega_Report.csv")
 
-dataframes = []
-for file in os.listdir(MergeOutput_path):
-    if file.endswith(common_end):
-        file_path = os.path.join(MergeOutput_path, file)
-        encoding = detect_encoding(file_path)
-        read_file = pd.read_csv(file_path, encoding=encoding, sep="\t", header=0)
-        dataframes.append(read_file)
-
-combined_read_files = pd.concat(dataframes, ignore_index=True)
-
-for filename in os.listdir(MergeOutput_path):
-    file_path = os.path.join(MergeOutput_path, filename)
-    try:
-        if os.path.isfile(file_path) or os.path.islink(file_path):
-            os.unlink(file_path)  # Remove the file
-    except Exception as e:
-        print(f'Failed to delete {file_path}. Reason: {e}')
-
-combined_read_files.to_csv(Mega, index=False)
-combined_read_files.to_csv(os.path.join(MergeOutput_path, "Combined_Mega_Report.csv"), index=False)
+Mega = os.path.join(BobsMega_Path, "Bobs Mega Report.csv")
 
 # Check if Mega exists
 if not os.path.exists(Mega):
     print(f"Error: The path {Mega} does not exist for this user.")
     exit()
+
+encoding = detect_encoding(Mega)
+
+# Read the Mega file with tab as the delimiter
+MegaDF = pd.read_csv(Mega, encoding=encoding, sep="\t", header=0)
 
 # Create an empty dataframe
 StockStatusDF = pd.DataFrame()
@@ -139,12 +126,6 @@ StockStatusDF.rename(
 StockStatusDF.sort_values("WPS Part Number", inplace=True)
 StockStatusDF.drop_duplicates(inplace=True)
 
-with open(Mega, 'rb') as f:
-    result = chardet.detect(f.read())
-    encoding = result['encoding']
-
-MegaDF = pd.read_csv(Mega, encoding=encoding, sep=",", header=0)
-print(MegaDF.columns)
 
 end_time_operation = time.time()
 operation_duration = round((end_time_operation - start_time_operation) / 60, 5)
@@ -152,7 +133,6 @@ spinner.stop_and_persist(
     symbol="✔️ ".encode("utf-8"),
     text=f"Files Read. Process Time: {operation_duration} minutes",
 )
-print(MegaDF.columns)
 MegaDF.sort_values("WPS Part Number", inplace=True)
 
 spinner = Halo(text="Merging dataframes...", spinner="dots")
@@ -208,7 +188,20 @@ start_time_operation = time.time()
 
 merged_df = merged_df[merged_df["WPS Part Number"].notnull()]
 
-merged_df.to_csv(os.path.join(output_path, "Bobs Merged Mega Report Output.csv"), index=False)
+output_file = os.path.join(output_path, "Bobs Merged Mega Report Output.csv")
+
+# Read the existing file into a DataFrame
+existing_df = pd.read_csv(output_file, encoding='utf-8')
+
+# Concatenate the existing DataFrame with the new merged DataFrame
+final_df = pd.concat([existing_df, merged_df], ignore_index=True)
+
+# Drop duplicates if necessary
+final_df.drop_duplicates(inplace=True)
+
+# Save the final DataFrame back to the file
+final_df.to_csv(output_file, index=False, encoding='utf-8')
+
 end_time_operation = time.time()
 operation_duration = round((end_time_operation - start_time_operation) / 60, 5)
 spinner.stop_and_persist(
