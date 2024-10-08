@@ -133,7 +133,7 @@ df_ops.rename_columns({
     "Class_ClassCode": "ClassCode",
     "SubClass_SubClass": "SubClassCode",
     "SubSubClass_SubSubClass": "SubSubClassCode",
-    "Brand_Lookup_Brand": "Brand",
+    "Brand_Lookup_BRAND_CODE": "Brand",
     "Item_Detail_ItemCategory": "ItemCategory",
     "Item_Detail_Hazmat": "Hazmat",
     "Item_Flags_CarbRestriction": "CarbRestriction",
@@ -248,7 +248,7 @@ def process_special_messages(df):
 
     # Split the 'Messages' column into lists
     df['Messages'] = df['Messages'].str.split(',')
-
+    
     # Explode the 'Messages' column to create new rows
     df_exploded = df.explode('Messages')
 
@@ -263,7 +263,7 @@ def process_special_messages(df):
 # Example usage
 message_creation_merge_df = MessageCreation_merge.get_dataframe()
 processed_df = process_special_messages(message_creation_merge_df)
-
+processed_df.to_csv('Messages.csv',index = False)
 def create_messages(processed_df, warranty_dup):
     # Check if inputs are DataFrames
     if not isinstance(processed_df, pd.DataFrame):
