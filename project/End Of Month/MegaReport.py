@@ -47,8 +47,7 @@ if not os.path.exists(Mega):
 # Create an empty dataframe
 StockStatusDF = pd.DataFrame()
 
-# Get a list of all .xlsx files in the directory
-xlsx_files = [entry.name for entry in os.scandir(StockStatus) if entry.is_file() and entry.name.endswith(".xlsx")]
+csv_files = [entry.name for entry in os.scandir(StockStatus) if entry.is_file() and entry.name.endswith(".csv")]
 
 dfs = []
 spinner = Halo(text="Reading files...", spinner="dots")
@@ -59,13 +58,16 @@ start_time_operation = time.time()
 
 def read_file(filename):
     # Read the file into a dataframe
-    file_df = pd.read_excel(os.path.join(StockStatus, filename), engine="openpyxl")
+    file_df = pd.read_csv(os.path.join(StockStatus, filename))
     return file_df
 
 # Use ThreadPoolExecutor to read files in parallel
 with ThreadPoolExecutor(max_workers=5) as executor:
-    dfs = list(executor.map(read_file, xlsx_files))
+    dfs = list(executor.map(read_file, csv_files))
 
+spinner.stop()
+end_time = time.time()
+print(f"Time taken: {end_time - start_time} seconds")
 # Concatenate all dataframes in the list
 StockStatusDF = pd.concat(dfs, ignore_index=True)
 
@@ -73,28 +75,37 @@ StockStatusDF = pd.concat(dfs, ignore_index=True)
 # Use in-place operations
 StockStatusDF.rename(
     columns={
-        "ItemLookup[ItemNumber]": "WPS Part Number",
-        "Item Detail[ItemStatus]": "ItemStatus",
-        "ItemLookup[Product Manager]": "Product Manager",
-        "Item Detail[OEMPartNumber]": "OEMPartNumber",
-        "ItemLookup[Description1]": "Description1",
-        "ItemLookup[Description2]": "Description2",
-        "Division[Division]": "Division",
-        "Class[Class]": "Class",
-        "SubClass[Sub-Class]": "Sub-Class",
-        "SubSubClass[Sub-Sub-Class]": "Sub-Sub-Class",
-        "Item Flags[ModelDesc]": "ModelDesc",
-        "Item Flags[StyleDesc]": "StyleDesc",
-        "Item Flags[ColorDesc]": "ColorDesc",
-        "Item Flags[SizeDescription]": "SizeDescription",
-        "Item Flags[ApparelDesc]": "ApparelDesc",
-        "[SumYearDesign]": "YearDesign",
-        "Segment[Segment]": "Segment",
-        "SubSegment[Sub-Segment]": "Sub-Segment",
-        "Item Detail[PreferredVendor]": "PreferredVendor",
-        "VendorDetail[Vendor]": "Vendor",
-        "Item Detail[ItemCategory]": "ItemCategory",
-        "Brand Lookup[Brand]": "Brand",
+        "ItemLookup_ItemNumber": "WPS Part Number",
+        "Item_Detail_ItemStatus": "ItemStatus",
+        "ItemRank_ItemRank": "Item Rank",
+        "ItemLookup_Product_Manager": "Product Manager",
+        "Item_Detail_VendorPartNumber": "VendorPartNumber",
+        "ItemLookup_Description1": "Description1",
+        "ItemLookup_Description2": "Description2",
+        "Division_Division": "Division",
+        "Class_Class": "Class",
+        "SubClass_Sub_Class": "Sub-Class",
+        "SubSubClass_Sub_Sub_Class": "Sub-Sub-Class",
+        "Item_Flags_ModelDesc": "ModelDesc",
+        "Item_Flags_StyleDesc": "StyleDesc",
+        "Item_Flags_ColorDesc": "ColorDesc",
+        "Item_Flags_SizeDescription": "SizeDescription",
+        "Item_Flags_ApparelDesc": "ApparelDesc",
+        "Item_Flags_YearDesign": "YearDesign",
+        "Segment_Segment": "Segment",
+        "SubSegment_Sub_Segment": "Sub-Segment",
+        "Item_Detail_PreferredVendor": "PreferredVendor",
+        "VendorDetail_Vendor": "Vendor",
+        "Item_Detail_ItemCategory": "ItemCategory",
+        "Brand_Lookup_Brand": "Brand",
+        "ID_CalcTable_Prev_12_Months_COGS": "Total Prev 12 COGS",
+        "ID_CalcTable_Prev_12_Months_Sales": "Total Prev 12 Sales $",
+        "ID_CalcTable_Prev_12_Months_QTY_Sold": "Total Prev 12 Units Sold",
+        "Item_Detail_AverageCost": "Average Cost",
+        "Item_Detail_Cost": "Cost",
+        "Item_Detail_DealerA": "Dealer A",
+        "Item_Detail_DealerB": "Dealer B",
+        "Item_Detail_ListPrice": "List Price"
     },
     inplace=True,
 )
@@ -124,8 +135,9 @@ merged_df = pd.merge(
         [
             "WPS Part Number",
             "ItemStatus",
+            "Item Rank",
             "Product Manager",
-            "OEMPartNumber",
+            "VendorPartNumber",
             "Description1",
             "Description2",
             "Division",
@@ -144,6 +156,14 @@ merged_df = pd.merge(
             "Vendor",
             "ItemCategory",
             "Brand",
+            "Average Cost",
+            "Cost",
+            "Dealer A",
+            "Dealer B",
+            "List Price",
+            "Total Prev 12 COGS",
+            "Total Prev 12 Sales $",
+            "Total Prev 12 Units Sold",
         ]
     ],
     MegaDF,
