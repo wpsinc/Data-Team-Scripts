@@ -112,10 +112,10 @@ StockStatusDF.rename(
 # Sort the DataFrame before dropping duplicates
 StockStatusDF.sort_values("WPS Part Number", inplace=True)
 StockStatusDF.drop_duplicates(inplace=True)
-with open(os.path.join(Mega, "Mega Report.csv"), 'rb') as f:
+with open(os.path.join(Mega, "Mega Report Purchasing.csv"), 'rb') as f:
     result = chardet.detect(f.read())
     encoding = result['encoding']
-MegaDF = pd.read_csv(os.path.join(Mega, "Mega Report.csv"), encoding=encoding, sep="\t", header=0)
+MegaDF = pd.read_csv(os.path.join(Mega, "Mega Report Purchasing.csv"), encoding=encoding, sep="\t", header=0)
 
 end_time_operation = time.time()
 operation_duration = round((end_time_operation - start_time_operation) / 60, 5)
