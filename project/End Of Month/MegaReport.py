@@ -27,16 +27,11 @@ def check_path(path, name):
     if not os.path.exists(path):
         print(f"Error: The path {path} does not exist for this user.")
         exit()
-        
-def detect_encoding(file_path):
-    with open(file_path, 'rb') as f:
-        result = chardet.detect(f.read())
-    return result['encoding']
 
+# Check paths
 check_path(base_path, "base_path")
 check_path(eom_path, "eom_path")
 check_path(output_path, "output_path")
-
 # Navigate to folder containing Stock Status
 StockStatus = os.path.join(base_path, "Stock Status")
 check_path(StockStatus, "StockStatus")
@@ -52,7 +47,6 @@ if not os.path.exists(Mega):
 # Create an empty dataframe
 StockStatusDF = pd.DataFrame()
 
-# Get a list of all .csv files in the directory
 csv_files = [entry.name for entry in os.scandir(StockStatus) if entry.is_file() and entry.name.endswith(".csv")]
 
 dfs = []
@@ -63,24 +57,27 @@ start_time = time.time()
 start_time_operation = time.time()
 
 def read_file(filename):
-    file_path = os.path.join(StockStatus, filename)
-    encoding = detect_encoding(file_path)
-    # Read the file into a dataframe with the detected encoding and specified separator
-    file_df = pd.read_csv(file_path, encoding=encoding, sep=",")
+    # Read the file into a dataframe
+    file_df = pd.read_csv(os.path.join(StockStatus, filename))
     return file_df
 
 # Use ThreadPoolExecutor to read files in parallel
 with ThreadPoolExecutor(max_workers=5) as executor:
     dfs = list(executor.map(read_file, csv_files))
 
+spinner.stop()
+end_time = time.time()
+print(f"Time taken: {end_time - start_time} seconds")
 # Concatenate all dataframes in the list
 StockStatusDF = pd.concat(dfs, ignore_index=True)
+
 
 # Use in-place operations
 StockStatusDF.rename(
     columns={
         "ItemLookup_ItemNumber": "WPS Part Number",
         "Item_Detail_ItemStatus": "ItemStatus",
+        "ItemRank_ItemRank": "Item Rank",
         "ItemLookup_Product_Manager": "Product Manager",
         "Item_Detail_VendorPartNumber": "VendorPartNumber",
         "ItemLookup_Description1": "Description1",
@@ -101,21 +98,17 @@ StockStatusDF.rename(
         "VendorDetail_Vendor": "Vendor",
         "Item_Detail_ItemCategory": "ItemCategory",
         "Brand_Lookup_Brand": "Brand",
-        "ID_CalcTable_Prev_12_Months_QTY_Sold": "Total Prev 12 Units Sold",
-        "ID_CalcTable_Prev_12_Months_COGS" : "Total Prev 12 COGS",
+        "ID_CalcTable_Prev_12_Months_COGS": "Total Prev 12 COGS",
         "ID_CalcTable_Prev_12_Months_Sales": "Total Prev 12 Sales $",
-        "ItemRank_ItemRank": "Item Rank",
+        "ID_CalcTable_Prev_12_Months_QTY_Sold": "Total Prev 12 Units Sold",
+        "Item_Detail_AverageCost": "Average Cost",
         "Item_Detail_Cost": "Cost",
         "Item_Detail_DealerA": "Dealer A",
         "Item_Detail_DealerB": "Dealer B",
         "Item_Detail_ListPrice": "List Price"
-
-
     },
-    
     inplace=True,
 )
-
 # Sort the DataFrame before dropping duplicates
 StockStatusDF.sort_values("WPS Part Number", inplace=True)
 StockStatusDF.drop_duplicates(inplace=True)
@@ -163,19 +156,21 @@ merged_df = pd.merge(
             "Vendor",
             "ItemCategory",
             "Brand",
+            "Average Cost",
             "Cost",
             "Dealer A",
             "Dealer B",
             "List Price",
-            "Total Prev 12 Units Sold",
             "Total Prev 12 COGS",
-            "Total Prev 12 Sales $"
+            "Total Prev 12 Sales $",
+            "Total Prev 12 Units Sold",
         ]
     ],
     MegaDF,
     on="WPS Part Number",
     how="right",
 )
+
 # Sort and drop duplicates after merging
 merged_df.sort_values("WPS Part Number", inplace=True)
 merged_df.drop_duplicates(inplace=True)
