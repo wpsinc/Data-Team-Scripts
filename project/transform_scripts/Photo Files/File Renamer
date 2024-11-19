@@ -1,0 +1,39 @@
+import os
+import pandas as pd
+from tkinter import Tk, filedialog
+
+def rename_files_from_excel():
+    root = Tk()
+    root.withdraw()
+    
+    print("Select the Excel file with current and new filenames.")
+    excel_file = filedialog.askopenfilename(title="Select Excel File", filetypes=[("Excel files", "*.xlsx;*.xls")])
+    if not excel_file:
+        print("No file selected. Exiting.")
+        return
+    
+    print("Select the directory containing the files to rename.")
+    directory = filedialog.askdirectory(title="Select Directory")
+    if not directory:
+        print("No directory selected. Exiting.")
+        return
+
+
+    sheet_name = 'Sheet1'  # Modify if needed
+    df = pd.read_excel(excel_file, sheet_name=sheet_name)
+    
+    # Assuming column A has the current filenames and column B has the new filenames
+    current_names = df.iloc[:, 0]
+    new_names = df.iloc[:, 1]
+    
+    for old_name, new_name in zip(current_names, new_names):
+        old_file = os.path.join(directory, old_name)
+        new_file = os.path.join(directory, new_name)
+        
+        if os.path.isfile(old_file):
+            os.rename(old_file, new_file)
+            print(f'Renamed: {old_name} to {new_name}')
+        else:
+            print(f'File not found: {old_name}')
+
+rename_files_from_excel()

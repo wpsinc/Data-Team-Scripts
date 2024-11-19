@@ -1,0 +1,29 @@
+import os
+import shutil
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+def move_file(file_path, destination_folder):
+    try:
+        shutil.move(file_path, os.path.join(destination_folder, os.path.basename(file_path)))
+        print(f"Moved: {file_path}")
+    except Exception as e:
+        print(f"Error moving {file_path}: {e}")
+
+def extract_files_parallel(source_folder, destination_folder="Extracted Cobra Photos", max_workers=4):
+    os.makedirs(destination_folder, exist_ok=True)
+    
+    file_paths = []
+    for root, dirs, files in os.walk(source_folder):
+        for file in files:
+            file_paths.append(os.path.join(root, file))
+    
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = [executor.submit(move_file, file_path, destination_folder) for file_path in file_paths]
+        
+        for future in as_completed(futures):
+            future.result()
+            
+    print("All files have been successfully moved to 'Extracted Cobra Photos'.")
+
+source_folder = "" #Put your folder path here from File Explorer
+extract_files_parallel(source_folder)
