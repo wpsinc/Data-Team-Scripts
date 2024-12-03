@@ -211,8 +211,8 @@ def process_special_messages(df):
                     "5157COVERSLUG" if row['Vendor-Brand-Div-Class'] in ["5157-1510-102-5", "5157-5930-102-5", "5157-1510-106-19", "5157-5930-106-19"] else
                     "5157COVERSLUG" if row['Vendor-Brand-Div-Class'].startswith("5157-1510-104") or row['Vendor-Brand-Div-Class'].startswith("5157-1510-130") or row['Vendor-Brand-Div-Class'].startswith("5157-5930-130") else
                     "5157OPEN" if row['Vendor-Brand-Div-Sub'] == "5157-3740-106-6" else
-                    "3DRUM" if row['Div-Sub-Sub'] == "110-1" else
-                    "3DRUMDIR" if row['Div-Sub-Sub-Cat'] == "110-1-DIR" else
+                    #"3DRUM" if row['Div-Sub-Sub'] == "110-1" else
+                    #"3DRUMDIR" if row['Div-Sub-Sub-Cat'] == "110-1-DIR" else
                     None,
         axis=1
     )
