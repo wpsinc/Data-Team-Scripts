@@ -54,5 +54,4 @@ selected_columns = ["URL", "SKU", "vehicle_type", "year", "make", "model"]
 filtered_df = merged_df[selected_columns]
 
 filtered_df.to_csv(output_file_path, index=False)
-
 print(f"Output saved to {output_file_path}")
