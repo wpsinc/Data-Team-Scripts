@@ -195,6 +195,7 @@ def process_special_messages(df):
         lambda row: "6271SCORP" if row['Vendor-Brand'] == "6271-4618" else
                     "5924BURLY" if row['Vendor-Brand'] == "5924-840" else
                     "5436-1875" if row['Vendor-Brand'] == "5436-1875" else
+                    "6415-3740" if row ['Vendor-Brand'] == "6415-3740" else
                     "5716TRAILER" if row['Vendor-Div-Sub'] == "5716-136-18" else
                     "6514WHEEL" if row['Vendor-Div-Class'] == "6514-136-9" else
                     "6514TIRE" if row['Vendor-Div-Class'] == "6514-136-5" else
