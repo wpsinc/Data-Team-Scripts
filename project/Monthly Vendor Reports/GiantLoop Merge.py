@@ -45,7 +45,7 @@ for vendor_dir in vendor_dirs:
         sales_df['SalesDate'] = pd.to_datetime(sales_df['SalesDate'])
 
         # Create a date range for pivoting
-        date_range = pd.date_range(start='2023-01-01', end='2024-12-01', freq='MS')
+        date_range = pd.date_range(start='2024-01-01', end='2025-12-01', freq='MS')
 
         # Pivot the table
         pivot_df = sales_df.pivot_table(index='ItemNumber', columns='SalesDate', values=['SalesQty', 'Sales $'], aggfunc='sum', fill_value=0)
