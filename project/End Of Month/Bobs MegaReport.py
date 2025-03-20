@@ -188,7 +188,6 @@ start_time_operation = time.time()
 
 merged_df = merged_df[merged_df["WPS Part Number"].notnull()]
 
-
 output_file = os.path.join(output_path, "Bobs Merged Mega Report Output.csv")
 
 # Read the existing file into a DataFrame
@@ -202,7 +201,6 @@ final_df.drop_duplicates(inplace=True)
 
 # Save the final DataFrame back to the file
 final_df.to_csv(output_file, index=False, encoding='utf-8')
-
 
 end_time_operation = time.time()
 operation_duration = round((end_time_operation - start_time_operation) / 60, 5)
