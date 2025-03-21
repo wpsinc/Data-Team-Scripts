@@ -202,9 +202,11 @@ def process_special_messages(df):
                     "5601SUS" if row['Vendor-Div-Sub-Sub'] == "5601-134-9" else
                     "6084RACING" if row['Vendor-Brand'] == "6084-4288" else
                     "5849DIR" if row['Vendor-Cat'] == "5849-DIR" else
+                    "5569DIR" if row['Vendor-Cat'] == "5569-DIR" else
+                    "5586DIR" if row['Vendor-Cat'] == "5586-DIR" else
                     "5600-1875" if row['Vendor-Brand'] == "5600-1875" else
                     "5772-1875" if row['Vendor-Brand'] == "5772-1875" else
-                    6 if row['Vendor-Cat'] == "5333-DIR" else
+                    # 6 if row['Vendor-Cat'] == "5333-DIR" else message missing ?
                     "6371RACEFUEL" if row['Vendor-Div-Class'] == "6371-110-19" else
                     "5864Axle" if row['Vendor-Div-Sub'] == "5864-112-4" else
                     5864 if row['Vendor'] == "5864" else
@@ -240,7 +242,7 @@ def process_special_messages(df):
 
     # Apply the if-then-else logic for DIRMessage
     df['DIR Message'] = df.apply(
-        lambda row: None if "5849" in row['Vendor-Cat'] or row['Vendor-Div-Class'] == "6371-110-19" else
+        lambda row: None if "5849" in row['Vendor-Cat'] or row['Vendor-Div-Class'] == "6371-110-19" or  "5569-DIR" in row['Vendor-Cat'] or  "5586-DIR" in row['Vendor-Cat'] else
                     4 if "DIR" in row['Vendor-Cat'] else
                     None,
         axis=1
